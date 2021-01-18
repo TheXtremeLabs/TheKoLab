@@ -1,12 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
 }
 
 android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    buildFeatures {
+        viewBinding true
+    }
 
     buildTypes {
         release {
