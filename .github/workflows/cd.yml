@@ -5,8 +5,10 @@ on:
       - 'master'
 
 jobs:
-  build:
+  build_and_tag:
     env:
+      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
@@ -16,20 +18,11 @@ jobs:
         run: ./gradlew clean build
       - name: Get application's version
         run: echo "APP_VERSION=$( ./gradlew -q printVersionName )" >> $GITHUB_ENV
-      - name: Upload APK
+      - name: Upload APKs
         uses: actions/upload-artifact@v2
         with:
           name: apks
           path: app/build/**/*.apk
-  tag:
-    env:
-      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
-      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Set Git identity
         run: |
           git config user.email "$GIT_USER_EMAIL"
