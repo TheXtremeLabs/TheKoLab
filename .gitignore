@@ -1,0 +1,44 @@
+# Jetbrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+
+## Directories
+.gradle/
+.idea*/
+/**/build/
+captures/
+cmake-build-*/
+out/
+
+## File extensions
+*.cxx
+*.externalNativeBuild
+*.iml
+*.ipr
+*.iws
+
+## Files
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics*.properties
+fabric.properties
+local.properties
+
+
+# WINDOWS
+
+## Directories
+$RECYCLE.BIN/
+
+## File extensions
+*.cab
+*.exe
+*.ini
+*.lnk
+*.msi*
+*.msm
+*.msp
+*.stackdump
+
+## Files
+ehthumbs*.db
+Thumbs.db*
+

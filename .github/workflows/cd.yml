@@ -1,0 +1,40 @@
+name: CD
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Android application
+        run: ./gradlew clean build
+      - name: Get application's version
+        run: echo "APP_VERSION=$( ./gradlew -q printVersionName )" >> $GITHUB_ENV
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks-$APP_VERSION
+          path: app/build/**/*.apk
+  tag:
+    env:
+      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set Git identity
+        run: |
+          git config user.email "$GIT_USER_EMAIL"
+          git config user.name "$GIT_USER_NAME"
+      - name: Create tag
+        run: git tag -a "v$APP_VERSION-rc" -m "Release candidate v$APP_VERSION"
+      - name: Push tag to repository
+        run: git push --tags origin
