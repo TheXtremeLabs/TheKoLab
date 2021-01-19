@@ -13,7 +13,7 @@
         android:bottom="-80dp"
         android:left="0dp"
         android:right="100dp"
-        android:top="-150dp">
+        android:top="-125dp">
 
         <rotate android:fromDegrees="45">
             <shape android:shape="rectangle">

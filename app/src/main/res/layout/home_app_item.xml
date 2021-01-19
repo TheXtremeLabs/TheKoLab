@@ -16,113 +16,95 @@
     app:cardUseCompatPadding="true"
     tools:cardBackgroundColor="@color/oil">
 
-    <FrameLayout
+    <include layout="@layout/home_app_item_background" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/small_margin">
 
-        <!-- Background image stuff -->
-        <include layout="@layout/home_app_item_background" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
 
-        <!-- 2nd Background image stuff -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:gravity="center|end"
-            android:orientation="horizontal">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/middle_vertical_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/middle_horizontal_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.7"
-                android:background="@drawable/trapezoidal_item_image_mask" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
 
-        </LinearLayout>
+        <!-- TODO: change icon -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/app_item_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:padding="@dimen/small_margin"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/left_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/the_lab_icon_white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/app_item_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="bottom"
+            android:paddingHorizontal="16dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/middle_horizontal_guideline"
+            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title app" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                android:gravity="center"
-                android:orientation="horizontal">
+        <TextView
+            android:id="@+id/app_item_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingHorizontal="16dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/middle_horizontal_guideline"
+            tools:ignore="NewApi"
+            tools:text="App description" />
 
-                <!-- Icon -->
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/row_icon_imageView"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:adjustViewBounds="true"
-                    android:fitsSystemWindows="true"
-                    android:padding="@dimen/small_margin"
-                    android:scaleType="fitCenter"
-                    tools:src="@drawable/the_lab_icon_white" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:fitsSystemWindows="true"
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/right_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- app Details -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/small_margin"
-                    android:paddingStart="@dimen/medium_margin"
-                    android:paddingEnd="@dimen/medium_margin">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/row_title_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:textAppearance="@android:style/TextAppearance.Material.Title"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            tools:ignore="NewApi"
-                            tools:text="Title app" />
-
-                        <TextView
-                            android:id="@+id/row_description_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|start"
-                            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-                            android:textStyle="normal"
-                            tools:ignore="NewApi"
-                            tools:text="App description" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/big_margin"
-                        android:layout_height="@dimen/big_margin"
-                        android:fitsSystemWindows="true"
-                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-    </FrameLayout>
 </androidx.cardview.widget.CardView>
