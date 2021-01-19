@@ -66,10 +66,10 @@ class ToolbarTimeFragment : Fragment(VIEW) {
     private fun launchTimeUpdater() {
         this.timeUpdaterJob = this.toolbarTimeScope.launch {
             while (this.isActive) {
-                delay(ONE_SECOND)
                 val timeText: String = this@ToolbarTimeFragment.getCurrentTime()
                 val updateTimeTextJob: Job = this@ToolbarTimeFragment.updateTimeText(timeText)
                 updateTimeTextJob.join()
+                delay(ONE_SECOND)
             }
         }
     }
