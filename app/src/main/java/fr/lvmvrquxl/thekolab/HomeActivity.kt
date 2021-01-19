@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
+import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var activityBinding: HomeActivityBinding
@@ -20,8 +21,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initCollapsingToolbar() {
-        val appBar: AppBarLayout = this.activityBinding.appbar
-        val collapsingToolbar: CollapsingToolbarLayout = this.activityBinding.homeToolbar.root
+        val homeToolbar: HomeToolbarBinding = this.activityBinding.homeToolbar
+        val appBar: AppBarLayout = homeToolbar.root
+        val collapsingToolbar: CollapsingToolbarLayout = homeToolbar.collapsingToolbar
         val homeAppBarListener = HomeToolbarListener(this, collapsingToolbar)
         appBar.setExpanded(true)
         appBar.addOnOffsetChangedListener(homeAppBarListener)
