@@ -1,33 +1,25 @@
 package fr.lvmvrquxl.thekolab
 
-import android.content.Context
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 
-class HomeToolbarListener(
-    private val context: Context,
-    private val collapsingToolbar: CollapsingToolbarLayout
-) : AppBarLayout.OnOffsetChangedListener {
+class HomeToolbarListener(private val activity: HomeActivity) :
+    AppBarLayout.OnOffsetChangedListener {
     private var scrollRange: Int = -1
     private var showTitle: Boolean = false
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        if (-1 == this.scrollRange) this.scrollRange = appBarLayout.totalScrollRange
+        if (-1 == this.scrollRange) this.initScrollRange(appBarLayout)
         if (0 == this.scrollRange + verticalOffset) {
-            this.putAppNameAsTitle()
+            this.activity.showCollapsingToolbarTitle()
             this.updateShowTitle()
         } else if (this.showTitle) {
-            this.resetTitle()
+            this.activity.hideCollapsingToolbarTitle()
             this.updateShowTitle()
         }
     }
 
-    private fun putAppNameAsTitle() {
-        this.collapsingToolbar.title = Strings.appName(context)
-    }
-
-    private fun resetTitle() {
-        this.collapsingToolbar.title = ""
+    private fun initScrollRange(appBarLayout: AppBarLayout) {
+        this.scrollRange = appBarLayout.totalScrollRange
     }
 
     private fun updateShowTitle() {
