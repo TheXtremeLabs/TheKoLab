@@ -141,4 +141,6 @@
 
     <color name="background_row_root_cause">#5d56aa</color>
     <color name="background_row_action_selected">#12798a</color>
+
+    <color name="ic_launcher_lab_icon_background">#3540A7</color>
 </resources>
