@@ -9,7 +9,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/content_loader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
@@ -18,7 +17,6 @@
         android:paddingBottom="@dimen/medium_margin">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/app_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
