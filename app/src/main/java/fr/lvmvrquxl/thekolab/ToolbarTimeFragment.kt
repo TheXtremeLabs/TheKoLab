@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import fr.lvmvrquxl.thekolab.databinding.HomeToolbarDateTimeBinding
+import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
 import kotlinx.coroutines.*
 import java.text.DateFormat
 import java.util.*
@@ -16,12 +16,12 @@ class ToolbarTimeFragment : Fragment(VIEW) {
         private const val ONE_SECOND: Long = 1000
         private const val SCOPE: String = "ToolbarTimeScope"
         private const val TIME_STYLE: Int = DateFormat.SHORT
-        private const val VIEW: Int = R.layout.home_toolbar_date_time
+        private const val VIEW: Int = R.layout.home_toolbar_time_fragment
     }
 
     private val toolbarTimeScope: CoroutineScope = CoroutineScope(CoroutineName(SCOPE))
     private var timeUpdaterJob: Job? = null
-    private var viewBinding: HomeToolbarDateTimeBinding? = null
+    private var viewBinding: HomeToolbarTimeFragmentBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +29,8 @@ class ToolbarTimeFragment : Fragment(VIEW) {
         savedInstanceState: Bundle?
     ): View? {
         val attachToParent = false
-        this.viewBinding = HomeToolbarDateTimeBinding.inflate(inflater, container, attachToParent)
+        this.viewBinding =
+            HomeToolbarTimeFragmentBinding.inflate(inflater, container, attachToParent)
         return this.viewBinding?.root
     }
 

@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/detail_backdrop_height"
+    android:layout_height="@dimen/backdrop_height"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:background="@color/teal_700"
-    tools:layout_height="@dimen/detail_backdrop_height">
+    tools:background="@color/purple_700">
 
     <TextView
         android:id="@+id/toolbar_time"
-        style="@style/TextAppearance.AppCompat.Display3"
+        style="@style/TheKoLab.Toolbar.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -23,7 +22,7 @@
 
     <TextView
         android:id="@+id/toolbar_date"
-        style="@style/TextAppearance.AppCompat.Body2"
+        style="@style/TheKoLab.Toolbar.Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -31,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_time"
-        tools:text="jeu. 24 Décembre 2020" />
+        tools:text="20 janv. 2021" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
