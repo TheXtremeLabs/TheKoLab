@@ -4,25 +4,21 @@ import com.google.android.material.appbar.AppBarLayout
 
 class HomeToolbarListener(private val activity: HomeActivity) :
     AppBarLayout.OnOffsetChangedListener {
-    private var scrollRange: Int = -1
-    private var showTitle: Boolean = false
+    companion object {
+        private const val INITIAL_SCROLL_RANGE: Int = -1
+        private const val OFFSET_LIMIT: Int = 0
+    }
+
+    private var scrollRange: Int = INITIAL_SCROLL_RANGE
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-        if (-1 == this.scrollRange) this.initScrollRange(appBarLayout)
-        if (0 == this.scrollRange + verticalOffset) {
+        if (INITIAL_SCROLL_RANGE == this.scrollRange) this.initScrollRange(appBarLayout)
+        if (OFFSET_LIMIT == this.scrollRange + verticalOffset)
             this.activity.showCollapsingToolbarTitle()
-            this.updateShowTitle()
-        } else if (this.showTitle) {
-            this.activity.hideCollapsingToolbarTitle()
-            this.updateShowTitle()
-        }
+        else this.activity.hideCollapsingToolbarTitle()
     }
 
     private fun initScrollRange(appBarLayout: AppBarLayout) {
         this.scrollRange = appBarLayout.totalScrollRange
-    }
-
-    private fun updateShowTitle() {
-        this.showTitle = !this.showTitle
     }
 }
