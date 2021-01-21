@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab
+package fr.lvmvrquxl.thekolab.home.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

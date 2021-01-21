@@ -11,7 +11,7 @@
         android:theme="@style/TheKoLab">
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".home.view.HomeActivity"
             android:theme="@style/TheKoLab.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
