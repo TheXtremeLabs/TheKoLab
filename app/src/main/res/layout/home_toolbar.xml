@@ -10,11 +10,14 @@
         android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/dark_grey"
         android:fitsSystemWindows="true"
-        app:contentScrim="@color/black"
+        app:contentScrim="@color/dark_grey"
         app:expandedTitleMarginEnd="64dp"
         app:expandedTitleMarginStart="48dp"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:scrimAnimationDuration="275"
+        app:statusBarScrim="@color/dark_grey"
         tools:background="@color/purple_700">
 
         <androidx.viewpager2.widget.ViewPager2
