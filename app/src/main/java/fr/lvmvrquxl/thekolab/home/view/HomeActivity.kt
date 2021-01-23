@@ -2,14 +2,16 @@ package fr.lvmvrquxl.thekolab.home.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import fr.lvmvrquxl.thekolab.base.BaseView
+import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 
 class HomeActivity : AppCompatActivity() {
-    private var view: HomeView? = null
+    private var view: BaseView<HomeActivityBinding>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.view = HomeView(this)
-        super.setContentView(this.view?.root())
+        super.setContentView(this.view?.root)
     }
 
     override fun onDestroy() {

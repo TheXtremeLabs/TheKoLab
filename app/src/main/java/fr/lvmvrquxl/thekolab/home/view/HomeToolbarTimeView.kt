@@ -23,11 +23,15 @@ class HomeToolbarTimeView(
         this.presenter = null
     }
 
-    fun onPause() = this.presenter?.cancelTimeUpdaterJob()
+    override fun onPause() = this.presenter?.cancelTimeUpdaterJob()
 
-    fun onResume() {
+    override fun onResume() {
         this.presenter?.launchTimeUpdater()
         this.initDateText()
+    }
+
+    fun updateTimeText(timeText: String) {
+        super.viewBinding?.toolbarTime?.text = timeText
     }
 
     private fun bindViews() {
@@ -38,9 +42,5 @@ class HomeToolbarTimeView(
 
     private fun initDateText() {
         super.viewBinding?.toolbarDate?.text = this.presenter?.getCurrentDate()
-    }
-
-    fun updateTimeText(timeText: String) {
-        super.viewBinding?.toolbarTime?.text = timeText
     }
 }

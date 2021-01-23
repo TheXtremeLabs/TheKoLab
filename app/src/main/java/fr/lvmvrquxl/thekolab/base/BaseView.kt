@@ -4,6 +4,8 @@ import android.view.View
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseView<VB : ViewBinding> {
+    val root: View?
+        get(): View? = this.viewBinding?.root
     protected var viewBinding: VB? = null
 
     open fun onDestroy() {
@@ -12,5 +14,7 @@ abstract class BaseView<VB : ViewBinding> {
 
     open fun onDestroyView() = this.onDestroy()
 
-    fun root(): View? = this.viewBinding?.root
+    open fun onPause(): Unit? = null
+
+    open fun onResume() {}
 }
