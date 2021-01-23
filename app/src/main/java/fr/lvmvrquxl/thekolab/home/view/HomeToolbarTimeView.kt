@@ -1,13 +1,15 @@
 package fr.lvmvrquxl.thekolab.home.view
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarTimePresenter
 
-class HomeToolbarTimeView(private val inflater: LayoutInflater, private val container: ViewGroup?) {
-    private var viewBinding: HomeToolbarTimeFragmentBinding? = null
+class HomeToolbarTimeView(
+    private val inflater: LayoutInflater,
+    private val container: ViewGroup?
+) : BaseView<HomeToolbarTimeFragmentBinding>() {
     private var presenter: HomeToolbarTimePresenter? = null
 
     init {
@@ -15,10 +17,10 @@ class HomeToolbarTimeView(private val inflater: LayoutInflater, private val cont
         this.presenter = HomeToolbarTimePresenter.build(this)
     }
 
-    fun onDestroyView() {
+    override fun onDestroyView() {
+        super.onDestroy()
         this.presenter?.cancelCoroutineScope()
         this.presenter = null
-        this.viewBinding = null
     }
 
     fun onPause() = this.presenter?.cancelTimeUpdaterJob()
@@ -28,19 +30,17 @@ class HomeToolbarTimeView(private val inflater: LayoutInflater, private val cont
         this.initDateText()
     }
 
-    fun root(): View? = this.viewBinding?.root
-
     private fun bindViews() {
         val attachToParent = false
-        this.viewBinding =
+        super.viewBinding =
             HomeToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 
     private fun initDateText() {
-        this.viewBinding?.toolbarDate?.text = this.presenter?.getCurrentDate()
+        super.viewBinding?.toolbarDate?.text = this.presenter?.getCurrentDate()
     }
 
     fun updateTimeText(timeText: String) {
-        this.viewBinding?.toolbarTime?.text = timeText
+        super.viewBinding?.toolbarTime?.text = timeText
     }
 }

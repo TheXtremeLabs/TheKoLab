@@ -1,20 +1,19 @@
 package fr.lvmvrquxl.thekolab.home.view
 
 import android.graphics.Color
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import fr.lvmvrquxl.thekolab.utils.Strings
+import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
+import fr.lvmvrquxl.thekolab.utils.Strings
 
-class HomeView(private val activity: HomeActivity) {
+class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBinding>() {
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var toolbar: HomeToolbarBinding? = null
-    private var viewBinding: HomeActivityBinding? = null
 
     init {
         this.bindViews()
@@ -23,25 +22,23 @@ class HomeView(private val activity: HomeActivity) {
         this.setStatusBarTransparent()
     }
 
-    fun onDestroy() {
+    override fun onDestroy() {
+        super.onDestroy()
         this.collapsingToolbar = null
         this.toolbar = null
-        this.viewBinding = null
     }
 
     fun hideCollapsingToolbarTitle() {
         this.collapsingToolbar?.title = " "
     }
 
-    fun root(): View? = this.viewBinding?.root
-
     fun showCollapsingToolbarTitle() {
         this.collapsingToolbar?.title = Strings.appName(this.activity)
     }
 
     private fun bindViews() {
-        this.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
-        this.toolbar = this.viewBinding?.homeToolbar
+        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
+        this.toolbar = super.viewBinding?.homeToolbar
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
     }
 
