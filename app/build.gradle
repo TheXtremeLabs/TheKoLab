@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'org.jetbrains.dokka'
 }
 
 android {
@@ -31,6 +32,15 @@ android {
         versionName rootProject.ext.versionName
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    dokkaHtml.configure {
+        dokkaSourceSets {
+            named("main") {
+                noAndroidSdkLink.set(false)
+                skipDeprecated.set(true)
+            }
+        }
     }
 
     kotlinOptions {
