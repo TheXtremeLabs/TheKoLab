@@ -3,6 +3,14 @@ package fr.lvmvrquxl.thekolab.home.presenter
 import com.google.android.material.appbar.AppBarLayout
 import fr.lvmvrquxl.thekolab.home.view.HomeView
 
+/**
+ * Listener's implementation of the home page's toolbar.
+ *
+ * @param view View of the home page
+ *
+ * @since 0.1.3
+ * @see [HomeView]
+ */
 class HomeToolbarListenerImpl(private val view: HomeView) : HomeToolbarListener {
     companion object {
         private const val INITIAL_SCROLL_RANGE: Int = -1
