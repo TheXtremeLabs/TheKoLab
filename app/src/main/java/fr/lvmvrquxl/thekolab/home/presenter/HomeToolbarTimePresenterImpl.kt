@@ -5,6 +5,14 @@ import kotlinx.coroutines.*
 import java.text.DateFormat
 import java.util.*
 
+/**
+ * Presenter's implementation of the toolbar's time display.
+ *
+ * @param view View of the toolbar's time display
+ *
+ * @since 0.1.3
+ * @see [HomeToolbarTimeView]
+ */
 class HomeToolbarTimePresenterImpl(private val view: HomeToolbarTimeView) :
     HomeToolbarTimePresenter {
     companion object {
