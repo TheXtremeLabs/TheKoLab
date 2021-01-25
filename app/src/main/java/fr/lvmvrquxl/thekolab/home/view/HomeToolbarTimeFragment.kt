@@ -9,6 +9,14 @@ import fr.lvmvrquxl.thekolab.R
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
 
+/**
+ * Home toolbar's time fragment.
+ *
+ * This fragment is used for displaying date and time in the view pager of the home page activity.
+ *
+ * @since 0.1.3
+ * @see [HomeActivity]
+ */
 class HomeToolbarTimeFragment : Fragment(LAYOUT) {
     companion object {
         private const val LAYOUT: Int = R.layout.home_toolbar_time_fragment
