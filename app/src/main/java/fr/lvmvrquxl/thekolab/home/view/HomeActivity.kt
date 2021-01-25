@@ -5,6 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 
+/**
+ * Home page activity.
+ *
+ * This class is currently the main activity of the application.
+ * It should only be used for overriding lifecycle tasks from Android's activities.
+ *
+ * @since 0.1.3
+ */
 class HomeActivity : AppCompatActivity() {
     private var view: BaseView<HomeActivityBinding>? = null
 
