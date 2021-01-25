@@ -11,6 +11,18 @@ import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
 import fr.lvmvrquxl.thekolab.utils.Strings
 
+/**
+ * Home page view.
+ *
+ * This class is the view of the home page activity.
+ *
+ * @param activity Instance of the home page activity
+ *
+ * @constructor Bind views, init application bar and view pager
+ *
+ * @since 0.1.3
+ * @see [HomeActivity]
+ */
 class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBinding>() {
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var toolbar: HomeToolbarBinding? = null
@@ -28,10 +40,30 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
         this.toolbar = null
     }
 
+    /**
+     * Hide the collapsing toolbar's title.
+     *
+     * This method hide the collapsing toolbar's title by setting its value to `" "`.
+     * For showing the collapsing toolbar's title, consider using [showCollapsingToolbarTitle]
+     * instead.
+     *
+     * @since 0.1.3
+     * @see [showCollapsingToolbarTitle]
+     */
     fun hideCollapsingToolbarTitle() {
         this.collapsingToolbar?.title = " "
     }
 
+    /**
+     * Show the collapsing toolbar's title.
+     *
+     * This method show the collapsing toolbar's title, which is the application's name.
+     * For hiding the collapsing toolbar's title, consider using [hideCollapsingToolbarTitle]
+     * instead.
+     *
+     * @since 0.1.3
+     * @see [hideCollapsingToolbarTitle]
+     */
     fun showCollapsingToolbarTitle() {
         this.collapsingToolbar?.title = Strings.appName(this.activity)
     }
