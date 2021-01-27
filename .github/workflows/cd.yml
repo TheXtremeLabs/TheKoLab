@@ -4,12 +4,14 @@ on:
     branches:
       - 'master'
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build_and_tag:
     env:
       GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
       GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -31,3 +33,16 @@ jobs:
         run: git tag -a "v$APP_VERSION-rc" -m "Release candidate v$APP_VERSION"
       - name: Push tag to repository
         run: git push --tags origin
+  generate_docs:
+    needs: build_and_tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Generate Kotlin documentation with Dokka
+        run: ./gradlew dokkaHtml
+      - name: Upload APKs
+        uses: actions/upload-artifact@v2
+        with:
+          name: documentation
+          path: app/build/dokka
