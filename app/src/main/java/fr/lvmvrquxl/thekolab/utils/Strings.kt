@@ -12,6 +12,10 @@ import fr.lvmvrquxl.thekolab.R
  */
 object Strings {
     private const val APP_NAME: Int = R.string.app_name
+    private const val FRANCE: Int = R.string.france
+    private const val LIGHT_RAIN: Int = R.string.light_rain
+    private const val PARIS: Int = R.string.paris
+    private const val X: Int = R.string.x
 
     /**
      * Get the application's name.
@@ -24,4 +28,16 @@ object Strings {
      * @since 0.1.3
      */
     fun appName(context: Context): String = context.getString(APP_NAME)
+
+    // TODO: Remove after testings
+    fun france(context: Context): String = context.getString(FRANCE)
+
+    // TODO: Remove after testings
+    fun lightRain(context: Context): String = context.getString(LIGHT_RAIN)
+
+    // TODO: Remove after testings
+    fun paris(context: Context): String = context.getString(PARIS)
+
+    // TODO: Remove after testings
+    fun x(context: Context): String = context.getString(X)
 }

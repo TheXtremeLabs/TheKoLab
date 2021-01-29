@@ -27,6 +27,8 @@
 
     <style name="TheKoLab.TextAppearance.Display" parent="TextAppearance.AppCompat.Display3" />
 
+    <style name="TheKoLab.TextAppearance.Headline" parent="TextAppearance.AppCompat.Headline" />
+
     <style name="TheKoLab.TextAppearance.Subhead" parent="@android:style/TextAppearance.Material.Subhead" />
 
     <style name="TheKoLab.TextAppearance.Title" parent="@android:style/TextAppearance.Material.Title" />
@@ -34,5 +36,11 @@
     <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.TextAppearance.Body" />
 
     <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.TextAppearance.Display" />
+
+    <style name="TheKoLab.Toolbar.Weather.Degree" parent="TheKoLab.TextAppearance.Display" />
+
+    <style name="TheKoLab.Toolbar.Weather.Description" parent="TheKoLab.TextAppearance.Body" />
+
+    <style name="TheKoLab.Toolbar.Weather.Location" parent="TheKoLab.TextAppearance.Headline" />
 
 </resources>

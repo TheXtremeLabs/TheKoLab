@@ -84,7 +84,8 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
 
     private fun initViewPager() {
         val toolbarTimeFragment = HomeToolbarTimeFragment()
-        val fragments: List<Fragment> = listOf(toolbarTimeFragment)
+        val toolbarWeatherFragment = HomeToolbarWeatherFragment()
+        val fragments: List<Fragment> = listOf(toolbarTimeFragment, toolbarWeatherFragment)
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager?.adapter = HomeToolbarAdapter(
