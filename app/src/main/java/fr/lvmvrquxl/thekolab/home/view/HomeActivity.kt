@@ -27,4 +27,12 @@ class HomeActivity : AppCompatActivity() {
         this.view?.onDestroy()
         this.view = null
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        this.view?.onRequestPermissionsResult(grantResults)
+    }
 }

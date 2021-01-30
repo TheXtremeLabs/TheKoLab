@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import fr.lvmvrquxl.thekolab.base.BaseView
+import fr.lvmvrquxl.thekolab.base.permission.LocationPermission
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
@@ -25,18 +26,28 @@ import fr.lvmvrquxl.thekolab.utils.Strings
  */
 class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBinding>() {
     private var collapsingToolbar: CollapsingToolbarLayout? = null
+    private var locationPermission: LocationPermission? = null
     private var toolbar: HomeToolbarBinding? = null
+    private var viewPagerFragments: List<Fragment> = listOf()
 
     init {
         this.bindViews()
         this.initAppBar()
+        this.checkLocationPermission()
         this.initViewPager()
         this.setStatusBarTransparent()
+    }
+
+    override fun onRequestPermissionsResult(grantResults: IntArray) {
+        this.locationPermission?.checkGrantResults(grantResults)
+        this.setViewPagerFragments()
+        this.toolbar?.let { it.viewPager.adapter?.notifyDataSetChanged() }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         this.collapsingToolbar = null
+        this.locationPermission = null
         this.toolbar = null
     }
 
@@ -74,6 +85,11 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
     }
 
+    private fun checkLocationPermission() {
+        this.locationPermission = LocationPermission(this.activity)
+        this.locationPermission?.check()
+    }
+
     private fun initAppBar() {
         val appBar: AppBarLayout? = this.toolbar?.root
         val homeAppBarListener: HomeToolbarListener = HomeToolbarListener.build(this)
@@ -83,19 +99,26 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
     }
 
     private fun initViewPager() {
-        val toolbarTimeFragment = HomeToolbarTimeFragment()
-        val toolbarWeatherFragment = HomeToolbarWeatherFragment()
-        val fragments: List<Fragment> = listOf(toolbarTimeFragment, toolbarWeatherFragment)
+        this.setViewPagerFragments()
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager?.adapter = HomeToolbarAdapter(
             this.activity.supportFragmentManager,
             this.activity.lifecycle,
-            fragments
+            this.viewPagerFragments
         )
     }
 
     private fun setStatusBarTransparent() {
         this.activity.window.statusBarColor = Color.TRANSPARENT
+    }
+
+    private fun setViewPagerFragments() {
+        val toolbarTimeFragment = HomeToolbarTimeFragment()
+        val toolbarWeatherFragment = HomeToolbarWeatherFragment()
+        this.viewPagerFragments = when (this.locationPermission?.isGranted()) {
+            true -> listOf(toolbarTimeFragment, toolbarWeatherFragment)
+            else -> listOf(toolbarTimeFragment)
+        }
     }
 }

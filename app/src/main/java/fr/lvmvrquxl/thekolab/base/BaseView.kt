@@ -80,6 +80,8 @@ abstract class BaseView<VB : ViewBinding> {
      */
     open fun onPause(): Unit? = null
 
+    open fun onRequestPermissionsResult(grantResults: IntArray) {}
+
     /**
      * Resume the view.
      *
