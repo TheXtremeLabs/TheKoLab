@@ -12,7 +12,7 @@ import fr.lvmvrquxl.thekolab.R
  */
 object Strings {
     private const val APP_NAME: Int = R.string.app_name
-    private const val FRANCE: Int = R.string.france
+    private const val FRANCE: Int = R.string.fr
     private const val LIGHT_RAIN: Int = R.string.light_rain
     private const val PARIS: Int = R.string.paris
     private const val X: Int = R.string.x

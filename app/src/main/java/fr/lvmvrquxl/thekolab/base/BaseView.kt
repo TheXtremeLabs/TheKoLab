@@ -92,5 +92,5 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * @since 0.1.3
      */
-    open fun onResume(): Unit? = null
+    open fun onResume() {}
 }

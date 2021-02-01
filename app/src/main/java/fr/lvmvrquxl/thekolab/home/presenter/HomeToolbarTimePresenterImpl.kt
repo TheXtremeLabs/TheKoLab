@@ -29,7 +29,7 @@ class HomeToolbarTimePresenterImpl(private val view: HomeToolbarTimeView) :
 
     override fun cancelTimeUpdaterJob(): Unit? = this.timeUpdaterJob?.cancel()
 
-    override fun getCurrentDate(): String {
+    override fun getCurrentDate(): String { // TODO: use a coroutine
         val currentDate: Date = Calendar.getInstance().time
         val dateFormat: DateFormat = DateFormat.getDateInstance(DATE_STYLE)
         return dateFormat.format(currentDate)
@@ -47,7 +47,7 @@ class HomeToolbarTimePresenterImpl(private val view: HomeToolbarTimeView) :
         }
     }
 
-    private fun getCurrentTime(): String {
+    private fun getCurrentTime(): String { // TODO: use a coroutine
         val currentTime: Date = Calendar.getInstance().time
         val dateFormat: DateFormat = DateFormat.getTimeInstance(TIME_STYLE)
         return dateFormat.format(currentTime)

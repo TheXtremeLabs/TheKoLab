@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/weather_location_comma"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/france" />
+            tools:text="@string/fr" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

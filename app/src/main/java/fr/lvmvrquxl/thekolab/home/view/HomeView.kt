@@ -28,20 +28,18 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var locationPermission: LocationPermission? = null
     private var toolbar: HomeToolbarBinding? = null
-    private var viewPagerFragments: List<Fragment> = listOf()
 
     init {
         this.bindViews()
         this.initAppBar()
         this.checkLocationPermission()
-        this.initViewPager()
+        this.setViewPager()
         this.setStatusBarTransparent()
     }
 
     override fun onRequestPermissionsResult(grantResults: IntArray) {
         this.locationPermission?.checkGrantResults(grantResults)
-        this.setViewPagerFragments()
-        this.toolbar?.let { it.viewPager.adapter?.notifyDataSetChanged() }
+        this.setViewPager()
     }
 
     override fun onDestroy() {
@@ -98,25 +96,25 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
         appBar?.addOnOffsetChangedListener(homeAppBarListener)
     }
 
-    private fun initViewPager() {
-        this.setViewPagerFragments()
+    private fun setStatusBarTransparent() {
+        this.activity.window.statusBarColor = Color.TRANSPARENT
+    }
+
+    private fun setViewPager() {
+        val fragments: List<Fragment> = this.setViewPagerFragments()
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager?.adapter = HomeToolbarAdapter(
             this.activity.supportFragmentManager,
             this.activity.lifecycle,
-            this.viewPagerFragments
+            fragments
         )
     }
 
-    private fun setStatusBarTransparent() {
-        this.activity.window.statusBarColor = Color.TRANSPARENT
-    }
-
-    private fun setViewPagerFragments() {
+    private fun setViewPagerFragments(): List<Fragment> {
         val toolbarTimeFragment = HomeToolbarTimeFragment()
         val toolbarWeatherFragment = HomeToolbarWeatherFragment()
-        this.viewPagerFragments = when (this.locationPermission?.isGranted()) {
+        return when (this.locationPermission?.isGranted()) {
             true -> listOf(toolbarTimeFragment, toolbarWeatherFragment)
             else -> listOf(toolbarTimeFragment)
         }
