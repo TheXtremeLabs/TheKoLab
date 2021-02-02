@@ -11,8 +11,13 @@ import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import fr.lvmvrquxl.thekolab.home.model.WeatherDTO
+import fr.lvmvrquxl.thekolab.home.model.WeatherRepository
 import fr.lvmvrquxl.thekolab.home.view.HomeToolbarWeatherView
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeatherView) :
@@ -91,16 +96,43 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                 address?.let { a: Address ->
                     this@HomeToolbarWeatherPresenterImpl.view.setLocationCity(a.locality)
                     this@HomeToolbarWeatherPresenterImpl.view.setLocationCountry(a.countryCode)
+
+                    this@HomeToolbarWeatherPresenterImpl.retrieveWeather(location)
                 }
             }
     }
+
+    private fun retrieveWeather(location: Location): Job =
+        this.coroutineScope.launch(Dispatchers.IO) {
+            if (this.isActive) {
+                val callback = object : Callback<WeatherDTO> {
+                    override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+
+                    override fun onResponse(
+                        call: Call<WeatherDTO>,
+                        response: Response<WeatherDTO>
+                    ) {
+                        response.body()?.let { weather: WeatherDTO ->
+                            this@HomeToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
+                            this@HomeToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
+                        }
+                    }
+                }
+                WeatherRepository.getWeatherFromCoordinates(
+                    location.latitude,
+                    location.longitude,
+                    callback
+                )
+            }
+        }
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates(): Job = this.coroutineScope.launch {
         if (this.isActive) {
             this@HomeToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
                 val locationCallback: LocationCallback = object : LocationCallback() {
-                    @SuppressLint("LongLogTag")
                     override fun onLocationResult(locationResult: LocationResult?) {
                         val lastLocation: Location? = locationResult?.locations?.last()
                         lastLocation?.let { location: Location ->

@@ -23,7 +23,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see [viewBinding]
      */
-    val root: View?
+    internal val root: View?
         get(): View? = this.viewBinding?.root
 
     /**
@@ -51,7 +51,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see [onDestroyView]
      */
-    open fun onDestroy() {
+    internal open fun onDestroy() {
         this.viewBinding = null
     }
 
@@ -66,7 +66,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see onDestroy
      */
-    open fun onDestroyView() = this.onDestroy()
+    internal open fun onDestroyView() = this.onDestroy()
 
     /**
      * Pause the view.
@@ -78,9 +78,9 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * @since 0.1.3
      */
-    open fun onPause(): Unit? = null
+    internal open fun onPause(): Unit? = null
 
-    open fun onRequestPermissionsResult(grantResults: IntArray) {}
+    internal open fun onRequestPermissionsResult(grantResults: IntArray) {}
 
     /**
      * Resume the view.
@@ -92,5 +92,5 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * @since 0.1.3
      */
-    open fun onResume() {}
+    internal open fun onResume(): Unit? = null
 }

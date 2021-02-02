@@ -9,7 +9,7 @@ import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarTimePresenter
 /**
  * View of the home toolbar's time.
  *
- * This view is managing the elements of the [HomeToolbarTimeFragment] class.
+ * This view is managing the elements of the toolbar's time fragment.
  *
  * @param inflater The object that can be used to inflate any views in the fragment
  * @param container Parent view that the fragment's UI should be attached to
@@ -17,7 +17,6 @@ import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarTimePresenter
  * @constructor Bind view and init its presenter [HomeToolbarTimePresenter]
  *
  * @since 0.1.3
- * @see [HomeToolbarTimeFragment]
  * @see [HomeToolbarTimePresenter]
  */
 class HomeToolbarTimeView(
@@ -53,7 +52,7 @@ class HomeToolbarTimeView(
      *
      * @since 0.1.3
      */
-    fun updateTimeText(timeText: String) {
+    internal fun updateTimeText(timeText: String) {
         super.viewBinding?.toolbarTime?.text = timeText
     }
 
