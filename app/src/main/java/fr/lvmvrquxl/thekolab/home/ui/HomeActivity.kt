@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.view
+package fr.lvmvrquxl.thekolab.home.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.view.HomeView
 
 /**
  * Home page activity.

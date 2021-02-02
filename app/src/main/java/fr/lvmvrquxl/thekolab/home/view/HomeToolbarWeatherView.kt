@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.utils.Strings
 
 class HomeToolbarWeatherView(
