@@ -57,6 +57,8 @@ dependencies {
     implementation rootProject.ext.dependencies.kotlin_stdlib
     implementation rootProject.ext.dependencies.material
     implementation rootProject.ext.dependencies.recyclerview
+    implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.retrofitGson
     implementation rootProject.ext.dependencies.viewpager2
 
     androidTestImplementation rootProject.ext.androidTestDependencies.espresso_core
