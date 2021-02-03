@@ -1,12 +1,11 @@
 package fr.lvmvrquxl.thekolab.home.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 /**
  * Home page activity.
@@ -17,24 +16,18 @@ import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
  * @since 0.1.3
  */
 class HomeActivity : AppCompatActivity() {
-    companion object {
-        fun intent(context: Context): Intent =
-            Intent(context, this::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-
     private var view: BaseView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (HomeToolbarWeatherPresenter.REQUEST_CHECK_SETTINGS == requestCode)
-            this.startActivity(Intent(this, this::class.java))
+        if (HomeToolbarWeatherPresenter.GPS_USABLE_REQUIRED == requestCode) this.recreate()
     }
 
     override fun onBackPressed() = this.finishAffinity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.view = HomeView(this)
+        this.view = HomeView.build(this)
         super.setContentView(this.view?.root)
     }
 

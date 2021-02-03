@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.home.view
 
 import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
@@ -26,7 +27,11 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeActivity]
  */
-class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBinding>() {
+class HomeView(private val activity: AppCompatActivity) : BaseView<HomeActivityBinding>() {
+    internal companion object {
+        fun build(activity: AppCompatActivity): BaseView<HomeActivityBinding> = HomeView(activity)
+    }
+
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var permissions: List<Permission>? = null
     private var toolbar: HomeToolbarBinding? = null

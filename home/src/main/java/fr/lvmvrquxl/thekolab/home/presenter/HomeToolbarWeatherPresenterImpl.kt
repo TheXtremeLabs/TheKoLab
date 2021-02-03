@@ -81,7 +81,7 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                                 this@HomeToolbarWeatherPresenterImpl.coroutineScope.cancel()
                                 exception.startResolutionForResult(
                                     activity,
-                                    HomeToolbarWeatherPresenter.REQUEST_CHECK_SETTINGS
+                                    HomeToolbarWeatherPresenter.GPS_USABLE_REQUIRED
                                 )
                             } catch (sendEx: IntentSender.SendIntentException) {
                             }
