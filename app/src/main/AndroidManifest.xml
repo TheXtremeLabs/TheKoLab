@@ -17,13 +17,18 @@
         tools:targetApi="m">
 
         <activity
-            android:name=".home.view.HomeActivity"
+            android:name=".MainActivity"
             android:theme="@style/TheKoLab.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".home.view.HomeActivity"
+            android:theme="@style/TheKoLab.NoActionBar" />
 
     </application>
 

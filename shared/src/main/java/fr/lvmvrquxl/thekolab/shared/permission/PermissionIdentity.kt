@@ -1,6 +1,6 @@
-package fr.lvmvrquxl.thekolab.base.permission
+package fr.lvmvrquxl.thekolab.shared.permission
 
-internal data class PermissionIdentity(
+data class PermissionIdentity(
     internal val name: String,
     internal val permission: String,
     internal val requestCode: Int

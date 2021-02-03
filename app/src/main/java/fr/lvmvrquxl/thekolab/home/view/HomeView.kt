@@ -5,14 +5,14 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import fr.lvmvrquxl.thekolab.base.BaseView
-import fr.lvmvrquxl.thekolab.base.permission.InternetPermission
-import fr.lvmvrquxl.thekolab.base.permission.Permission
-import fr.lvmvrquxl.thekolab.base.permission.LocationPermission
+import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.permission.InternetPermission
+import fr.lvmvrquxl.thekolab.shared.permission.Permission
+import fr.lvmvrquxl.thekolab.shared.permission.LocationPermission
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
-import fr.lvmvrquxl.thekolab.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 
 /**
  * Home page view.

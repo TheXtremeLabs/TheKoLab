@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fr.lvmvrquxl.thekolab.R
-import fr.lvmvrquxl.thekolab.base.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
 
 /**

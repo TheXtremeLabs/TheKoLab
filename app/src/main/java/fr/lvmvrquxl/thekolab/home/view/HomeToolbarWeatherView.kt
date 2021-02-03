@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import fr.lvmvrquxl.thekolab.base.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
 

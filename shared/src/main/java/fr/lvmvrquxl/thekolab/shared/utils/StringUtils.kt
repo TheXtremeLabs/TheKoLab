@@ -1,7 +1,7 @@
-package fr.lvmvrquxl.thekolab.utils
+package fr.lvmvrquxl.thekolab.shared.utils
 
 import android.content.Context
-import fr.lvmvrquxl.thekolab.R
+import fr.lvmvrquxl.thekolab.shared.R
 
 /**
  * String utilities.
@@ -10,13 +10,13 @@ import fr.lvmvrquxl.thekolab.R
  *
  * @since 0.1.3
  */
-internal object StringUtils {
-    private const val APP_NAME: Int = R.string.app_name
-    private const val PERMISSION_DENIED: Int = R.string.permission_denied
-    private const val PERMISSION_DIALOG_MSG: Int = R.string.permission_dialog_msg
-    private const val PERMISSION_DIALOG_TITLE: Int = R.string.permission_dialog_title
-    private const val PERMISSION_GRANTED: Int = R.string.permission_granted
-    private const val OK: Int = R.string.ok
+object StringUtils {
+    private val APP_NAME: Int = R.string.app_name
+    private val PERMISSION_DENIED: Int = R.string.permission_denied
+    private val PERMISSION_DIALOG_MSG: Int = R.string.permission_dialog_msg
+    private val PERMISSION_DIALOG_TITLE: Int = R.string.permission_dialog_title
+    private val PERMISSION_GRANTED: Int = R.string.permission_granted
+    private val OK: Int = R.string.ok
 
     /**
      * Get the application's name.
@@ -28,9 +28,9 @@ internal object StringUtils {
      *
      * @since 0.1.3
      */
-    internal fun appName(context: Context): String = context.getString(APP_NAME)
+    fun appName(context: Context): String = context.getString(APP_NAME)
 
-    internal fun ok(context: Context): String = context.getString(OK)
+    fun ok(context: Context): String = context.getString(OK)
 
     internal fun permissionDenied(context: Context): String = context.getString(PERMISSION_DENIED)
 

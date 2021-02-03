@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.utils
+package fr.lvmvrquxl.thekolab.shared.utils
 
 import android.content.Context
 import android.widget.Toast

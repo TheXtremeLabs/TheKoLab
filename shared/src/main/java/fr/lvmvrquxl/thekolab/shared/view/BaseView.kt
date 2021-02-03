@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.base
+package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
 import androidx.viewbinding.ViewBinding
@@ -23,7 +23,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see [viewBinding]
      */
-    internal val root: View?
+    val root: View?
         get(): View? = this.viewBinding?.root
 
     /**
@@ -51,7 +51,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see [onDestroyView]
      */
-    internal open fun onDestroy() {
+    open fun onDestroy() {
         this.viewBinding = null
     }
 
@@ -66,7 +66,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see onDestroy
      */
-    internal open fun onDestroyView() = this.onDestroy()
+    open fun onDestroyView() = this.onDestroy()
 
     /**
      * Pause the view.
@@ -78,9 +78,9 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * @since 0.1.3
      */
-    internal open fun onPause(): Unit? = null
+    open fun onPause(): Unit? = null
 
-    internal open fun onRequestPermissionsResult(grantResults: IntArray) {}
+    open fun onRequestPermissionsResult(grantResults: IntArray) {}
 
     /**
      * Resume the view.
@@ -92,5 +92,5 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * @since 0.1.3
      */
-    internal open fun onResume(): Unit? = null
+    open fun onResume(): Unit? = null
 }

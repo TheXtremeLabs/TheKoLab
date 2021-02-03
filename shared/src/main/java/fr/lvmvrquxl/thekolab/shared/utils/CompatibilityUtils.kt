@@ -1,8 +1,8 @@
-package fr.lvmvrquxl.thekolab.utils
+package fr.lvmvrquxl.thekolab.shared.utils
 
 import android.os.Build
 
-object CompatibilityUtils {
+internal object CompatibilityUtils {
     /**
      * Check if the current device runs at least an Android Marshmallow.
      *
@@ -13,7 +13,7 @@ object CompatibilityUtils {
      * - `true` if the device runs at least an Android Marshmallow
      * - `false` if the device runs an Android lower than Marshmallow
      */
-    fun isMarshmallow(): Boolean = this.getSdkVersion() >= Build.VERSION_CODES.M
+    internal fun isMarshmallow(): Boolean = this.getSdkVersion() >= Build.VERSION_CODES.M
 
     private fun getSdkVersion(): Int = Build.VERSION.SDK_INT
 }

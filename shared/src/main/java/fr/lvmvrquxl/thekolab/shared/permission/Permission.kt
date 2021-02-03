@@ -1,21 +1,21 @@
-package fr.lvmvrquxl.thekolab.base.permission
+package fr.lvmvrquxl.thekolab.shared.permission
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import fr.lvmvrquxl.thekolab.utils.CompatibilityUtils
-import fr.lvmvrquxl.thekolab.utils.DialogUtils
-import fr.lvmvrquxl.thekolab.utils.StringUtils
-import fr.lvmvrquxl.thekolab.utils.ToastUtils
+import fr.lvmvrquxl.thekolab.shared.utils.CompatibilityUtils
+import fr.lvmvrquxl.thekolab.shared.utils.DialogUtils
+import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.utils.ToastUtils
 
-internal abstract class Permission(
+abstract class Permission(
     private val activity: Activity,
     private val identity: PermissionIdentity
 ) {
     @SuppressLint("NewApi")
-    internal fun check() {
+    fun check() {
         if (CompatibilityUtils.isMarshmallow()) when {
             this.isGranted() -> {
             }
@@ -24,7 +24,7 @@ internal abstract class Permission(
         }
     }
 
-    internal fun checkGrantResults(grantResults: IntArray) {
+    fun checkGrantResults(grantResults: IntArray) {
         val text: String = when (
             grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == grantResults[0]
         ) {
@@ -35,7 +35,7 @@ internal abstract class Permission(
     }
 
     @SuppressLint("NewApi")
-    internal fun isGranted(): Boolean = PackageManager.PERMISSION_GRANTED ==
+    fun isGranted(): Boolean = PackageManager.PERMISSION_GRANTED ==
             this.activity.checkSelfPermission(this.identity.permission)
 
     @SuppressLint("NewApi")
