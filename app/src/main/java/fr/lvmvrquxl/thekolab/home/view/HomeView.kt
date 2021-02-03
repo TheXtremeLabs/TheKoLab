@@ -15,7 +15,7 @@ import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
 import fr.lvmvrquxl.thekolab.home.ui.HomeActivity
 import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarWeatherFragment
-import fr.lvmvrquxl.thekolab.utils.Strings
+import fr.lvmvrquxl.thekolab.utils.StringUtils
 
 /**
  * Home page view.
@@ -82,7 +82,7 @@ class HomeView(private val activity: HomeActivity) : BaseView<HomeActivityBindin
      * @see [hideCollapsingToolbarTitle]
      */
     internal fun showCollapsingToolbarTitle() {
-        this.collapsingToolbar?.title = Strings.appName(this.activity)
+        this.collapsingToolbar?.title = StringUtils.appName(this.activity)
     }
 
     private fun bindViews() {

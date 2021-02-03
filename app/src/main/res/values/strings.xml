@@ -3,7 +3,14 @@
     <string name="comma">,</string>
     <string name="degree_celsius">°C</string>
     <string name="fr">FR</string>
-    <string name="light_rain">Light rain</string>
+    <string name="light_rain">light rain</string>
+    <string name="ok">OK</string>
     <string name="paris">Paris</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_dialog_msg">
+        The following permission is required for this feature:
+    </string>
+    <string name="permission_dialog_title">Permission required</string>
+    <string name="permission_granted">Permission granted</string>
     <string name="x">X</string>
 </resources>

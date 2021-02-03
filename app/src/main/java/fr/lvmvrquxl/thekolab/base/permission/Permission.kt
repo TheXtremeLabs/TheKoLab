@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import fr.lvmvrquxl.thekolab.utils.ApiCompatibility
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import fr.lvmvrquxl.thekolab.utils.CompatibilityUtils
+import fr.lvmvrquxl.thekolab.utils.DialogUtils
+import fr.lvmvrquxl.thekolab.utils.StringUtils
+import fr.lvmvrquxl.thekolab.utils.ToastUtils
 
 internal abstract class Permission(
     private val activity: Activity,
@@ -14,7 +16,7 @@ internal abstract class Permission(
 ) {
     @SuppressLint("NewApi")
     internal fun check() {
-        if (ApiCompatibility.isMarshmallow()) when {
+        if (CompatibilityUtils.isMarshmallow()) when {
             this.isGranted() -> {
             }
             this.shouldShowRequestPermissionRationale() -> this.showDialog()
@@ -22,11 +24,15 @@ internal abstract class Permission(
         }
     }
 
-    internal fun checkGrantResults(grantResults: IntArray) =
-        when (grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
-            true -> this.showToast("Permission granted: ${this.identity.name}")
-            else -> this.showToast("Permission denied: ${this.identity.name}")
+    internal fun checkGrantResults(grantResults: IntArray) {
+        val text: String = when (
+            grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == grantResults[0]
+        ) {
+            true -> StringUtils.permissionGranted(this.activity)
+            else -> StringUtils.permissionDenied(this.activity)
         }
+        ToastUtils.short(this.activity, "$text: ${this.identity.name}")
+    }
 
     @SuppressLint("NewApi")
     internal fun isGranted(): Boolean = PackageManager.PERMISSION_GRANTED ==
@@ -42,20 +48,16 @@ internal abstract class Permission(
     private fun shouldShowRequestPermissionRationale(): Boolean =
         this.activity.shouldShowRequestPermissionRationale(this.identity.permission)
 
-    private fun showDialog() = AlertDialog.Builder(this.activity)
-        .apply {
-            this.setTitle("Permission required")
-            this.setMessage(
-                "Permission to access your ${this@Permission.identity.name} is required for this feature"
-            )
-            this.setPositiveButton("Ok") { _: DialogInterface, _: Int ->
+    private fun showDialog() = DialogUtils.notCancelable(
+        MaterialAlertDialogBuilder(this.activity).apply {
+            val title: String = StringUtils.permissionDialogTitle(this@Permission.activity)
+            this.setTitle(title)
+            val message: String = StringUtils.permissionDialogMessage(this@Permission.activity)
+            this.setMessage("$message ${this@Permission.identity.name}.")
+            val buttonText: String = StringUtils.ok(this@Permission.activity)
+            this.setPositiveButton(buttonText) { _: DialogInterface, _: Int ->
                 this@Permission.requestPermission()
             }
-            this.setCancelable(false)
         }
-        .create()
-        .show()
-
-    private fun showToast(text: String) =
-        Toast.makeText(this.activity, text, Toast.LENGTH_SHORT).show()
+    )
 }

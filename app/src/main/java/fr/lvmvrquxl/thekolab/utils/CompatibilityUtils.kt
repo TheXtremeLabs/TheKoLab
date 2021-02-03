@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.utils
 
 import android.os.Build
 
-object ApiCompatibility {
+object CompatibilityUtils {
     /**
      * Check if the current device runs at least an Android Marshmallow.
      *
