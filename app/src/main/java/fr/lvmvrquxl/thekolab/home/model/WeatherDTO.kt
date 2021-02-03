@@ -12,9 +12,9 @@ internal data class WeatherDTO(
     internal val rain: Rain,
     internal val clouds: Clouds,
     @SerializedName("dt") internal val dataTime: Long,
-    @SerializedName("sys") internal val system: System,
+    @Expose @SerializedName("sys") internal val system: System,
     internal val timezone: Int,
-    internal val id: Int,
-    internal val name: String,
+    @SerializedName("id") internal val cityId: Int,
+    @Expose @SerializedName("name") internal val cityName: String,
     @SerializedName("cod") internal val code: String
 )

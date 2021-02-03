@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.IntentSender
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
@@ -31,6 +29,7 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
     private var locationProviderClient: FusedLocationProviderClient? = null
     private var locationRequest: LocationRequest? = null
     private var resolveApiException: Boolean = true
+    private var hasWeatherData: Boolean = false
 
     init {
         this.locationProviderClient = this.view.activity?.let { context: Context ->
@@ -75,9 +74,11 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                         if (
                             exception is ResolvableApiException
                             && this@HomeToolbarWeatherPresenterImpl.resolveApiException
+                            && !this@HomeToolbarWeatherPresenterImpl.hasWeatherData
                         )
                             try {
                                 this@HomeToolbarWeatherPresenterImpl.resolveApiException = false
+                                this@HomeToolbarWeatherPresenterImpl.coroutineScope.cancel()
                                 exception.startResolutionForResult(
                                     activity,
                                     HomeToolbarWeatherPresenter.REQUEST_CHECK_SETTINGS
@@ -88,19 +89,6 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                 }
             }
         }
-
-    private fun retrieveCity(location: Location) = this.view.activity?.let { activity: Activity ->
-        Geocoder(activity, Locale.getDefault())
-            .getFromLocation(location.latitude, location.longitude, 1)
-            .forEach { address: Address? ->
-                address?.let { a: Address ->
-                    this@HomeToolbarWeatherPresenterImpl.view.setLocationCity(a.locality)
-                    this@HomeToolbarWeatherPresenterImpl.view.setLocationCountry(a.countryCode)
-
-                    this@HomeToolbarWeatherPresenterImpl.retrieveWeather(location)
-                }
-            }
-    }
 
     private fun retrieveWeather(location: Location): Job =
         this.coroutineScope.launch(Dispatchers.IO) {
@@ -115,8 +103,11 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                         response: Response<WeatherDTO>
                     ) {
                         response.body()?.let { weather: WeatherDTO ->
+                            this@HomeToolbarWeatherPresenterImpl.view.setLocationCity(weather.cityName)
+                            this@HomeToolbarWeatherPresenterImpl.view.setLocationCountry(weather.system.country)
                             this@HomeToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
                             this@HomeToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
+                            this@HomeToolbarWeatherPresenterImpl.showDataOnUI()
                         }
                     }
                 }
@@ -128,6 +119,14 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
             }
         }
 
+    private fun showDataOnUI(): Job = this.coroutineScope.launch(Dispatchers.Main) {
+        if (isActive) {
+            this@HomeToolbarWeatherPresenterImpl.hasWeatherData = true
+            delay(1000)
+            this@HomeToolbarWeatherPresenterImpl.view.showWeatherInfo()
+        }
+    }
+
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates(): Job = this.coroutineScope.launch {
         if (this.isActive) {
@@ -136,7 +135,7 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                     override fun onLocationResult(locationResult: LocationResult?) {
                         val lastLocation: Location? = locationResult?.locations?.last()
                         lastLocation?.let { location: Location ->
-                            this@HomeToolbarWeatherPresenterImpl.retrieveCity(location)
+                            this@HomeToolbarWeatherPresenterImpl.retrieveWeather(location)
                         }
                     }
                 }

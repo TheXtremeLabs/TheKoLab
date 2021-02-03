@@ -9,19 +9,21 @@
 
     <ProgressBar
         android:id="@+id/weather_progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
-        android:indeterminateOnly="true"
         android:layout_height="wrap_content"
+        android:indeterminateDrawable="@drawable/circle_progress_bar"
+        android:indeterminateDuration="1500"
+        android:indeterminateOnly="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weather_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

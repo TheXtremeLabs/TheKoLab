@@ -2,6 +2,7 @@ package fr.lvmvrquxl.thekolab.home.view
 
 import android.app.Activity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarWeatherFragmentBinding
@@ -38,6 +39,11 @@ internal class HomeToolbarWeatherView(
 
     internal fun setLocationCountry(country: String) {
         super.viewBinding?.weatherLocationCountry?.apply { this.text = country }
+    }
+
+    internal fun showWeatherInfo() {
+        super.viewBinding?.weatherInfo?.visibility = View.VISIBLE
+        super.viewBinding?.weatherProgressBar?.visibility = View.GONE
     }
 
     private fun bindViews() {
