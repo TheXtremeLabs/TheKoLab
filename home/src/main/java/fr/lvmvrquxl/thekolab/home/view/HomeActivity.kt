@@ -1,5 +1,6 @@
 package fr.lvmvrquxl.thekolab.home.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,11 @@ import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
  * @since 0.1.3
  */
 class HomeActivity : AppCompatActivity() {
+    companion object {
+        fun intent(context: Context): Intent =
+            Intent(context, this::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+
     private var view: BaseView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
