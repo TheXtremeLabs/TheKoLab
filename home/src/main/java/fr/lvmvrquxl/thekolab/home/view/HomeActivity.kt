@@ -10,8 +10,7 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
 /**
  * Home page activity.
  *
- * This class is currently the main activity of the application.
- * It should only be used for overriding lifecycle tasks from Android's activities.
+ * This activity is managing the lifecycle of the home page.
  *
  * @since 0.1.3
  */
