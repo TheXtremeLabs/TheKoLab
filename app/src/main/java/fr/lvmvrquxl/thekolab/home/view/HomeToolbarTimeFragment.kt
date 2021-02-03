@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.ui
+package fr.lvmvrquxl.thekolab.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import fr.lvmvrquxl.thekolab.R
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
-import fr.lvmvrquxl.thekolab.home.view.HomeToolbarTimeView
 
 /**
  * Home toolbar's time fragment.

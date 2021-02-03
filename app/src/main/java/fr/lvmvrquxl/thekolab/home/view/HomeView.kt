@@ -12,9 +12,6 @@ import fr.lvmvrquxl.thekolab.base.permission.LocationPermission
 import fr.lvmvrquxl.thekolab.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarListener
-import fr.lvmvrquxl.thekolab.home.ui.HomeActivity
-import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarTimeFragment
-import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.utils.StringUtils
 
 /**

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import fr.lvmvrquxl.thekolab.base.BaseView
 import fr.lvmvrquxl.thekolab.databinding.HomeToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
-import fr.lvmvrquxl.thekolab.home.ui.HomeToolbarWeatherFragment
 
 internal class HomeToolbarWeatherView(
     private val inflater: LayoutInflater,
