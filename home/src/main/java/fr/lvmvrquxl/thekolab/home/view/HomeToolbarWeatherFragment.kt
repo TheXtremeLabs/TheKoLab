@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import fr.lvmvrquxl.thekolab.R
+import fr.lvmvrquxl.thekolab.home.R
+import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
-import fr.lvmvrquxl.thekolab.databinding.HomeToolbarWeatherFragmentBinding
 
 class HomeToolbarWeatherFragment : Fragment(LAYOUT) {
     companion object {
-        private const val LAYOUT: Int = R.layout.home_toolbar_weather_fragment
+        private val LAYOUT: Int = R.layout.home_toolbar_weather_fragment
     }
 
     private var view: BaseView<HomeToolbarWeatherFragmentBinding>? = null

@@ -2,9 +2,9 @@ package fr.lvmvrquxl.thekolab.home.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
-import fr.lvmvrquxl.thekolab.databinding.HomeToolbarTimeFragmentBinding
+import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarTimeFragmentBinding
 import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarTimePresenter
+import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 /**
  * View of the home toolbar's time.
