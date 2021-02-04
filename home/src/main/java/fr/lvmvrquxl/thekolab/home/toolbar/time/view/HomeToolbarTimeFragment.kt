@@ -15,7 +15,6 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * This fragment is used for displaying date and time in the view pager of the home page activity.
  *
  * @since 0.1.3
- * @see [HomeActivity]
  */
 internal class HomeToolbarTimeFragment : Fragment(LAYOUT) {
     companion object {
@@ -31,7 +30,7 @@ internal class HomeToolbarTimeFragment : Fragment(LAYOUT) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.view = HomeToolbarTimeView(inflater, container)
+        this.view = HomeToolbarTimeView.create(inflater, container)
         return this.view?.root
     }
 

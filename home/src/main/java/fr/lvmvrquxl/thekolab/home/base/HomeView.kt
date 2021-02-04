@@ -77,7 +77,7 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
-    private fun homeToolbarCallback() = object : HomeToolbarCallback {
+    private fun homeToolbarCallback(): HomeToolbarCallback = object : HomeToolbarCallback {
         private val toolbar: CollapsingToolbarLayout? = this@HomeView.collapsingToolbar
 
         override fun hideTitle() {

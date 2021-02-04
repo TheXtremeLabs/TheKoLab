@@ -3,6 +3,7 @@ package fr.lvmvrquxl.thekolab.home.toolbar.time.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarTimeFragmentBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.HomeToolbarTimeCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.HomeToolbarTimePresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
@@ -19,41 +20,34 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeToolbarTimePresenter]
  */
-class HomeToolbarTimeView(
+internal class HomeToolbarTimeView(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?
 ) : BaseView<HomeToolbarTimeFragmentBinding>() {
+    companion object {
+        fun create(
+            inflater: LayoutInflater,
+            container: ViewGroup?
+        ): BaseView<HomeToolbarTimeFragmentBinding> = HomeToolbarTimeView(inflater, container)
+    }
+
     private var presenter: HomeToolbarTimePresenter? = null
 
     init {
         this.bindViews()
-        this.presenter = HomeToolbarTimePresenter.build(this)
+        this.initPresenter()
     }
 
     override fun onDestroyView() {
         super.onDestroy()
-        this.presenter?.cancelCoroutineScope()
+        this.presenter?.cancelCoroutines()
         this.presenter = null
     }
 
-    override fun onPause() = this.presenter?.cancelTimeUpdaterJob()
+    override fun onPause() = this.presenter?.cancelCoroutines()
 
     override fun onResume() {
-        this.presenter?.launchTimeUpdater()
-        this.initDateText()
-    }
-
-    /**
-     * Update toolbar's time text.
-     *
-     * This method updates the time displayed in the toolbar.
-     *
-     * @param timeText New time to display
-     *
-     * @since 0.1.3
-     */
-    internal fun updateTimeText(timeText: String) {
-        super.viewBinding?.toolbarTime?.text = timeText
+        this.presenter?.startBackgroundCoroutines()
     }
 
     private fun bindViews() {
@@ -62,7 +56,22 @@ class HomeToolbarTimeView(
             HomeToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 
-    private fun initDateText() {
-        super.viewBinding?.toolbarDate?.text = this.presenter?.getCurrentDate()
+    private fun homeToolbarTimeCallback(): HomeToolbarTimeCallback =
+        object : HomeToolbarTimeCallback {
+            private val view: HomeToolbarTimeFragmentBinding? =
+                super@HomeToolbarTimeView.viewBinding
+
+            override fun updateDate(date: String) {
+                this.view?.toolbarDate?.text = date
+            }
+
+            override fun updateTime(time: String) {
+                this.view?.toolbarTime?.text = time
+            }
+        }
+
+    private fun initPresenter() {
+        val callback: HomeToolbarTimeCallback = this.homeToolbarTimeCallback()
+        this.presenter = HomeToolbarTimePresenter.create(callback)
     }
 }

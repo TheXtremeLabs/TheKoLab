@@ -1,7 +1,5 @@
 package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 
-import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeView
-
 /**
  * Presenter's interface of the toolbar's time display.
  *
@@ -9,21 +7,21 @@ import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeView
  *
  * @since 0.1.3
  */
-interface HomeToolbarTimePresenter {
+internal interface HomeToolbarTimePresenter {
     companion object {
         /**
          * Build a new toolbar's time presenter.
          *
          * This method creates a new presenter for managing the toolbar's time display.
          *
-         * @param view View of the toolbar's time display
+         * @param callback Callback with time updater
          * @return The new toolbar's time presenter
          *
          * @since 0.1.3
-         * @see [HomeToolbarTimeView]
+         * @see [HomeToolbarTimeCallback]
          */
-        fun build(view: HomeToolbarTimeView): HomeToolbarTimePresenter =
-            HomeToolbarTimePresenterImpl(view)
+        fun create(callback: HomeToolbarTimeCallback): HomeToolbarTimePresenter =
+            HomeToolbarTimePresenterImpl(callback)
     }
 
     /**
@@ -33,34 +31,12 @@ interface HomeToolbarTimePresenter {
      *
      * @since 0.1.3
      */
-    fun cancelCoroutineScope()
+    fun cancelCoroutines()
 
     /**
-     * Cancel time updater's job.
-     *
-     * This method cancels only the job responsible for updating the time.
+     * Launch background coroutines.
      *
      * @since 0.1.3
      */
-    fun cancelTimeUpdaterJob(): Unit?
-
-    /**
-     * Get current date.
-     *
-     * This method gets the current date of the device.
-     *
-     * @return The current date of the device
-     *
-     * @since 0.1.3
-     */
-    fun getCurrentDate(): String
-
-    /**
-     * Launch time updater's job.
-     *
-     * This method launches the job responsible for updating the time.
-     *
-     * @since 0.1.3
-     */
-    fun launchTimeUpdater()
+    fun startBackgroundCoroutines()
 }
