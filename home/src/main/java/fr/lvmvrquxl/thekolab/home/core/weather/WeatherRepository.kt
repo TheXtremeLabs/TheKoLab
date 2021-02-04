@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.model
+package fr.lvmvrquxl.thekolab.home.core.weather
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,7 +11,7 @@ internal object WeatherRepository {
 
     init {
         val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-        this.apiService = Retrofit.Builder()
+        apiService = Retrofit.Builder()
             .baseUrl(WeatherApiService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -22,7 +22,7 @@ internal object WeatherRepository {
         latitude: Double,
         longitude: Double,
         callback: Callback<WeatherDTO>
-    ) = this.apiService?.let { service: WeatherApiService ->
+    ) = apiService?.let { service: WeatherApiService ->
         service.getWeatherFromCoordinates(latitude, longitude).enqueue(callback)
     }
 }

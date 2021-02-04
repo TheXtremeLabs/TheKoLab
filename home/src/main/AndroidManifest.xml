@@ -7,7 +7,7 @@
 
     <application>
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".base.HomeActivity"
             android:theme="@style/TheKoLab.NoActionBar" />
     </application>
 

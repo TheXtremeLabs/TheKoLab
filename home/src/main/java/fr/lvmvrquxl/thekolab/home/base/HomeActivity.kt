@@ -1,10 +1,10 @@
-package fr.lvmvrquxl.thekolab.home.view
+package fr.lvmvrquxl.thekolab.home.base
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
-import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.HomeToolbarWeatherPresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 /**
@@ -26,7 +26,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.view = HomeView.build(this)
+        this.view = HomeView.create(this)
         super.setContentView(this.view?.root)
     }
 

@@ -1,6 +1,6 @@
-package fr.lvmvrquxl.thekolab.home.presenter
+package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 
-import fr.lvmvrquxl.thekolab.home.view.HomeToolbarTimeView
+import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeView
 
 /**
  * Presenter's interface of the toolbar's time display.

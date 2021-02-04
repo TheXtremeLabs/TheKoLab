@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import fr.lvmvrquxl.thekolab.home.view.HomeActivity
+import fr.lvmvrquxl.thekolab.home.base.HomeActivity
 
 /**
  * Main activity.

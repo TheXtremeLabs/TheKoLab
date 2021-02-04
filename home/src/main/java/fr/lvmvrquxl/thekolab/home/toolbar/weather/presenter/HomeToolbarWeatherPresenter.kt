@@ -1,6 +1,6 @@
-package fr.lvmvrquxl.thekolab.home.presenter
+package fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter
 
-import fr.lvmvrquxl.thekolab.home.view.HomeToolbarWeatherView
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherView
 
 internal interface HomeToolbarWeatherPresenter {
     companion object {

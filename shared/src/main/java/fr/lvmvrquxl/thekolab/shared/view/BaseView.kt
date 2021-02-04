@@ -40,6 +40,7 @@ abstract class BaseView<VB : ViewBinding> {
      */
     protected var viewBinding: VB? = null
 
+    // TODO: Add @CallSuper for enforcing super calls when this method is overridden
     /**
      * Destroy the view.
      *
@@ -55,6 +56,7 @@ abstract class BaseView<VB : ViewBinding> {
         this.viewBinding = null
     }
 
+    // TODO: Add @CallSuper for enforcing super calls when this method is overridden
     /**
      * Destroy the view.
      *

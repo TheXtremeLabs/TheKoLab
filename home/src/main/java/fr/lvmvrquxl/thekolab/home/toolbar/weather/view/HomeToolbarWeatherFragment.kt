@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.view
+package fr.lvmvrquxl.thekolab.home.toolbar.weather.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

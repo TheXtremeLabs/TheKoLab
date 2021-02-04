@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.presenter
+package fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,9 +9,9 @@ import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import fr.lvmvrquxl.thekolab.home.model.WeatherDTO
-import fr.lvmvrquxl.thekolab.home.model.WeatherRepository
-import fr.lvmvrquxl.thekolab.home.view.HomeToolbarWeatherView
+import fr.lvmvrquxl.thekolab.home.core.weather.WeatherDTO
+import fr.lvmvrquxl.thekolab.home.core.weather.WeatherRepository
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherView
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback

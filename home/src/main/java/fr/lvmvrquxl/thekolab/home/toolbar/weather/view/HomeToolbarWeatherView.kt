@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.view
+package fr.lvmvrquxl.thekolab.home.toolbar.weather.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarWeatherFragmentBinding
-import fr.lvmvrquxl.thekolab.home.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.HomeToolbarWeatherPresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 internal class HomeToolbarWeatherView(

@@ -1,7 +1,7 @@
-package fr.lvmvrquxl.thekolab.home.presenter
+package fr.lvmvrquxl.thekolab.home.toolbar
 
 import com.google.android.material.appbar.AppBarLayout
-import fr.lvmvrquxl.thekolab.home.view.HomeView
+import fr.lvmvrquxl.thekolab.home.base.HomeView
 
 /**
  * Listener's interface of the home page's toolbar.
@@ -11,7 +11,7 @@ import fr.lvmvrquxl.thekolab.home.view.HomeView
  *
  * @since 0.1.3
  */
-interface HomeToolbarListener : AppBarLayout.OnOffsetChangedListener {
+internal interface HomeToolbarListener : AppBarLayout.OnOffsetChangedListener {
     companion object {
         /**
          * Build a new toolbar's listener.

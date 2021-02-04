@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.model
+package fr.lvmvrquxl.thekolab.home.core.weather
 
 import retrofit2.Call
 import retrofit2.http.GET

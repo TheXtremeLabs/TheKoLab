@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.model
+package fr.lvmvrquxl.thekolab.home.core.weather
 
 import com.google.gson.annotations.SerializedName
 
