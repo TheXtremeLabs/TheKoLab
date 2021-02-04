@@ -17,9 +17,11 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeActivity]
  */
-class HomeToolbarTimeFragment : Fragment(LAYOUT) {
+internal class HomeToolbarTimeFragment : Fragment(LAYOUT) {
     companion object {
         private val LAYOUT: Int = R.layout.home_toolbar_time_fragment
+
+        fun create(): HomeToolbarTimeFragment = HomeToolbarTimeFragment()
     }
 
     private var view: BaseView<HomeToolbarTimeFragmentBinding>? = null

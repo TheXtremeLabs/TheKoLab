@@ -1,5 +1,6 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -20,11 +21,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @see [HomeActivity]
  * @see [HomeView]
  */
-class HomeToolbarAdapter(
+internal class HomeToolbarAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val fragments: List<Fragment>
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
+    companion object {
+        fun create(activity: AppCompatActivity, fragments: List<Fragment>): HomeToolbarAdapter =
+            HomeToolbarAdapter(activity.supportFragmentManager, activity.lifecycle, fragments)
+    }
+
     override fun createFragment(position: Int): Fragment = this.fragments[position]
 
     override fun getItemCount(): Int = this.fragments.size

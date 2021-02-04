@@ -12,9 +12,8 @@ import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarAdapter
 import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarListener
 import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherFragment
-import fr.lvmvrquxl.thekolab.shared.permission.InternetPermission
-import fr.lvmvrquxl.thekolab.shared.permission.LocationPermission
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
+import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
@@ -92,6 +91,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         this.collapsingToolbar?.title = StringUtils.appName(this.activity)
     }
 
+    private fun arePermissionsGranted() = this.permissions?.all { p: Permission -> p.isGranted() }
+
     private fun bindViews() {
         super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
         this.toolbar = super.viewBinding?.homeToolbar
@@ -104,15 +105,15 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         this.hideCollapsingToolbarTitle()
         val appBar: AppBarLayout? = this.toolbar?.root
         appBar?.setExpanded(true)
-        // TODO: Replace listener with a lambda
         val homeAppBarListener: HomeToolbarListener = HomeToolbarListener.build(this)
         appBar?.addOnOffsetChangedListener(homeAppBarListener)
     }
 
     private fun initPermissions() {
-        // TODO: Create permissions with Permissions abstract class
-        this.permissions =
-            listOf(InternetPermission(this.activity), LocationPermission(this.activity))
+        this.permissions = PermissionBuilder(this.activity)
+            .withInternet()
+            .withLocation()
+            .build()
     }
 
     private fun setStatusBarTransparent() {
@@ -122,17 +123,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     private fun setViewPager() {
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        // TODO: Replace with a mutable list that should be updated if all permissions are granted
-        val fragments: List<Fragment> =
-            when (this.permissions?.all { permission: Permission -> permission.isGranted() }) {
-                true -> listOf(HomeToolbarTimeFragment(), HomeToolbarWeatherFragment())
-                else -> listOf(HomeToolbarTimeFragment())
-            }
-        // TODO: Let the adapter create itself
-        viewPager?.adapter = HomeToolbarAdapter(
-            this.activity.supportFragmentManager,
-            this.activity.lifecycle,
-            fragments
-        )
+        val fragments: MutableList<Fragment> = mutableListOf(HomeToolbarTimeFragment.create())
+        if (true == this.arePermissionsGranted()) fragments.add(HomeToolbarWeatherFragment.create())
+        viewPager?.adapter = HomeToolbarAdapter.create(this.activity, fragments)
     }
 }

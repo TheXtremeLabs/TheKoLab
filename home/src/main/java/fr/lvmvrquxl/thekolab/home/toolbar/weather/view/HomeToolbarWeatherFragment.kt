@@ -9,9 +9,11 @@ import fr.lvmvrquxl.thekolab.home.R
 import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
-class HomeToolbarWeatherFragment : Fragment(LAYOUT) {
+internal class HomeToolbarWeatherFragment : Fragment(LAYOUT) {
     companion object {
         private val LAYOUT: Int = R.layout.home_toolbar_weather_fragment
+
+        fun create(): HomeToolbarWeatherFragment = HomeToolbarWeatherFragment()
     }
 
     private var view: BaseView<HomeToolbarWeatherFragmentBinding>? = null
