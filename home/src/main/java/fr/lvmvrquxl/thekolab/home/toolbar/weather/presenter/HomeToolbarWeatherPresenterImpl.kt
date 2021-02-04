@@ -9,7 +9,7 @@ import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import fr.lvmvrquxl.thekolab.home.core.weather.WeatherDTO
+import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.core.weather.WeatherRepository
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherView
 import kotlinx.coroutines.*

@@ -2,6 +2,7 @@ package fr.lvmvrquxl.thekolab.home.core.weather
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,7 +19,7 @@ internal object WeatherRepository {
             .create(WeatherApiService::class.java)
     }
 
-    internal fun getWeatherFromCoordinates(
+    fun getWeatherFromCoordinates(
         latitude: Double,
         longitude: Double,
         callback: Callback<WeatherDTO>
