@@ -17,22 +17,25 @@ import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
-// TODO: Update documentation if necessary
-
 /**
  * Home page view.
  *
- * This class is the view of the home page activity.
+ * This class is responsible for managing the views of the home page activity.
  *
  * @param activity Instance of the home page activity
- *
- * @constructor Bind views, init application bar and view pager
  *
  * @since 0.1.3
  * @see [HomeActivity]
  */
 internal class HomeView(private val activity: AppCompatActivity) : BaseView<HomeActivityBinding>() {
     companion object {
+        /**
+         * Create the home page view.
+         *
+         * @param activity Instance of the home page activity
+         *
+         * @since 0.1.3
+         */
         fun create(activity: AppCompatActivity): BaseView<HomeActivityBinding> = HomeView(activity)
     }
 
@@ -66,9 +69,9 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     /**
      * Hide the collapsing toolbar's title.
      *
-     * This method hide the collapsing toolbar's title by setting its value to `" "`.
-     * For showing the collapsing toolbar's title, consider using [showCollapsingToolbarTitle]
-     * instead.
+     * This method hides the collapsing toolbar's title by setting its value to `" "`.
+     * Consider using the [showCollapsingToolbarTitle] method for showing the collapsing toolbar's
+     * title.
      *
      * @since 0.1.3
      * @see [showCollapsingToolbarTitle]
@@ -80,9 +83,9 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     /**
      * Show the collapsing toolbar's title.
      *
-     * This method show the collapsing toolbar's title, which is the application's name.
-     * For hiding the collapsing toolbar's title, consider using [hideCollapsingToolbarTitle]
-     * instead.
+     * This method shows the collapsing toolbar's title, which is the application's name.
+     * Consider using the [hideCollapsingToolbarTitle] method for hiding the collapsing toolbar's
+     * title.
      *
      * @since 0.1.3
      * @see [hideCollapsingToolbarTitle]
