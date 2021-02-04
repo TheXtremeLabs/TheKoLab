@@ -1,17 +1,17 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
 import com.google.android.material.appbar.AppBarLayout
-import fr.lvmvrquxl.thekolab.home.base.HomeView
 
 /**
  * Listener's implementation of the home page's toolbar.
  *
- * @param view View of the home page
+ * @param callback Callback with hide and show title methods
  *
  * @since 0.1.3
- * @see [HomeView]
+ * @see [HomeToolbarCallback]
  */
-internal class HomeToolbarListenerImpl(private val view: HomeView) : HomeToolbarListener {
+internal class HomeToolbarListenerImpl(private val callback: HomeToolbarCallback) :
+    HomeToolbarListener {
     companion object {
         private const val INITIAL_SCROLL_RANGE: Int = -1
         private const val OFFSET_MAX: Int = 589
@@ -22,9 +22,8 @@ internal class HomeToolbarListenerImpl(private val view: HomeView) : HomeToolbar
 
     override fun onOffsetChanged(appBar: AppBarLayout, verticalOffset: Int) {
         if (INITIAL_SCROLL_RANGE == this.scrollRange) this.initScrollRange(appBar)
-        if (OFFSET_LIMIT >= this.scrollRange + verticalOffset)
-            this.view.showCollapsingToolbarTitle()
-        else this.view.hideCollapsingToolbarTitle()
+        if (OFFSET_LIMIT >= this.scrollRange + verticalOffset) this.callback.showTitle()
+        else this.callback.hideTitle()
     }
 
     private fun initScrollRange(appBar: AppBarLayout) {

@@ -9,6 +9,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarAdapter
+import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarListener
 import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherFragment
@@ -66,34 +67,6 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         this.setViewPager()
     }
 
-    /**
-     * Hide the collapsing toolbar's title.
-     *
-     * This method hides the collapsing toolbar's title by setting its value to `" "`.
-     * Consider using the [showCollapsingToolbarTitle] method for showing the collapsing toolbar's
-     * title.
-     *
-     * @since 0.1.3
-     * @see [showCollapsingToolbarTitle]
-     */
-    fun hideCollapsingToolbarTitle() {
-        this.collapsingToolbar?.title = " "
-    }
-
-    /**
-     * Show the collapsing toolbar's title.
-     *
-     * This method shows the collapsing toolbar's title, which is the application's name.
-     * Consider using the [hideCollapsingToolbarTitle] method for hiding the collapsing toolbar's
-     * title.
-     *
-     * @since 0.1.3
-     * @see [hideCollapsingToolbarTitle]
-     */
-    fun showCollapsingToolbarTitle() {
-        this.collapsingToolbar?.title = StringUtils.appName(this.activity)
-    }
-
     private fun arePermissionsGranted() = this.permissions?.all { p: Permission -> p.isGranted() }
 
     private fun bindViews() {
@@ -104,11 +77,23 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
+    private fun homeToolbarCallback() = object : HomeToolbarCallback {
+        private val toolbar: CollapsingToolbarLayout? = this@HomeView.collapsingToolbar
+
+        override fun hideTitle() {
+            this.toolbar?.title = " "
+        }
+
+        override fun showTitle() {
+            this.toolbar?.title = StringUtils.appName(this@HomeView.activity)
+        }
+    }
+
     private fun initAppBar() {
-        this.hideCollapsingToolbarTitle()
         val appBar: AppBarLayout? = this.toolbar?.root
         appBar?.setExpanded(true)
-        val homeAppBarListener: HomeToolbarListener = HomeToolbarListener.build(this)
+        val callback = this.homeToolbarCallback()
+        val homeAppBarListener: HomeToolbarListener = HomeToolbarListener.create(callback)
         appBar?.addOnOffsetChangedListener(homeAppBarListener)
     }
 
