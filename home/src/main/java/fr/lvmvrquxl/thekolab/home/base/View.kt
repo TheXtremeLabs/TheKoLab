@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
-import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarBinding
-import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarAdapter
-import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarCallback
-import fr.lvmvrquxl.thekolab.home.toolbar.HomeToolbarListener
-import fr.lvmvrquxl.thekolab.home.toolbar.time.view.HomeToolbarTimeFragment
-import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherFragment
+import fr.lvmvrquxl.thekolab.home.databinding.ActivityBinding
+import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarAdapter
+import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarCallback
+import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarListener
+import fr.lvmvrquxl.thekolab.home.toolbar.time.view.ToolbarTimeFragment
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
 import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
@@ -28,7 +28,7 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeActivity]
  */
-internal class HomeView(private val activity: AppCompatActivity) : BaseView<HomeActivityBinding>() {
+internal class View(private val activity: AppCompatActivity) : BaseView<ActivityBinding>() {
     companion object {
         /**
          * Create the home page view.
@@ -37,12 +37,12 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
          *
          * @since 0.1.3
          */
-        fun create(activity: AppCompatActivity): BaseView<HomeActivityBinding> = HomeView(activity)
+        fun create(activity: AppCompatActivity): BaseView<ActivityBinding> = View(activity)
     }
 
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var permissions: List<Permission>? = null
-    private var toolbar: HomeToolbarBinding? = null
+    private var toolbar: ToolbarBinding? = null
 
     init {
         this.bindViews()
@@ -70,22 +70,22 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     private fun arePermissionsGranted() = this.permissions?.all { p: Permission -> p.isGranted() }
 
     private fun bindViews() {
-        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
+        super.viewBinding = ActivityBinding.inflate(this.activity.layoutInflater)
         this.toolbar = super.viewBinding?.homeToolbar
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
     }
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
-    private fun homeToolbarCallback(): HomeToolbarCallback = object : HomeToolbarCallback {
-        private val toolbar: CollapsingToolbarLayout? = this@HomeView.collapsingToolbar
+    private fun homeToolbarCallback(): ToolbarCallback = object : ToolbarCallback {
+        private val toolbar: CollapsingToolbarLayout? = this@View.collapsingToolbar
 
         override fun hideTitle() {
             this.toolbar?.title = " "
         }
 
         override fun showTitle() {
-            this.toolbar?.title = StringUtils.appName(this@HomeView.activity)
+            this.toolbar?.title = StringUtils.appName(this@View.activity)
         }
     }
 
@@ -93,8 +93,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         val appBar: AppBarLayout? = this.toolbar?.root
         appBar?.setExpanded(true)
         val callback = this.homeToolbarCallback()
-        val homeAppBarListener: HomeToolbarListener = HomeToolbarListener.create(callback)
-        appBar?.addOnOffsetChangedListener(homeAppBarListener)
+        val toolbarListener: ToolbarListener = ToolbarListener.create(callback)
+        appBar?.addOnOffsetChangedListener(toolbarListener)
     }
 
     private fun initPermissions() {
@@ -111,8 +111,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     private fun setViewPager() {
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        val fragments: MutableList<Fragment> = mutableListOf(HomeToolbarTimeFragment.create())
-        if (true == this.arePermissionsGranted()) fragments.add(HomeToolbarWeatherFragment.create())
-        viewPager?.adapter = HomeToolbarAdapter.create(this.activity, fragments)
+        val fragments: MutableList<Fragment> = mutableListOf(ToolbarTimeFragment.create())
+        if (true == this.arePermissionsGranted()) fragments.add(ToolbarWeatherFragment.create())
+        viewPager?.adapter = ToolbarAdapter.create(this.activity, fragments)
     }
 }

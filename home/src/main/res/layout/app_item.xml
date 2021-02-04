@@ -15,7 +15,7 @@
     app:cardUseCompatPadding="true"
     tools:cardBackgroundColor="@color/oil">
 
-    <include layout="@layout/home_app_item_background" />
+    <include layout="@layout/app_item_background" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

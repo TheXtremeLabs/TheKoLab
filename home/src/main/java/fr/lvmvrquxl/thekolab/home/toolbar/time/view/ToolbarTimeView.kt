@@ -2,9 +2,9 @@ package fr.lvmvrquxl.thekolab.home.toolbar.time.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarTimeFragmentBinding
-import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.HomeToolbarTimeCallback
-import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.HomeToolbarTimePresenter
+import fr.lvmvrquxl.thekolab.home.databinding.ToolbarTimeFragmentBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimeCallback
+import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimePresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 /**
@@ -15,23 +15,23 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @param inflater The object that can be used to inflate any views in the fragment
  * @param container Parent view that the fragment's UI should be attached to
  *
- * @constructor Bind view and init its presenter [HomeToolbarTimePresenter]
+ * @constructor Bind view and init its presenter [ToolbarTimePresenter]
  *
  * @since 0.1.3
- * @see [HomeToolbarTimePresenter]
+ * @see [ToolbarTimePresenter]
  */
-internal class HomeToolbarTimeView(
+internal class ToolbarTimeView(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?
-) : BaseView<HomeToolbarTimeFragmentBinding>() {
+) : BaseView<ToolbarTimeFragmentBinding>() {
     companion object {
         fun create(
             inflater: LayoutInflater,
             container: ViewGroup?
-        ): BaseView<HomeToolbarTimeFragmentBinding> = HomeToolbarTimeView(inflater, container)
+        ): BaseView<ToolbarTimeFragmentBinding> = ToolbarTimeView(inflater, container)
     }
 
-    private var presenter: HomeToolbarTimePresenter? = null
+    private var presenter: ToolbarTimePresenter? = null
 
     init {
         this.bindViews()
@@ -53,13 +53,13 @@ internal class HomeToolbarTimeView(
     private fun bindViews() {
         val attachToParent = false
         super.viewBinding =
-            HomeToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+            ToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 
-    private fun homeToolbarTimeCallback(): HomeToolbarTimeCallback =
-        object : HomeToolbarTimeCallback {
-            private val view: HomeToolbarTimeFragmentBinding? =
-                super@HomeToolbarTimeView.viewBinding
+    private fun homeToolbarTimeCallback(): ToolbarTimeCallback =
+        object : ToolbarTimeCallback {
+            private val view: ToolbarTimeFragmentBinding? =
+                super@ToolbarTimeView.viewBinding
 
             override fun updateDate(date: String) {
                 this.view?.toolbarDate?.text = date
@@ -71,7 +71,7 @@ internal class HomeToolbarTimeView(
         }
 
     private fun initPresenter() {
-        val callback: HomeToolbarTimeCallback = this.homeToolbarTimeCallback()
-        this.presenter = HomeToolbarTimePresenter.create(callback)
+        val callback: ToolbarTimeCallback = this.homeToolbarTimeCallback()
+        this.presenter = ToolbarTimePresenter.create(callback)
     }
 }

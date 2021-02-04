@@ -11,15 +11,15 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.core.weather.WeatherRepository
-import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.HomeToolbarWeatherView
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherView
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeatherView) :
-    HomeToolbarWeatherPresenter {
+internal class ToolbarWeatherPresenterImpl(private val view: ToolbarWeatherView) :
+    ToolbarWeatherPresenter {
     companion object {
         private const val LOCATION_REQUEST_INTERVAL: Long = 1000
         private const val SCOPE_NAME: String = "HomeToolbarWeatherPresenterImpl"
@@ -41,8 +41,8 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
         this.coroutineScope.launch {
             if (this.isActive) {
                 val locationSettingsJob: Job =
-                    this@HomeToolbarWeatherPresenterImpl.checkLocationSettings {
-                        this@HomeToolbarWeatherPresenterImpl.startLocationUpdates()
+                    this@ToolbarWeatherPresenterImpl.checkLocationSettings {
+                        this@ToolbarWeatherPresenterImpl.startLocationUpdates()
                     }
                 locationSettingsJob.join()
             }
@@ -52,14 +52,14 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
     private fun checkLocationSettings(onSuccess: () -> Unit): Job =
         this.coroutineScope.launch(Dispatchers.Main) {
             if (this.isActive) {
-                this@HomeToolbarWeatherPresenterImpl.locationRequest =
+                this@ToolbarWeatherPresenterImpl.locationRequest =
                     LocationRequest.create().apply {
                         this.interval = LOCATION_REQUEST_INTERVAL
                         this.priority = LocationRequest.PRIORITY_LOW_POWER
                     }
-                this@HomeToolbarWeatherPresenterImpl.view.activity?.let { activity: Activity ->
+                this@ToolbarWeatherPresenterImpl.view.activity?.let { activity: Activity ->
                     val task: Task<LocationSettingsResponse>? =
-                        this@HomeToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
+                        this@ToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
                             val settingsRequest: LocationSettingsRequest =
                                 LocationSettingsRequest.Builder().addLocationRequest(request)
                                     .build()
@@ -73,15 +73,15 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                     task?.addOnFailureListener { exception: Exception ->
                         if (
                             exception is ResolvableApiException
-                            && this@HomeToolbarWeatherPresenterImpl.resolveApiException
-                            && !this@HomeToolbarWeatherPresenterImpl.hasWeatherData
+                            && this@ToolbarWeatherPresenterImpl.resolveApiException
+                            && !this@ToolbarWeatherPresenterImpl.hasWeatherData
                         )
                             try {
-                                this@HomeToolbarWeatherPresenterImpl.resolveApiException = false
-                                this@HomeToolbarWeatherPresenterImpl.coroutineScope.cancel()
+                                this@ToolbarWeatherPresenterImpl.resolveApiException = false
+                                this@ToolbarWeatherPresenterImpl.coroutineScope.cancel()
                                 exception.startResolutionForResult(
                                     activity,
-                                    HomeToolbarWeatherPresenter.GPS_USABLE_REQUIRED
+                                    ToolbarWeatherPresenter.GPS_USABLE_REQUIRED
                                 )
                             } catch (sendEx: IntentSender.SendIntentException) {
                             }
@@ -103,11 +103,11 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
                         response: Response<WeatherDTO>
                     ) {
                         response.body()?.let { weather: WeatherDTO ->
-                            this@HomeToolbarWeatherPresenterImpl.view.setLocationCity(weather.cityName)
-                            this@HomeToolbarWeatherPresenterImpl.view.setLocationCountry(weather.system.country)
-                            this@HomeToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
-                            this@HomeToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
-                            this@HomeToolbarWeatherPresenterImpl.showDataOnUI()
+                            this@ToolbarWeatherPresenterImpl.view.setLocationCity(weather.cityName)
+                            this@ToolbarWeatherPresenterImpl.view.setLocationCountry(weather.system.country)
+                            this@ToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
+                            this@ToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
+                            this@ToolbarWeatherPresenterImpl.showDataOnUI()
                         }
                     }
                 }
@@ -121,25 +121,25 @@ internal class HomeToolbarWeatherPresenterImpl(private val view: HomeToolbarWeat
 
     private fun showDataOnUI(): Job = this.coroutineScope.launch(Dispatchers.Main) {
         if (isActive) {
-            this@HomeToolbarWeatherPresenterImpl.hasWeatherData = true
+            this@ToolbarWeatherPresenterImpl.hasWeatherData = true
             delay(1000)
-            this@HomeToolbarWeatherPresenterImpl.view.showWeatherInfo()
+            this@ToolbarWeatherPresenterImpl.view.showWeatherInfo()
         }
     }
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates(): Job = this.coroutineScope.launch {
         if (this.isActive) {
-            this@HomeToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
+            this@ToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
                 val locationCallback: LocationCallback = object : LocationCallback() {
                     override fun onLocationResult(locationResult: LocationResult?) {
                         val lastLocation: Location? = locationResult?.locations?.last()
                         lastLocation?.let { location: Location ->
-                            this@HomeToolbarWeatherPresenterImpl.retrieveWeather(location)
+                            this@ToolbarWeatherPresenterImpl.retrieveWeather(location)
                         }
                     }
                 }
-                this@HomeToolbarWeatherPresenterImpl.locationProviderClient?.requestLocationUpdates(
+                this@ToolbarWeatherPresenterImpl.locationProviderClient?.requestLocationUpdates(
                     request,
                     locationCallback,
                     Looper.getMainLooper()

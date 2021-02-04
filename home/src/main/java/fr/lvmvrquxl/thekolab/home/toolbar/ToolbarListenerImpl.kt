@@ -8,10 +8,10 @@ import com.google.android.material.appbar.AppBarLayout
  * @param callback Callback with hide and show title methods
  *
  * @since 0.1.3
- * @see [HomeToolbarCallback]
+ * @see [ToolbarCallback]
  */
-internal class HomeToolbarListenerImpl(private val callback: HomeToolbarCallback) :
-    HomeToolbarListener {
+internal class ToolbarListenerImpl(private val callback: ToolbarCallback) :
+    ToolbarListener {
     companion object {
         private const val INITIAL_SCROLL_RANGE: Int = -1
         private const val OFFSET_MAX: Int = 589

@@ -21,14 +21,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @see [HomeActivity]
  * @see [HomeView]
  */
-internal class HomeToolbarAdapter(
+internal class ToolbarAdapter(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val fragments: List<Fragment>
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
     companion object {
-        fun create(activity: AppCompatActivity, fragments: List<Fragment>): HomeToolbarAdapter =
-            HomeToolbarAdapter(activity.supportFragmentManager, activity.lifecycle, fragments)
+        fun create(activity: AppCompatActivity, fragments: List<Fragment>): ToolbarAdapter =
+            ToolbarAdapter(activity.supportFragmentManager, activity.lifecycle, fragments)
     }
 
     override fun createFragment(position: Int): Fragment = this.fragments[position]

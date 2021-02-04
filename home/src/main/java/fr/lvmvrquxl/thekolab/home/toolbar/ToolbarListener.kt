@@ -10,7 +10,7 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * @since 0.1.3
  */
-internal interface HomeToolbarListener : AppBarLayout.OnOffsetChangedListener {
+internal interface ToolbarListener : AppBarLayout.OnOffsetChangedListener {
     companion object {
         /**
          * Create a new toolbar's listener.
@@ -21,9 +21,9 @@ internal interface HomeToolbarListener : AppBarLayout.OnOffsetChangedListener {
          * @return The new toolbar's listener
          *
          * @since 0.1.3
-         * @see [HomeToolbarCallback]
+         * @see [ToolbarCallback]
          */
-        fun create(callback: HomeToolbarCallback): HomeToolbarListener =
-            HomeToolbarListenerImpl(callback)
+        fun create(callback: ToolbarCallback): ToolbarListener =
+            ToolbarListenerImpl(callback)
     }
 }

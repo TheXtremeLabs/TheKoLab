@@ -1,6 +1,6 @@
 package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 
-internal interface HomeToolbarTimeCallback {
+internal interface ToolbarTimeCallback {
     fun updateDate(date: String)
 
     /**

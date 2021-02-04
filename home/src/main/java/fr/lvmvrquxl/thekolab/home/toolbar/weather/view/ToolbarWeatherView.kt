@@ -7,24 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarWeatherFragmentBinding
-import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
-internal class HomeToolbarWeatherView(
+internal class ToolbarWeatherView(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?,
-    private val fragment: HomeToolbarWeatherFragment
-) : BaseView<HomeToolbarWeatherFragmentBinding>() {
+    private val fragment: ToolbarWeatherFragment
+) : BaseView<ToolbarWeatherFragmentBinding>() {
     internal val activity: Activity?
         get() = this.fragment.activity
 
-    private var presenter: HomeToolbarWeatherPresenter? = null
+    private var presenter: ToolbarWeatherPresenter? = null
     private var shortAnimationDuration: Int = 0
 
     init {
         this.bindViews()
-        this.presenter = HomeToolbarWeatherPresenter.build(this)
+        this.presenter = ToolbarWeatherPresenter.build(this)
     }
 
     override fun onResume() = this.presenter?.launchLocationRetriever()
@@ -71,6 +71,6 @@ internal class HomeToolbarWeatherView(
     private fun bindViews() {
         val attachToParent = false
         super.viewBinding =
-            HomeToolbarWeatherFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+            ToolbarWeatherFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 }

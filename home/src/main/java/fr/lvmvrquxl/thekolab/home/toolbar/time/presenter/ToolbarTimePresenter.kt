@@ -7,7 +7,7 @@ package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
  *
  * @since 0.1.3
  */
-internal interface HomeToolbarTimePresenter {
+internal interface ToolbarTimePresenter {
     companion object {
         /**
          * Build a new toolbar's time presenter.
@@ -18,10 +18,10 @@ internal interface HomeToolbarTimePresenter {
          * @return The new toolbar's time presenter
          *
          * @since 0.1.3
-         * @see [HomeToolbarTimeCallback]
+         * @see [ToolbarTimeCallback]
          */
-        fun create(callback: HomeToolbarTimeCallback): HomeToolbarTimePresenter =
-            HomeToolbarTimePresenterImpl(callback)
+        fun create(callback: ToolbarTimeCallback): ToolbarTimePresenter =
+            ToolbarTimePresenterImpl(callback)
     }
 
     /**

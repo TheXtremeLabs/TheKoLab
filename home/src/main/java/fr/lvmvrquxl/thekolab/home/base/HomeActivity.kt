@@ -3,8 +3,8 @@ package fr.lvmvrquxl.thekolab.home.base
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
-import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.HomeToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.home.databinding.ActivityBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
 /**
@@ -15,18 +15,18 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  */
 class HomeActivity : AppCompatActivity() {
-    private var view: BaseView<HomeActivityBinding>? = null
+    private var view: BaseView<ActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (HomeToolbarWeatherPresenter.GPS_USABLE_REQUIRED == requestCode) this.recreate()
+        if (ToolbarWeatherPresenter.GPS_USABLE_REQUIRED == requestCode) this.recreate()
     }
 
     override fun onBackPressed() = this.finishAffinity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.view = HomeView.create(this)
+        this.view = View.create(this)
         super.setContentView(this.view?.root)
     }
 

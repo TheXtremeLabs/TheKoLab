@@ -1,6 +1,6 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
-internal interface HomeToolbarCallback {
+internal interface ToolbarCallback {
     /**
      * Hide the collapsing toolbar's title.
      *

@@ -6,24 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fr.lvmvrquxl.thekolab.home.R
-import fr.lvmvrquxl.thekolab.home.databinding.HomeToolbarWeatherFragmentBinding
+import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.shared.view.BaseView
 
-internal class HomeToolbarWeatherFragment : Fragment(LAYOUT) {
+internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
     companion object {
-        private val LAYOUT: Int = R.layout.home_toolbar_weather_fragment
+        private val LAYOUT: Int = R.layout.toolbar_weather_fragment
 
-        fun create(): HomeToolbarWeatherFragment = HomeToolbarWeatherFragment()
+        fun create(): ToolbarWeatherFragment = ToolbarWeatherFragment()
     }
 
-    private var view: BaseView<HomeToolbarWeatherFragmentBinding>? = null
+    private var view: BaseView<ToolbarWeatherFragmentBinding>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.view = HomeToolbarWeatherView(inflater, container, this)
+        this.view = ToolbarWeatherView(inflater, container, this)
         return this.view?.root
     }
 
