@@ -24,6 +24,7 @@ internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
         savedInstanceState: Bundle?
     ): View? {
         this.view = ToolbarWeatherView(inflater, container, this)
+        this.view?.onCreateView()
         return this.view?.root
     }
 
@@ -40,5 +41,10 @@ internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
     override fun onResume() {
         super.onResume()
         this.view?.onResume()
+    }
+
+    override fun onStart() {
+        this.view?.onStart()
+        super.onStart()
     }
 }

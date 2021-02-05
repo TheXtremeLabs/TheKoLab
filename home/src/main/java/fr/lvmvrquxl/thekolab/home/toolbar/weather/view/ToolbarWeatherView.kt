@@ -22,14 +22,18 @@ internal class ToolbarWeatherView(
     private var presenter: ToolbarWeatherPresenter? = null
     private var shortAnimationDuration: Int = 0
 
-    init {
-        this.bindViews()
-        this.presenter = ToolbarWeatherPresenter.build(this)
+    override fun onCreateView() = this.bindViews()
+
+    override fun onDestroyView() {
+        this.presenter = null
+        super.onDestroyView()
     }
 
-    override fun onPause(): Unit? = this.presenter?.cancelCoroutines()
+    override fun onPause() = this.presenter?.cancelCoroutines()
 
     override fun onResume() = this.presenter?.startBackgroundCoroutines()
+
+    override fun onStart() = this.initPresenter()
 
     internal fun setDegreeNumber(degree: Double) {
         super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
@@ -74,5 +78,9 @@ internal class ToolbarWeatherView(
         val attachToParent = false
         super.viewBinding =
             ToolbarWeatherFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+    }
+
+    private fun initPresenter() {
+        this.presenter = ToolbarWeatherPresenter.build(this)
     }
 }
