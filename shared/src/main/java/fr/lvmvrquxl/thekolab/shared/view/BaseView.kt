@@ -43,6 +43,8 @@ abstract class BaseView<VB : ViewBinding> {
 
     open fun onCreate() {}
 
+    open fun onCreateView() {}
+
     /**
      * Destroy the view.
      *
@@ -101,5 +103,7 @@ abstract class BaseView<VB : ViewBinding> {
 
     open fun onStart() {}
 
-    open fun onStop() {}
+    open fun onStop(): Unit? = null
+
+    open fun onViewCreated() {}
 }

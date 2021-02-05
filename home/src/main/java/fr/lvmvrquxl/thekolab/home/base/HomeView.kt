@@ -44,9 +44,7 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     private var permissions: List<Permission>? = null
     private var toolbar: ToolbarBinding? = null
 
-    override fun onCreate() {
-        this.bindViews()
-    }
+    override fun onCreate() = this.bindViews()
 
     override fun onDestroy() {
         this.collapsingToolbar = null
@@ -70,7 +68,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         this.setViewPager()
     }
 
-    private fun arePermissionsGranted() = this.permissions?.all { p: Permission -> p.isGranted() }
+    private fun arePermissionsGranted(): Boolean =
+        true == this.permissions?.all { p: Permission -> p.isGranted() }
 
     private fun bindViews() {
         super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
@@ -115,7 +114,7 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         val viewPager: ViewPager2? = this.toolbar?.viewPager
         viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         val fragments: MutableList<Fragment> = mutableListOf(ToolbarTimeFragment.create())
-        if (true == this.arePermissionsGranted()) fragments.add(ToolbarWeatherFragment.create())
+        if (this.arePermissionsGranted()) fragments.add(ToolbarWeatherFragment.create())
         viewPager?.adapter = ToolbarAdapter.create(this.activity, fragments)
     }
 }

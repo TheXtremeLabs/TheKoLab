@@ -31,22 +31,28 @@ internal class ToolbarTimeFragment : Fragment(LAYOUT) {
         savedInstanceState: Bundle?
     ): View? {
         this.view = ToolbarTimeView.create(inflater, container)
+        this.view?.onCreateView()
         return this.view?.root
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         this.view?.onDestroyView()
         this.view = null
+        super.onDestroyView()
     }
 
     override fun onPause() {
-        super.onPause()
         this.view?.onPause()
+        super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
         this.view?.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        this.view?.onStart()
     }
 }

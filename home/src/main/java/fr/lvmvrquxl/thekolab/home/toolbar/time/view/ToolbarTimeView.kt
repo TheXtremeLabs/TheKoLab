@@ -33,10 +33,7 @@ internal class ToolbarTimeView(
 
     private var presenter: ToolbarTimePresenter? = null
 
-    init {
-        this.bindViews()
-        this.initPresenter()
-    }
+    override fun onCreateView() = this.bindViews()
 
     override fun onDestroyView() {
         this.presenter = null
@@ -45,9 +42,9 @@ internal class ToolbarTimeView(
 
     override fun onPause() = this.presenter?.cancelCoroutines()
 
-    override fun onResume() {
-        this.presenter?.startBackgroundCoroutines()
-    }
+    override fun onResume() = this.presenter?.startBackgroundCoroutines()
+
+    override fun onStart() = this.initPresenter()
 
     private fun bindViews() {
         val attachToParent = false
