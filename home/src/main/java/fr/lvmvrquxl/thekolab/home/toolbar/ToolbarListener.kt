@@ -23,7 +23,6 @@ internal interface ToolbarListener : AppBarLayout.OnOffsetChangedListener {
          * @since 0.1.3
          * @see [ToolbarCallback]
          */
-        fun create(callback: ToolbarCallback): ToolbarListener =
-            ToolbarListenerImpl(callback)
+        fun create(callback: ToolbarCallback): ToolbarListener = ToolbarListenerImpl(callback)
     }
 }

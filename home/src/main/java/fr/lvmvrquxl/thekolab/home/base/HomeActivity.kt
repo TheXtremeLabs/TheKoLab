@@ -29,13 +29,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.view = HomeView.create(this)
+        this.view?.onCreate()
         super.setContentView(this.view?.root)
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         this.view?.onDestroy()
         this.view = null
+        super.onDestroy()
     }
 
     override fun onRequestPermissionsResult(
@@ -44,5 +45,15 @@ class HomeActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         this.view?.onRequestPermissionsResult(grantResults)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        this.view?.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        this.view?.onStart()
     }
 }

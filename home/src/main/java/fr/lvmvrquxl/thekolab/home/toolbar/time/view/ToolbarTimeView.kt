@@ -40,7 +40,7 @@ internal class ToolbarTimeView(
 
     override fun onDestroyView() {
         this.presenter = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 
     override fun onPause() = this.presenter?.cancelCoroutines()

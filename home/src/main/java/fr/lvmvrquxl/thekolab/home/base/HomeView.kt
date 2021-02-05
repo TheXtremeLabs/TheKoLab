@@ -44,13 +44,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
     private var permissions: List<Permission>? = null
     private var toolbar: ToolbarBinding? = null
 
-    init {
+    override fun onCreate() {
         this.bindViews()
-        this.initPermissions()
-        this.checkPermissions()
-        this.initAppBar()
-        this.setViewPager()
-        this.setStatusBarTransparent()
     }
 
     override fun onDestroy() {
@@ -64,6 +59,14 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
         this.permissions?.forEach { permission: Permission ->
             permission.checkGrantResults(grantResults)
         }
+        this.setViewPager()
+    }
+
+    override fun onStart() {
+        this.setStatusBarTransparent()
+        this.initAppBar()
+        this.initPermissions()
+        this.checkPermissions()
         this.setViewPager()
     }
 

@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -40,7 +41,8 @@ abstract class BaseView<VB : ViewBinding> {
      */
     protected var viewBinding: VB? = null
 
-    // TODO: Add @CallSuper for enforcing super calls when this method is overridden
+    open fun onCreate() {}
+
     /**
      * Destroy the view.
      *
@@ -52,11 +54,11 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see [onDestroyView]
      */
+    @CallSuper
     open fun onDestroy() {
         this.viewBinding = null
     }
 
-    // TODO: Add @CallSuper for enforcing super calls when this method is overridden
     /**
      * Destroy the view.
      *
@@ -68,6 +70,7 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      * @see onDestroy
      */
+    @CallSuper
     open fun onDestroyView() = this.onDestroy()
 
     /**
@@ -95,4 +98,8 @@ abstract class BaseView<VB : ViewBinding> {
      * @since 0.1.3
      */
     open fun onResume(): Unit? = null
+
+    open fun onStart() {}
+
+    open fun onStop() {}
 }
