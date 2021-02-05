@@ -15,7 +15,7 @@ import androidx.viewbinding.ViewBinding
  *
  * @since 0.1.3
  */
-abstract class BaseView<VB : ViewBinding> {
+abstract class ActivityView<VB : ViewBinding> {
     /**
      * Root of the view.
      *
@@ -43,18 +43,14 @@ abstract class BaseView<VB : ViewBinding> {
 
     open fun onCreate() {}
 
-    open fun onCreateView() {}
-
     /**
      * Destroy the view.
      *
      * Destroy the current view binding setting it to `null`.
      * For reading purpose, this method should be called from views manipulating elements of an
      * activity.
-     * If your view is manipulating elements of a fragment, consider using [onDestroyView] instead.
      *
      * @since 0.1.3
-     * @see [onDestroyView]
      */
     @CallSuper
     open fun onDestroy() {
@@ -62,25 +58,11 @@ abstract class BaseView<VB : ViewBinding> {
     }
 
     /**
-     * Destroy the view.
-     *
-     * Destroy the current view binding setting it to `null`.
-     * For reading purpose, this method should be called from views manipulating elements of a
-     * fragment.
-     * If your view is manipulating elements of an activity, consider using [onDestroy] instead.
-     *
-     * @since 0.1.3
-     * @see onDestroy
-     */
-    @CallSuper
-    open fun onDestroyView() = this.onDestroy()
-
-    /**
      * Pause the view.
      *
      * This method only exists for following the lifecycle of activities and fragments of
      * Android applications.
-     * It has no implementation in [BaseView], but could be implemented in child views for
+     * It has no implementation in [ActivityView], but could be implemented in child views for
      * background tasks, like canceling a coroutine.
      *
      * @since 0.1.3
@@ -94,7 +76,7 @@ abstract class BaseView<VB : ViewBinding> {
      *
      * This method only exists for following the lifecycle of activities and fragments of
      * Android applications.
-     * It has no implementation in [BaseView], but could be implemented in child views for
+     * It has no implementation in [ActivityView], but could be implemented in child views for
      * background tasks, like starting a coroutine.
      *
      * @since 0.1.3
@@ -104,6 +86,4 @@ abstract class BaseView<VB : ViewBinding> {
     open fun onStart() {}
 
     open fun onStop(): Unit? = null
-
-    open fun onViewCreated() {}
 }

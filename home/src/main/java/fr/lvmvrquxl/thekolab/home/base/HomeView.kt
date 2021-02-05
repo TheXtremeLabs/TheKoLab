@@ -16,7 +16,7 @@ import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
 import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
  * Home page view.
@@ -28,7 +28,8 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeActivity]
  */
-internal class HomeView(private val activity: AppCompatActivity) : BaseView<HomeActivityBinding>() {
+internal class HomeView(private val activity: AppCompatActivity) :
+    ActivityView<HomeActivityBinding>() {
     companion object {
         /**
          * Create the home page view.
@@ -37,7 +38,8 @@ internal class HomeView(private val activity: AppCompatActivity) : BaseView<Home
          *
          * @since 0.1.3
          */
-        fun create(activity: AppCompatActivity): BaseView<HomeActivityBinding> = HomeView(activity)
+        fun create(activity: AppCompatActivity): ActivityView<HomeActivityBinding> =
+            HomeView(activity)
     }
 
     private var collapsingToolbar: CollapsingToolbarLayout? = null

@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
  * Home page activity.
@@ -15,7 +15,7 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  */
 class HomeActivity : AppCompatActivity() {
-    private var view: BaseView<HomeActivityBinding>? = null
+    private var view: ActivityView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

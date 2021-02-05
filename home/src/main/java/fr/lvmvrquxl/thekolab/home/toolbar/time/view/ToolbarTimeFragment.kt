@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fr.lvmvrquxl.thekolab.home.R
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarTimeFragmentBinding
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 /**
  * Home toolbar's time fragment.
@@ -23,7 +23,7 @@ internal class ToolbarTimeFragment : Fragment(LAYOUT) {
         fun create(): ToolbarTimeFragment = ToolbarTimeFragment()
     }
 
-    private var view: BaseView<ToolbarTimeFragmentBinding>? = null
+    private var view: FragmentView<ToolbarTimeFragmentBinding>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,

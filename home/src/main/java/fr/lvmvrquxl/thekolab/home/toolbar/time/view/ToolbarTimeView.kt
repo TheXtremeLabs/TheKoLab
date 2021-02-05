@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarTimeFragmentBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimeCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimePresenter
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 /**
  * View of the home toolbar's time.
@@ -23,12 +23,12 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
 internal class ToolbarTimeView(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?
-) : BaseView<ToolbarTimeFragmentBinding>() {
+) : FragmentView<ToolbarTimeFragmentBinding>() {
     companion object {
         fun create(
             inflater: LayoutInflater,
             container: ViewGroup?
-        ): BaseView<ToolbarTimeFragmentBinding> = ToolbarTimeView(inflater, container)
+        ): FragmentView<ToolbarTimeFragmentBinding> = ToolbarTimeView(inflater, container)
     }
 
     private var presenter: ToolbarTimePresenter? = null

@@ -9,13 +9,22 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
-import fr.lvmvrquxl.thekolab.shared.view.BaseView
+import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 internal class ToolbarWeatherView(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?,
     private val fragment: ToolbarWeatherFragment
-) : BaseView<ToolbarWeatherFragmentBinding>() {
+) : FragmentView<ToolbarWeatherFragmentBinding>() {
+    companion object {
+        fun create(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            fragment: ToolbarWeatherFragment
+        ): FragmentView<ToolbarWeatherFragmentBinding> =
+            ToolbarWeatherView(inflater, container, fragment)
+    }
+
     internal val activity: Activity?
         get() = this.fragment.activity
 
@@ -59,13 +68,13 @@ internal class ToolbarWeatherView(
             this.visibility = View.VISIBLE
             this.animate()
                 .alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
+                .setDuration(this@ToolbarWeatherView.shortAnimationDuration.toLong())
                 .setListener(null)
         }
         super.viewBinding?.weatherProgressBar?.let { progressBar: ProgressBar ->
             progressBar.animate()
                 .alpha(0f)
-                .setDuration(shortAnimationDuration.toLong())
+                .setDuration(this@ToolbarWeatherView.shortAnimationDuration.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         progressBar.visibility = View.GONE
