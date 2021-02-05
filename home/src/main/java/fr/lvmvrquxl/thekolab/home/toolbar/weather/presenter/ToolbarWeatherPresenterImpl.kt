@@ -5,12 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.IntentSender
 import android.location.Location
-import android.os.Looper
+import android.util.Log
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.core.weather.WeatherRepository
+import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherView
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -21,129 +21,142 @@ import java.util.*
 internal class ToolbarWeatherPresenterImpl(private val view: ToolbarWeatherView) :
     ToolbarWeatherPresenter {
     companion object {
+        private const val INTERVAL: Long = 5000
         private const val LOCATION_REQUEST_INTERVAL: Long = 1000
-        private const val SCOPE_NAME: String = "HomeToolbarWeatherPresenterImpl"
+        private const val SCOPE_NAME: String = "ToolbarWeatherPresenter"
     }
 
     private val coroutineScope: CoroutineScope = CoroutineScope(CoroutineName(SCOPE_NAME))
-    private var locationProviderClient: FusedLocationProviderClient? = null
-    private var locationRequest: LocationRequest? = null
-    private var resolveApiException: Boolean = true
     private var hasWeatherData: Boolean = false
 
-    init {
-        this.locationProviderClient = this.view.activity?.let { context: Context ->
-            LocationServices.getFusedLocationProviderClient(context)
+    // TODO: Remove after testings
+    private fun log(text: String) = this.coroutineScope.launch {
+        Log.d(SCOPE_NAME, text)
+    }
+
+    override fun cancelCoroutines() = runBlocking(Dispatchers.Default) {
+        this@ToolbarWeatherPresenterImpl.log("Canceling coroutines...")
+
+        this@ToolbarWeatherPresenterImpl.coroutineScope.cancel()
+    }
+
+    override fun startBackgroundCoroutines() = runBlocking<Unit>(Dispatchers.Default) {
+        this@ToolbarWeatherPresenterImpl.log("Starting background coroutines...")
+
+        this@ToolbarWeatherPresenterImpl.trackWeather()
+    }
+
+    private suspend fun trackWeather(): Job = this.coroutineScope.launch {
+        while (this.isActive && !this@ToolbarWeatherPresenterImpl.hasWeatherData) {
+            this@ToolbarWeatherPresenterImpl.log("Tracking weather...")
+
+            this@ToolbarWeatherPresenterImpl.checkLocationSettings()
+            this@ToolbarWeatherPresenterImpl.requestLocationUpdates()
+            delay(INTERVAL)
         }
     }
 
-    override fun launchLocationRetriever() {
-        this.coroutineScope.launch {
-            if (this.isActive) {
-                val locationSettingsJob: Job =
-                    this@ToolbarWeatherPresenterImpl.checkLocationSettings {
-                        this@ToolbarWeatherPresenterImpl.startLocationUpdates()
-                    }
-                locationSettingsJob.join()
+    private fun checkLocationSettings() = runBlocking<Unit> {
+        this@ToolbarWeatherPresenterImpl.log("Checking location settings...")
+
+        val settingsRequest: Deferred<LocationSettingsRequest> = this.async {
+            val request: LocationRequest = LocationRequest.create().apply {
+                this.interval = LOCATION_REQUEST_INTERVAL
+                this.priority = LocationRequest.PRIORITY_LOW_POWER
+            }
+            LocationSettingsRequest.Builder()
+                .addLocationRequest(request)
+                .build()
+        }
+        val settingsClient: Deferred<SettingsClient?> = this.async {
+            this@ToolbarWeatherPresenterImpl.view.activity?.let { activity: Activity ->
+                LocationServices.getSettingsClient(activity)
             }
         }
-    }
-
-    private fun checkLocationSettings(onSuccess: () -> Unit): Job =
-        this.coroutineScope.launch(Dispatchers.Main) {
-            if (this.isActive) {
-                this@ToolbarWeatherPresenterImpl.locationRequest =
-                    LocationRequest.create().apply {
-                        this.interval = LOCATION_REQUEST_INTERVAL
-                        this.priority = LocationRequest.PRIORITY_LOW_POWER
-                    }
-                this@ToolbarWeatherPresenterImpl.view.activity?.let { activity: Activity ->
-                    val task: Task<LocationSettingsResponse>? =
-                        this@ToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
-                            val settingsRequest: LocationSettingsRequest =
-                                LocationSettingsRequest.Builder().addLocationRequest(request)
-                                    .build()
-                            val settingsClient: SettingsClient =
-                                LocationServices.getSettingsClient(activity)
-                            settingsClient.checkLocationSettings(settingsRequest)
-                        }
-                    task?.addOnSuccessListener { response: LocationSettingsResponse ->
-                        if (response.locationSettingsStates.isGpsUsable) onSuccess()
-                    }
-                    task?.addOnFailureListener { exception: Exception ->
-                        if (
-                            exception is ResolvableApiException
-                            && this@ToolbarWeatherPresenterImpl.resolveApiException
-                            && !this@ToolbarWeatherPresenterImpl.hasWeatherData
-                        )
-                            try {
-                                this@ToolbarWeatherPresenterImpl.resolveApiException = false
-                                this@ToolbarWeatherPresenterImpl.coroutineScope.cancel()
-                                exception.startResolutionForResult(
-                                    activity,
-                                    ToolbarWeatherPresenter.GPS_USABLE_REQUIRED
-                                )
-                            } catch (sendEx: IntentSender.SendIntentException) {
-                            }
-                    }
-                }
-            }
-        }
-
-    private fun retrieveWeather(location: Location): Job =
-        this.coroutineScope.launch(Dispatchers.IO) {
-            if (this.isActive) {
-                val callback = object : Callback<WeatherDTO> {
-                    override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-
-                    override fun onResponse(
-                        call: Call<WeatherDTO>,
-                        response: Response<WeatherDTO>
-                    ) {
-                        response.body()?.let { weather: WeatherDTO ->
-                            this@ToolbarWeatherPresenterImpl.view.setLocationCity(weather.cityName)
-                            this@ToolbarWeatherPresenterImpl.view.setLocationCountry(weather.system.country)
-                            this@ToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
-                            this@ToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
-                            this@ToolbarWeatherPresenterImpl.showDataOnUI()
-                        }
-                    }
-                }
-                WeatherRepository.getWeatherFromCoordinates(
-                    location.latitude,
-                    location.longitude,
-                    callback
-                )
-            }
-        }
-
-    private fun showDataOnUI(): Job = this.coroutineScope.launch(Dispatchers.Main) {
-        if (isActive) {
-            this@ToolbarWeatherPresenterImpl.hasWeatherData = true
-            delay(1000)
-            this@ToolbarWeatherPresenterImpl.view.showWeatherInfo()
+        val task: Task<LocationSettingsResponse>? =
+            settingsClient.await()?.checkLocationSettings(settingsRequest.await())
+        task?.addOnFailureListener { exception: Exception ->
+            this@ToolbarWeatherPresenterImpl.resolveLocationSettings(exception)
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun startLocationUpdates(): Job = this.coroutineScope.launch {
-        if (this.isActive) {
-            this@ToolbarWeatherPresenterImpl.locationRequest?.let { request: LocationRequest ->
-                val locationCallback: LocationCallback = object : LocationCallback() {
-                    override fun onLocationResult(locationResult: LocationResult?) {
-                        val lastLocation: Location? = locationResult?.locations?.last()
-                        lastLocation?.let { location: Location ->
-                            this@ToolbarWeatherPresenterImpl.retrieveWeather(location)
-                        }
+    private fun requestLocationUpdates(): Unit = runBlocking {
+        this@ToolbarWeatherPresenterImpl.log("Requesting location updates...")
+
+        val providerClient: FusedLocationProviderClient? =
+            this@ToolbarWeatherPresenterImpl.view.activity?.let { context: Context ->
+                LocationServices.getFusedLocationProviderClient(context)
+            }
+        providerClient?.lastLocation?.addOnSuccessListener { location: Location? ->
+            location?.let { l: Location -> this@ToolbarWeatherPresenterImpl.retrieveWeather(l) }
+        }
+    }
+
+    private fun resolveLocationSettings(exception: Exception): Job =
+        this.coroutineScope.launch(Dispatchers.Main) {
+            this@ToolbarWeatherPresenterImpl.log("Resolving location settings...")
+
+            if (exception is ResolvableApiException)
+                try {
+                    this@ToolbarWeatherPresenterImpl.view.activity?.let { activity: Activity ->
+                        exception.startResolutionForResult(
+                            activity,
+                            ToolbarWeatherPresenter.GPS_USABLE_REQUIRED
+                        )
                     }
+                } catch (sendEx: IntentSender.SendIntentException) {
+                } finally {
+                    this@ToolbarWeatherPresenterImpl.cancelCoroutines()
                 }
-                this@ToolbarWeatherPresenterImpl.locationProviderClient?.requestLocationUpdates(
-                    request,
-                    locationCallback,
-                    Looper.getMainLooper()
-                )
+        }
+
+    private fun retrieveWeather(location: Location): Job =
+        this.coroutineScope.launch(Dispatchers.IO) {
+            this@ToolbarWeatherPresenterImpl.log("Retrieving weather from API...")
+
+            val callback: Callback<WeatherDTO> = this@ToolbarWeatherPresenterImpl.weatherCallback()
+            WeatherRepository.getWeatherFromCoordinates(
+                location.latitude,
+                location.longitude,
+                callback
+            )
+        }
+
+    private fun setUIData(weather: WeatherDTO): Job =
+        this.coroutineScope.launch(Dispatchers.Main) {
+            this@ToolbarWeatherPresenterImpl.log("Setting UI data...")
+
+            this@ToolbarWeatherPresenterImpl.view.setLocationCity(weather.cityName)
+            this@ToolbarWeatherPresenterImpl.view.setLocationCountry(weather.system.country)
+            this@ToolbarWeatherPresenterImpl.view.setDegreeNumber(weather.mainData.temperature)
+            this@ToolbarWeatherPresenterImpl.view.setDescription(weather.weather[0].description)
+
+            if (!this@ToolbarWeatherPresenterImpl.hasWeatherData) {
+                this@ToolbarWeatherPresenterImpl.showWeather()
+                this@ToolbarWeatherPresenterImpl.hasWeatherData = true
+            }
+        }
+
+    private fun showWeather(): Job = this.coroutineScope.launch(Dispatchers.Main) {
+        this@ToolbarWeatherPresenterImpl.log("Show weather data!")
+
+        this@ToolbarWeatherPresenterImpl.view.showWeatherInfo()
+    }
+
+    private fun weatherCallback(): Callback<WeatherDTO> = object : Callback<WeatherDTO> {
+        override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
+            t.printStackTrace()
+        }
+
+        override fun onResponse(
+            call: Call<WeatherDTO>,
+            response: Response<WeatherDTO>
+        ) {
+            this@ToolbarWeatherPresenterImpl.log("On weather API response!")
+
+            response.body()?.let { weather: WeatherDTO ->
+                this@ToolbarWeatherPresenterImpl.setUIData(weather)
             }
         }
     }

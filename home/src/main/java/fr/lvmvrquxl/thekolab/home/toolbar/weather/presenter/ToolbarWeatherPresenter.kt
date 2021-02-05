@@ -10,5 +10,7 @@ internal interface ToolbarWeatherPresenter {
             ToolbarWeatherPresenterImpl(view)
     }
 
-    fun launchLocationRetriever()
+    fun cancelCoroutines()
+
+    fun startBackgroundCoroutines()
 }

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import fr.lvmvrquxl.thekolab.home.databinding.ActivityBinding
+import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarAdapter
 import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarCallback
@@ -28,7 +28,7 @@ import fr.lvmvrquxl.thekolab.shared.view.BaseView
  * @since 0.1.3
  * @see [HomeActivity]
  */
-internal class View(private val activity: AppCompatActivity) : BaseView<ActivityBinding>() {
+internal class HomeView(private val activity: AppCompatActivity) : BaseView<HomeActivityBinding>() {
     companion object {
         /**
          * Create the home page view.
@@ -37,7 +37,7 @@ internal class View(private val activity: AppCompatActivity) : BaseView<Activity
          *
          * @since 0.1.3
          */
-        fun create(activity: AppCompatActivity): BaseView<ActivityBinding> = View(activity)
+        fun create(activity: AppCompatActivity): BaseView<HomeActivityBinding> = HomeView(activity)
     }
 
     private var collapsingToolbar: CollapsingToolbarLayout? = null
@@ -54,10 +54,10 @@ internal class View(private val activity: AppCompatActivity) : BaseView<Activity
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         this.collapsingToolbar = null
         this.permissions = null
         this.toolbar = null
+        super.onDestroy()
     }
 
     override fun onRequestPermissionsResult(grantResults: IntArray) {
@@ -70,7 +70,7 @@ internal class View(private val activity: AppCompatActivity) : BaseView<Activity
     private fun arePermissionsGranted() = this.permissions?.all { p: Permission -> p.isGranted() }
 
     private fun bindViews() {
-        super.viewBinding = ActivityBinding.inflate(this.activity.layoutInflater)
+        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
         this.toolbar = super.viewBinding?.homeToolbar
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
     }
@@ -78,14 +78,14 @@ internal class View(private val activity: AppCompatActivity) : BaseView<Activity
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
     private fun homeToolbarCallback(): ToolbarCallback = object : ToolbarCallback {
-        private val toolbar: CollapsingToolbarLayout? = this@View.collapsingToolbar
+        private val toolbar: CollapsingToolbarLayout? = this@HomeView.collapsingToolbar
 
         override fun hideTitle() {
             this.toolbar?.title = " "
         }
 
         override fun showTitle() {
-            this.toolbar?.title = StringUtils.appName(this@View.activity)
+            this.toolbar?.title = StringUtils.appName(this@HomeView.activity)
         }
     }
 

@@ -27,14 +27,16 @@ internal class ToolbarWeatherView(
         this.presenter = ToolbarWeatherPresenter.build(this)
     }
 
-    override fun onResume() = this.presenter?.launchLocationRetriever()
+    override fun onPause(): Unit? = this.presenter?.cancelCoroutines()
 
-    internal fun setDescription(description: String) {
-        super.viewBinding?.weatherDescription?.text = description
-    }
+    override fun onResume() = this.presenter?.startBackgroundCoroutines()
 
     internal fun setDegreeNumber(degree: Double) {
         super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
+    }
+
+    internal fun setDescription(description: String) {
+        super.viewBinding?.weatherDescription?.text = description
     }
 
     internal fun setLocationCity(city: String) {

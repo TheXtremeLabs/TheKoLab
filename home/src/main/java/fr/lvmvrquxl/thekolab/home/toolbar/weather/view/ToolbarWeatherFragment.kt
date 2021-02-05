@@ -27,6 +27,16 @@ internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
         return this.view?.root
     }
 
+    override fun onDestroyView() {
+        this.view?.onDestroyView()
+        super.onDestroyView()
+    }
+
+    override fun onPause() {
+        this.view?.onPause()
+        super.onPause()
+    }
+
     override fun onResume() {
         super.onResume()
         this.view?.onResume()
