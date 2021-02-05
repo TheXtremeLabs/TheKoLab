@@ -16,7 +16,7 @@
         android:id="@+id/iv_row_item_background"
         android:layout_width="0dp"
         android:layout_height="104dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/thekolab_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/middle_vertical_guideline"
