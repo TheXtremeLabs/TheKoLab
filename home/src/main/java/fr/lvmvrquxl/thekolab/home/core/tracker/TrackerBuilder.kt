@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.tracker
+package fr.lvmvrquxl.thekolab.home.core.tracker
 
 internal class TrackerBuilder {
     companion object {
@@ -8,8 +8,8 @@ internal class TrackerBuilder {
     private var dateTracker: DateTracker? = null
     private var timeTracker: TimeTracker? = null
 
-    fun build(): List<Tracker> {
-        val trackers: MutableList<Tracker> = mutableListOf()
+    fun build(): List<DateTimeTracker> {
+        val trackers: MutableList<DateTimeTracker> = mutableListOf()
         if (null != this.dateTracker) this.dateTracker?.let { t: DateTracker -> trackers.add(t) }
         if (null != this.timeTracker) this.timeTracker?.let { t: TimeTracker -> trackers.add(t) }
         if (trackers.isEmpty()) throw NoSuchElementException(ERROR_MSG)

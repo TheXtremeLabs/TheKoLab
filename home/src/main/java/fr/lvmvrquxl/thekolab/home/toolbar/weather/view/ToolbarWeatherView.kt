@@ -6,8 +6,9 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
+import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
@@ -25,11 +26,9 @@ internal class ToolbarWeatherView(
             ToolbarWeatherView(inflater, container, fragment)
     }
 
-    internal val activity: Activity?
+    private val activity: Activity?
         get() = this.fragment.activity
-
     private var presenter: ToolbarWeatherPresenter? = null
-    private var shortAnimationDuration: Int = 0
 
     override fun onCreateView() = this.bindViews()
 
@@ -44,45 +43,6 @@ internal class ToolbarWeatherView(
 
     override fun onStart() = this.initPresenter()
 
-    internal fun setDegreeNumber(degree: Double) {
-        super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
-    }
-
-    internal fun setDescription(description: String) {
-        super.viewBinding?.weatherDescription?.text = description
-    }
-
-    internal fun setLocationCity(city: String) {
-        super.viewBinding?.weatherLocationCity?.apply { this.text = city }
-    }
-
-    internal fun setLocationCountry(country: String) {
-        super.viewBinding?.weatherLocationCountry?.apply { this.text = country }
-    }
-
-    internal fun showWeatherInfo() = this.activity?.let { activity: Activity ->
-        this.shortAnimationDuration =
-            activity.resources.getInteger(android.R.integer.config_mediumAnimTime)
-        super.viewBinding?.weatherInfo?.apply {
-            this.alpha = 0f
-            this.visibility = View.VISIBLE
-            this.animate()
-                .alpha(1f)
-                .setDuration(this@ToolbarWeatherView.shortAnimationDuration.toLong())
-                .setListener(null)
-        }
-        super.viewBinding?.weatherProgressBar?.let { progressBar: ProgressBar ->
-            progressBar.animate()
-                .alpha(0f)
-                .setDuration(this@ToolbarWeatherView.shortAnimationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        progressBar.visibility = View.GONE
-                    }
-                })
-        }
-    }
-
     private fun bindViews() {
         val attachToParent = false
         super.viewBinding =
@@ -90,6 +50,66 @@ internal class ToolbarWeatherView(
     }
 
     private fun initPresenter() {
-        this.presenter = ToolbarWeatherPresenter.build(this)
+        val callback: ToolbarWeatherCallback = this.toolbarWeatherCallback()
+        this.presenter = this.activity?.let { activity: Activity ->
+            ToolbarWeatherPresenter.create(activity, callback)
+        }
+    }
+
+    private fun setDegreeNumber(degree: Double) {
+        super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
+    }
+
+    private fun setDescription(description: String) {
+        super.viewBinding?.weatherDescription?.text = description
+    }
+
+    private fun setLocationCity(city: String) {
+        super.viewBinding?.weatherLocationCity?.apply { this.text = city }
+    }
+
+    private fun setLocationCountry(country: String) {
+        super.viewBinding?.weatherLocationCountry?.apply { this.text = country }
+    }
+
+    private fun showWeatherInfo() {
+        val animationDuration: Int? = this.activity?.let { activity: Activity ->
+            activity.resources.getInteger(android.R.integer.config_mediumAnimTime)
+        }
+        super.viewBinding?.weatherInfo?.apply {
+            this.alpha = 0f
+            this.visibility = View.VISIBLE
+            animationDuration?.toLong()?.let { duration: Long ->
+                this.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setListener(null)
+            }
+        }
+        super.viewBinding?.weatherProgressBar?.apply {
+            animationDuration?.toLong()?.let {
+                this.animate()
+                    .alpha(0f)
+                    .setDuration(it)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            this@apply.visibility = View.GONE
+                        }
+                    })
+            }
+        }
+    }
+
+    private fun toolbarWeatherCallback(): ToolbarWeatherCallback = object : ToolbarWeatherCallback {
+        override fun showWeather() {
+            this@ToolbarWeatherView.showWeatherInfo()
+        }
+
+        override fun updateWeather(weather: WeatherDTO) {
+            this@ToolbarWeatherView.setLocationCity(weather.cityName)
+            this@ToolbarWeatherView.setLocationCountry(weather.system.country)
+            this@ToolbarWeatherView.setDegreeNumber(weather.mainData.temperature)
+            this@ToolbarWeatherView.setDescription(weather.weather[0].description)
+        }
     }
 }

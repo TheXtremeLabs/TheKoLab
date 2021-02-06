@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 
-import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.tracker.Tracker
-import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.tracker.TrackerBuilder
+import fr.lvmvrquxl.thekolab.home.core.tracker.Tracker
+import fr.lvmvrquxl.thekolab.home.core.tracker.TrackerBuilder
 import kotlinx.coroutines.*
 import java.util.*
 

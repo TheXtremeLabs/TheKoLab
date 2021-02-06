@@ -1,13 +1,15 @@
 package fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter
 
-import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherView
+import android.app.Activity
 
 internal interface ToolbarWeatherPresenter {
     companion object {
         const val GPS_USABLE_REQUIRED: Int = 101
 
-        fun build(view: ToolbarWeatherView): ToolbarWeatherPresenter =
-            ToolbarWeatherPresenterImpl(view)
+        fun create(
+            activity: Activity,
+            callback: ToolbarWeatherCallback
+        ): ToolbarWeatherPresenter = ToolbarWeatherPresenterImpl(activity, callback)
     }
 
     fun cancelCoroutines()
