@@ -1,42 +1,35 @@
 package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 
+import fr.lvmvrquxl.thekolab.core.tracker.TrackerBuilder
+import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
+import kotlinx.coroutines.*
+import java.util.*
+
 /**
- * Presenter's interface of the toolbar's time display.
+ * Presenter's implementation of the toolbar's time display.
  *
- * This presenter is responsible for managing the background tasks of the toolbar's time display.
+ * @param callback Callback with time updater
  *
  * @since 0.1.3
+ * @see [ToolbarTimeCallback]
  */
-internal interface ToolbarTimePresenter {
+internal class ToolbarTimePresenter(private val callback: ToolbarTimeCallback) : Presenter() {
     companion object {
-        /**
-         * Build a new toolbar's time presenter.
-         *
-         * This method creates a new presenter for managing the toolbar's time display.
-         *
-         * @param callback Callback with time updater
-         * @return The new toolbar's time presenter
-         *
-         * @since 0.1.3
-         * @see [ToolbarTimeCallback]
-         */
-        fun create(callback: ToolbarTimeCallback): ToolbarTimePresenter =
-            ToolbarTimePresenterImpl(callback)
+        fun create(callback: ToolbarTimeCallback): Presenter = ToolbarTimePresenter(callback)
     }
 
-    /**
-     * Cancel all coroutines in the presenter's scope.
-     *
-     * This method cancels all running coroutines in the presenter's scope.
-     *
-     * @since 0.1.3
-     */
-    fun cancelCoroutines()
+    init {
+        super.trackers = TrackerBuilder()
+            .withDate { date: String -> this.updateDate(date) }
+            .withTime { time: String -> this.updateTime(time) }
+            .build()
+    }
 
-    /**
-     * Launch background coroutines.
-     *
-     * @since 0.1.3
-     */
-    fun startBackgroundCoroutines()
+    private fun updateDate(date: String) = runBlocking(Dispatchers.Main) {
+        this@ToolbarTimePresenter.callback.updateDate(date)
+    }
+
+    private fun updateTime(time: String) = runBlocking(Dispatchers.Main) {
+        this@ToolbarTimePresenter.callback.updateTime(time)
+    }
 }

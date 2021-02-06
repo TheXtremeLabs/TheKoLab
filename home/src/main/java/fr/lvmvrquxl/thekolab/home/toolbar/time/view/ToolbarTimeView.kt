@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarTimeFragmentBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimeCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.time.presenter.ToolbarTimePresenter
+import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 /**
@@ -15,10 +16,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @param inflater The object that can be used to inflate any views in the fragment
  * @param container Parent view that the fragment's UI should be attached to
  *
- * @constructor Bind view and init its presenter [ToolbarTimePresenter]
- *
  * @since 0.1.3
- * @see [ToolbarTimePresenter]
  */
 internal class ToolbarTimeView(
     private val inflater: LayoutInflater,
@@ -31,7 +29,7 @@ internal class ToolbarTimeView(
         ): FragmentView<ToolbarTimeFragmentBinding> = ToolbarTimeView(inflater, container)
     }
 
-    private var presenter: ToolbarTimePresenter? = null
+    private var presenter: Presenter? = null
 
     override fun onCreateView() = this.bindViews()
 

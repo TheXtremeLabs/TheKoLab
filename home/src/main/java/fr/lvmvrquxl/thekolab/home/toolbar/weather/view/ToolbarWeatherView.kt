@@ -6,10 +6,11 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import fr.lvmvrquxl.thekolab.home.core.weather.dto.WeatherDTO
+import fr.lvmvrquxl.thekolab.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 internal class ToolbarWeatherView(
@@ -28,7 +29,7 @@ internal class ToolbarWeatherView(
 
     private val activity: Activity?
         get() = this.fragment.activity
-    private var presenter: ToolbarWeatherPresenter? = null
+    private var presenter: Presenter? = null
 
     override fun onCreateView() = this.bindViews()
 
