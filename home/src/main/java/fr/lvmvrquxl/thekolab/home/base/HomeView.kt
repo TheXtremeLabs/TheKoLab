@@ -1,11 +1,16 @@
 package fr.lvmvrquxl.thekolab.home.base
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.graphics.Color
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarAdapter
@@ -82,14 +87,36 @@ internal class HomeView(private val activity: AppCompatActivity) :
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
     private fun homeToolbarCallback(): ToolbarCallback = object : ToolbarCallback {
-        private val toolbar: CollapsingToolbarLayout? = this@HomeView.collapsingToolbar
+        private val animationDuration: Int =
+            this@HomeView.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
+        private val toolbar: ToolbarBinding? = this@HomeView.toolbar
+
+        override fun hideTabIndicators() {
+            this.toolbar?.tabIndicators?.apply {
+                this.alpha = 0f
+                this.visibility = View.GONE
+            }
+        }
 
         override fun hideTitle() {
-            this.toolbar?.title = " "
+            this.toolbar?.collapsingToolbar?.title = " "
+        }
+
+        override fun showTabIndicators() {
+            this.toolbar?.tabIndicators?.apply {
+                this.animate()
+                    .alpha(0.75f)
+                    .setDuration(animationDuration.toLong())
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationStart(animation: Animator?) {
+                            this@apply.visibility = View.VISIBLE
+                        }
+                    })
+            }
         }
 
         override fun showTitle() {
-            this.toolbar?.title = StringUtils.appName(this@HomeView.activity)
+            this.toolbar?.collapsingToolbar?.title = StringUtils.appName(this@HomeView.activity)
         }
     }
 
@@ -113,10 +140,14 @@ internal class HomeView(private val activity: AppCompatActivity) :
     }
 
     private fun setViewPager() {
-        val viewPager: ViewPager2? = this.toolbar?.viewPager
-        viewPager?.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         val fragments: MutableList<Fragment> = mutableListOf(ToolbarTimeFragment.create())
         if (this.arePermissionsGranted()) fragments.add(ToolbarWeatherFragment.create())
-        viewPager?.adapter = ToolbarAdapter.create(this.activity, fragments)
+        this.toolbar?.viewPager?.let { viewPager: ViewPager2 ->
+            viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            viewPager.adapter = ToolbarAdapter.create(this.activity, fragments)
+            this.toolbar?.tabIndicators?.let { tabLayout: TabLayout ->
+                TabLayoutMediator(tabLayout, viewPager) { _: TabLayout.Tab, _: Int -> }.attach()
+            }
+        }
     }
 }

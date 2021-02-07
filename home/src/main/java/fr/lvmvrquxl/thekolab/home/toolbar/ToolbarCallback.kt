@@ -1,6 +1,8 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
 internal interface ToolbarCallback {
+    fun hideTabIndicators()
+
     /**
      * Hide the collapsing toolbar's title.
      *
@@ -11,6 +13,8 @@ internal interface ToolbarCallback {
      * @see [showTitle]
      */
     fun hideTitle()
+
+    fun showTabIndicators()
 
     /**
      * Show the collapsing toolbar's title.
