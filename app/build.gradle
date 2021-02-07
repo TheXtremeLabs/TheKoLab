@@ -54,10 +54,4 @@ dependencies {
     implementation rootProject.ext.dependencies.appcompat
     implementation rootProject.ext.dependencies.core_ktx
     implementation rootProject.ext.dependencies.kotlin_stdlib
-    implementation rootProject.ext.dependencies.material
-
-    androidTestImplementation rootProject.ext.androidTestDependencies.espresso_core
-    androidTestImplementation rootProject.ext.androidTestDependencies.junit
-
-    testImplementation rootProject.ext.testDependencies.junit
 }
