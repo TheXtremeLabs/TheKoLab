@@ -15,7 +15,7 @@ internal class ToolbarListenerImpl(private val callback: ToolbarCallback) :
     companion object {
         private const val INITIAL_SCROLL_RANGE: Int = -1
         private const val OFFSET_MAX: Int = 589
-        private const val TAB_INDICATORS_OFFSET_LIMIT: Int = (OFFSET_MAX * 75) / 100
+        private const val TAB_INDICATORS_OFFSET_LIMIT: Int = (OFFSET_MAX * 50) / 100
         private const val TITLE_OFFSET_LIMIT: Int = (OFFSET_MAX * 5) / 100
     }
 

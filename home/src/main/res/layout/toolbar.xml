@@ -33,7 +33,6 @@
             android:layout_gravity="bottom"
             android:alpha="0.75"
             android:background="@color/transparent"
-            android:translationY="-64dp"
             app:tabBackground="@drawable/toolbar_tab_selector"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp" />
