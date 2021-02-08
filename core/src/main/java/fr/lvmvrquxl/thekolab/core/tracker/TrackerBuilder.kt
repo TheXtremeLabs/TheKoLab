@@ -6,6 +6,15 @@ import fr.lvmvrquxl.thekolab.core.tracker.time.TimeTracker
 import fr.lvmvrquxl.thekolab.core.tracker.weather.WeatherTracker
 import fr.lvmvrquxl.thekolab.core.tracker.weather.WeatherTrackerListener
 
+/**
+ * Builder of all trackers.
+ *
+ * This class should be used as an interface to build all trackers.
+ *
+ * @since 0.1.3
+ *
+ * @see [Tracker]
+ */
 class TrackerBuilder {
     companion object {
         private const val ERROR_MSG: String = "No tracker was provided!"
@@ -15,6 +24,19 @@ class TrackerBuilder {
     private var timeTracker: TimeTracker? = null
     private var weatherTracker: WeatherTracker? = null
 
+    /**
+     * Build provided trackers.
+     *
+     * @return List of provided trackers
+     *
+     * @throws [NoSuchElementException] When no tracker was provided
+     *
+     * @since 0.1.3
+     *
+     * @see [List]
+     * @see [NoSuchElementException]
+     * @see [Tracker]
+     */
     fun build(): List<Tracker> {
         val trackers: MutableList<Tracker> = mutableListOf()
         this.dateTracker?.let { t: DateTracker -> trackers.add(t) }
@@ -24,16 +46,52 @@ class TrackerBuilder {
         return trackers
     }
 
+    /**
+     * Provide a date tracker.
+     *
+     * @param dateListener Listener of the date tracker
+     *
+     * @return Current instance of the builder
+     *
+     * @since 0.1.3
+     *
+     * @see [DateTimeTrackerListener]
+     * @see [TrackerBuilder]
+     */
     fun withDate(dateListener: DateTimeTrackerListener): TrackerBuilder {
         this.dateTracker = DateTracker(dateListener)
         return this
     }
 
+    /**
+     * Provide a time tracker.
+     *
+     * @param timeListener Listener of the time tracker
+     *
+     * @return Current instance of the builder
+     *
+     * @since 0.1.3
+     *
+     * @see [DateTimeTrackerListener]
+     * @see [TrackerBuilder]
+     */
     fun withTime(timeListener: DateTimeTrackerListener): TrackerBuilder {
         this.timeTracker = TimeTracker(timeListener)
         return this
     }
 
+    /**
+     * Provide a weather tracker.
+     *
+     * @param weatherListener Listener of the weather tracker
+     *
+     * @return Current instance of the builder
+     *
+     * @since 0.1.3
+     *
+     * @see [TrackerBuilder]
+     * @see [WeatherTrackerListener]
+     */
     fun withWeather(weatherListener: WeatherTrackerListener): TrackerBuilder {
         this.weatherTracker = WeatherTracker(weatherListener)
         return this

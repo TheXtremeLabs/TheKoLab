@@ -12,6 +12,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Weather tracker.
+ *
+ * @param listener Listener of weather tracker
+ *
+ * @since 0.1.3
+ *
+ * @see [Tracker]
+ * @see [WeatherTrackerListener]
+ */
 internal class WeatherTracker(private val listener: WeatherTrackerListener) : Tracker() {
     companion object {
         private const val INTERVAL: Long = 5000
@@ -57,7 +67,7 @@ internal class WeatherTracker(private val listener: WeatherTrackerListener) : Tr
     }
 
     private fun retrieveWeather(location: Location): Job =
-        this.coroutineScope.launch(Dispatchers.IO) {
+        super.coroutineScope.launch(Dispatchers.IO) {
             val callback: Callback<WeatherDTO> = this@WeatherTracker.weatherCallback()
             WeatherRepository.getWeatherFromCoordinates(
                 location.latitude,

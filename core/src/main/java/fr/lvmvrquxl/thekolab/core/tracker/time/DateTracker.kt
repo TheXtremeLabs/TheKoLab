@@ -2,6 +2,16 @@ package fr.lvmvrquxl.thekolab.core.tracker.time
 
 import java.text.DateFormat
 
+/**
+ * Date tracker.
+ *
+ * @param listener Listener of the date tracker
+ *
+ * @since 0.1.3
+ *
+ * @see [DateTimeTracker]
+ * @see [DateTimeTrackerListener]
+ */
 internal class DateTracker(listener: DateTimeTrackerListener) :
     DateTimeTracker(INTERVAL, listener) {
     companion object {

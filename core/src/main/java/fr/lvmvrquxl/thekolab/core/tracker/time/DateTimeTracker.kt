@@ -5,10 +5,33 @@ import kotlinx.coroutines.*
 import java.text.DateFormat
 import java.util.*
 
+/**
+ * Tracker for date and time.
+ *
+ * This class is responsible for tracking date and time of the running device.
+ *
+ * @param interval Interval between tracker's updating
+ * @param listener Listener of date and time tracker
+ *
+ * @since 0.1.3
+ *
+ * @see [DateTimeTrackerListener]
+ * @see [Tracker]
+ */
 internal abstract class DateTimeTracker(
     private val interval: Long,
     private val listener: DateTimeTrackerListener
 ) : Tracker() {
+    /**
+     * Format of date or time.
+     *
+     * This field should be an instance of date or an instance of time.
+     *
+     * @since 0.1.3
+     *
+     * @see [DateFormat.getDateInstance]
+     * @see [DateFormat.getTimeInstance]
+     */
     protected var dateFormat: DateFormat? = null
 
     override suspend fun start(): Job = super.coroutineScope.launch(Dispatchers.Default) {
