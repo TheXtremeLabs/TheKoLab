@@ -7,23 +7,41 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Weather repository.
+ *
+ * This singleton object should be used for accessing weather info from API.
+ *
+ * @since 0.1.3
+ */
 internal object WeatherRepository {
     private var apiService: WeatherApiService? = null
 
     init {
-        val gson: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-        apiService = Retrofit.Builder()
+        val converter: Gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+        this.apiService = Retrofit.Builder()
             .baseUrl(WeatherApiService.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(converter))
             .build()
             .create(WeatherApiService::class.java)
     }
 
+    /**
+     * Get weather info from given coordinates.
+     *
+     * @param latitude Location's latitude
+     * @param longitude Location's longitude
+     * @param callback Weather callback
+     *
+     * @since 0.1.3
+     *
+     * @see [Callback]
+     */
     fun getWeatherFromCoordinates(
         latitude: Double,
         longitude: Double,
         callback: Callback<WeatherDTO>
-    ) = apiService?.let { service: WeatherApiService ->
+    ) = this.apiService?.let { service: WeatherApiService ->
         service.getWeatherFromCoordinates(latitude, longitude).enqueue(callback)
     }
 }

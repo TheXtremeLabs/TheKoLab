@@ -57,12 +57,12 @@ internal class ToolbarWeatherView(
         }
     }
 
-    private fun setDegreeNumber(degree: Double) {
-        super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
+    private fun setCondition(description: String) {
+        super.viewBinding?.weatherCondition?.text = description
     }
 
-    private fun setDescription(description: String) {
-        super.viewBinding?.weatherDescription?.text = description
+    private fun setDegreeNumber(degree: Double) {
+        super.viewBinding?.weatherDegreeNumber?.text = "${degree.toInt()}"
     }
 
     private fun setLocationCity(city: String) {
@@ -110,7 +110,7 @@ internal class ToolbarWeatherView(
             this@ToolbarWeatherView.setLocationCity(weather.cityName)
             this@ToolbarWeatherView.setLocationCountry(weather.system.country)
             this@ToolbarWeatherView.setDegreeNumber(weather.mainData.temperature)
-            this@ToolbarWeatherView.setDescription(weather.weather[0].description)
+            this@ToolbarWeatherView.setCondition(weather.weather[0].condition)
         }
     }
 }
