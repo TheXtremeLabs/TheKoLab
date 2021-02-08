@@ -1,6 +1,14 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
+import androidx.appcompat.app.AppCompatActivity
+import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
+
 internal interface ToolbarCallback {
+    companion object {
+        fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): ToolbarCallback =
+            ToolbarCallbackImpl(activity, toolbar)
+    }
+
     fun hideTabIndicators()
 
     /**

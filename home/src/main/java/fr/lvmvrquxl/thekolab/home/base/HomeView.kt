@@ -1,9 +1,6 @@
 package fr.lvmvrquxl.thekolab.home.base
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.graphics.Color
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -20,7 +17,6 @@ import fr.lvmvrquxl.thekolab.home.toolbar.time.view.ToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
 import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
-import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
@@ -31,6 +27,9 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  * @param activity Instance of the home page activity
  *
  * @since 0.1.3
+ *
+ * @see [ActivityView]
+ * @see [AppCompatActivity]
  * @see [HomeActivity]
  */
 internal class HomeView(private val activity: AppCompatActivity) :
@@ -41,7 +40,12 @@ internal class HomeView(private val activity: AppCompatActivity) :
          *
          * @param activity Instance of the home page activity
          *
+         * @return New instance of the home page view
+         *
          * @since 0.1.3
+         *
+         * @see [AppCompatActivity]
+         * @see [ActivityView]
          */
         fun create(activity: AppCompatActivity): ActivityView<HomeActivityBinding> =
             HomeView(activity)
@@ -86,45 +90,14 @@ internal class HomeView(private val activity: AppCompatActivity) :
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
-    private fun homeToolbarCallback(): ToolbarCallback = object : ToolbarCallback {
-        private val animationDuration: Int =
-            this@HomeView.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
-        private val toolbar: ToolbarBinding? = this@HomeView.toolbar
-
-        override fun hideTabIndicators() {
-            this.toolbar?.tabIndicators?.apply {
-                this.alpha = 0f
-                this.visibility = View.GONE
-            }
-        }
-
-        override fun hideTitle() {
-            this.toolbar?.collapsingToolbar?.title = " "
-        }
-
-        override fun showTabIndicators() {
-            this.toolbar?.tabIndicators?.apply {
-                this.animate()
-                    .alpha(0.75f)
-                    .setDuration(animationDuration.toLong())
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationStart(animation: Animator?) {
-                            this@apply.visibility = View.VISIBLE
-                        }
-                    })
-            }
-        }
-
-        override fun showTitle() {
-            this.toolbar?.collapsingToolbar?.title = StringUtils.appName(this@HomeView.activity)
-        }
-    }
-
     private fun initAppBar() {
         val appBar: AppBarLayout? = this.toolbar?.root
         appBar?.setExpanded(true)
-        val callback = this.homeToolbarCallback()
-        val toolbarListener: ToolbarListener = ToolbarListener.create(callback)
+        val callback: ToolbarCallback? = this.toolbar?.let { toolbar: ToolbarBinding ->
+            ToolbarCallback.create(this.activity, toolbar)
+        }
+        val toolbarListener: ToolbarListener? =
+            callback?.let { c: ToolbarCallback -> ToolbarListener.create(c) }
         appBar?.addOnOffsetChangedListener(toolbarListener)
     }
 
