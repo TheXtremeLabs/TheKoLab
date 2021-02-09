@@ -2,29 +2,77 @@ package fr.lvmvrquxl.thekolab.shared.permission
 
 import android.app.Activity
 
-class PermissionBuilder(private val activity: Activity) {
+/**
+ * Permissions builder.
+ *
+ * @param activity Activity that requests permission
+ *
+ * @since 0.1.3
+ *
+ * @see [Activity]
+ */
+class PermissionBuilder private constructor(private val activity: Activity) {
     companion object {
         private const val ERROR_MSG: String = "No permission was provided!"
+
+        /**
+         * Create an instance of the builder.
+         *
+         * @param activity Activity that requests permission
+         *
+         * @since 0.1.3
+         *
+         * @see [Activity]
+         */
+        fun create(activity: Activity): PermissionBuilder = PermissionBuilder(activity)
     }
 
-    private var internet: InternetPermission? = null
-    private var location: LocationPermission? = null
+    private val permissions: MutableList<Permission> = mutableListOf()
 
-    fun build(): List<Permission> {
-        val permissions: MutableList<Permission> = mutableListOf()
-        this.internet?.let { p: InternetPermission -> permissions.add(p) }
-        this.location?.let { p: LocationPermission -> permissions.add(p) }
-        if (permissions.isEmpty()) throw NoSuchElementException(ERROR_MSG)
-        return permissions
+    /**
+     * Build permissions.
+     *
+     * @return List of provided permissions
+     *
+     * @throws [NoSuchElementException] If no permission was provided
+     *
+     * @since 0.1.3
+     *
+     * @see [List]
+     * @see [Permission]
+     */
+    fun build(): List<Permission> = when (this.permissions.isEmpty()) {
+        true -> throw NoSuchElementException(ERROR_MSG)
+        else -> this.permissions
     }
 
+    /**
+     * Add internet permission in builder.
+     *
+     * @return Current instance of builder
+     *
+     * @since 0.1.3
+     */
     fun withInternet(): PermissionBuilder {
-        this.internet = InternetPermission(this.activity)
+        val permission: Permission = InternetPermission.create(this.activity)
+        this.addPermission(permission)
         return this
     }
 
+    /**
+     * Add location permission in builder.
+     *
+     * @return Current instance of builder
+     *
+     * @since 0.1.3
+     */
     fun withLocation(): PermissionBuilder {
-        this.location = LocationPermission(this.activity)
+        val permission: Permission = LocationPermission.create(this.activity)
+        this.addPermission(permission)
         return this
+    }
+
+    private fun addPermission(permission: Permission) {
+        if (!this.permissions.contains(permission)) this.permissions.add(permission)
     }
 }

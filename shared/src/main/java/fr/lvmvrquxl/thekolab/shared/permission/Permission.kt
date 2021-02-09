@@ -10,10 +10,31 @@ import fr.lvmvrquxl.thekolab.shared.utils.DialogUtils
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 import fr.lvmvrquxl.thekolab.shared.utils.ToastUtils
 
+/**
+ * Parent of all requested permissions.
+ *
+ * @param activity Activity that requests permission
+ * @param identity Identity of the permission
+ *
+ * @since 0.1.3
+ *
+ * @see [Activity]
+ * @see [PermissionIdentity]
+ */
 abstract class Permission(
     private val activity: Activity,
     private val identity: PermissionIdentity
 ) {
+    /**
+     * Check permission's status.
+     *
+     * This method only check permissions on devices running an Android with at least
+     * Marshmallow version (API >= 23).
+     * On other devices running API <= 22, permissions are granted or not on installation of the
+     * application.
+     *
+     * @since 0.1.3
+     */
     @SuppressLint("NewApi")
     fun check() {
         if (CompatibilityUtils.isMarshmallow()) when {
@@ -24,6 +45,15 @@ abstract class Permission(
         }
     }
 
+    /**
+     * Check grant results.
+     *
+     * @param grantResults Grant results
+     *
+     * @since 0.1.3
+     *
+     * @see [IntArray]
+     */
     fun checkGrantResults(grantResults: IntArray) {
         val text: String = when (
             grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == grantResults[0]
@@ -34,6 +64,15 @@ abstract class Permission(
         ToastUtils.short(this.activity, "$text: ${this.identity.name}")
     }
 
+    /**
+     * Check if permission is granted or denied.
+     *
+     * @return
+     *  - `true` : permission is granted
+     *  - `false` : permission is denied
+     *
+     * @since 0.1.3
+     */
     @SuppressLint("NewApi")
     fun isGranted(): Boolean = PackageManager.PERMISSION_GRANTED ==
             this.activity.checkSelfPermission(this.identity.permission)
