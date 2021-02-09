@@ -9,17 +9,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 /**
  * Home toolbar's adapter.
  *
- * This class is mainly used for managing the fragments displaying in the toolbar's view pager.
- * For design purpose, it should not be invoked directly by the activity but by its
- * corresponding view (ex : [HomeView] use this class, instead of [HomeActivity]).
+ * This class is responsible of managing the fragments display in the toolbar's view pager.
  *
- * @param fragmentManager Manager for interacting with fragments associated with the [HomeActivity]
- * @param lifecycle Lifecycle of the [HomeActivity]
+ * @param fragmentManager Manager for interacting with fragments
+ * @param lifecycle Lifecycle of the view pager's host
  * @param fragments List of fragments to display in the view pager
  *
  * @since 0.1.3
- * @see [HomeActivity]
- * @see [HomeView]
+ *
+ * @see [Fragment]
+ * @see [FragmentManager]
+ * @see [FragmentStateAdapter]
+ * @see [Lifecycle]
+ * @see [List]
  */
 internal class ToolbarAdapter(
     fragmentManager: FragmentManager,
@@ -27,7 +29,22 @@ internal class ToolbarAdapter(
     private val fragments: List<Fragment>
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
     companion object {
-        fun create(activity: AppCompatActivity, fragments: List<Fragment>): ToolbarAdapter =
+        /**
+         * Create an instance of home toolbar's adapter.
+         *
+         * @param activity Activity containing the view pager
+         * @param fragments Fragments to display in the view pager
+         *
+         * @return New instance of home toolbar's adapter
+         *
+         * @since 0.1.3
+         *
+         * @see [AppCompatActivity]
+         * @see [Fragment]
+         * @see [FragmentStateAdapter]
+         * @see [List]
+         */
+        fun create(activity: AppCompatActivity, fragments: List<Fragment>): FragmentStateAdapter =
             ToolbarAdapter(activity.supportFragmentManager, activity.lifecycle, fragments)
     }
 

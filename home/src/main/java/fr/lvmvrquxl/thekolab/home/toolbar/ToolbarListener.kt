@@ -3,24 +3,25 @@ package fr.lvmvrquxl.thekolab.home.toolbar
 import com.google.android.material.appbar.AppBarLayout
 
 /**
- * Listener's interface of the home page's toolbar.
+ * Listener's of the home page's toolbar.
  *
- * This listener is dedicated for managing interactions with the toolbar, like an offset
- * changing.
+ * This interface is responsible for managing interactions with the collapsing toolbar.
  *
  * @since 0.1.3
+ *
+ * @see [AppBarLayout.OnOffsetChangedListener]
  */
 internal interface ToolbarListener : AppBarLayout.OnOffsetChangedListener {
     companion object {
         /**
-         * Create a new toolbar's listener.
+         * Create a new instance of toolbar's listener.
          *
-         * This method creates a new listener for the home page's toolbar.
+         * @param callback Toolbar's callback
          *
-         * @param callback Callback with hide and show toolbar's title
-         * @return The new toolbar's listener
+         * @return The new instance of toolbar's listener
          *
          * @since 0.1.3
+         *
          * @see [ToolbarCallback]
          */
         fun create(callback: ToolbarCallback): ToolbarListener = ToolbarListenerImpl(callback)

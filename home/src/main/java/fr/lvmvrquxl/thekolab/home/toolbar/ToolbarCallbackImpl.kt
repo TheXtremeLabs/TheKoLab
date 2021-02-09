@@ -7,6 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
 import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 
+/**
+ * Implementation of toolbar's interactions.
+ *
+ * This class should not be used directly! Use [ToolbarCallback] instead.
+ *
+ * @param activity Home page's activity
+ * @param toolbar Toolbar's view binding
+ *
+ * @since 0.1.3
+ *
+ * @see [AppCompatActivity]
+ * @see [ToolbarCallback]
+ */
 internal class ToolbarCallbackImpl(
     private val activity: AppCompatActivity,
     private val toolbar: ToolbarBinding

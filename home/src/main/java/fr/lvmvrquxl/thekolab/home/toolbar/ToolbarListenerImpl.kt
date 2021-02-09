@@ -5,10 +5,14 @@ import com.google.android.material.appbar.AppBarLayout
 /**
  * Listener's implementation of the home page's toolbar.
  *
- * @param callback Callback with hide and show title methods
+ * This class should not be used directly! Use [ToolbarListener] instead.
+ *
+ * @param callback Toolbar's callback
  *
  * @since 0.1.3
+ *
  * @see [ToolbarCallback]
+ * @see [ToolbarListener]
  */
 internal class ToolbarListenerImpl(private val callback: ToolbarCallback) :
     ToolbarListener {
