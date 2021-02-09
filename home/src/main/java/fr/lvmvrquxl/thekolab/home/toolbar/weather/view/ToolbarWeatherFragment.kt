@@ -5,15 +5,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import fr.lvmvrquxl.thekolab.home.R
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarWeatherFragmentBinding
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
-internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
+/**
+ * Toolbar's weather fragment.
+ *
+ * @since 0.1.3
+ *
+ * @see [Fragment]
+ */
+internal class ToolbarWeatherFragment private constructor() : Fragment(LAYOUT) {
     companion object {
         private val LAYOUT: Int = R.layout.toolbar_weather_fragment
 
-        fun create(): ToolbarWeatherFragment = ToolbarWeatherFragment()
+        /**
+         * Create a new instance of the toolbar's weather.
+         *
+         * @return New instance of the toolbar's weather
+         *
+         * @since 0.1.3
+         *
+         * @see [Fragment]
+         */
+        fun create(): Fragment = ToolbarWeatherFragment()
     }
 
     private var view: FragmentView<ToolbarWeatherFragmentBinding>? = null
@@ -23,7 +40,9 @@ internal class ToolbarWeatherFragment : Fragment(LAYOUT) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        this.view = ToolbarWeatherView.create(inflater, container, this)
+        this.view = this.activity?.let { activity: FragmentActivity ->
+            ToolbarWeatherView.create(inflater, container, activity)
+        }
         this.view?.onCreateView()
         return this.view?.root
     }

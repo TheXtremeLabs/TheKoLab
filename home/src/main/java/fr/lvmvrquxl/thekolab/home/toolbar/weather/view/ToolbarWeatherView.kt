@@ -13,22 +13,50 @@ import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresen
 import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
-internal class ToolbarWeatherView(
+/**
+ * Toolbar's weather view.
+ *
+ * @param inflater The object that can be used to inflate any views in the fragment
+ * @param container Parent view that the fragment's UI should be attached to
+ * @param activity Toolbar's weather activity
+ *
+ * @since 0.1.3
+ *
+ * @see [Activity]
+ * @see [FragmentView]
+ * @see [LayoutInflater]
+ * @see [ToolbarWeatherFragmentBinding]
+ * @see [ViewGroup]
+ */
+internal class ToolbarWeatherView private constructor(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?,
-    private val fragment: ToolbarWeatherFragment
+    private val activity: Activity
 ) : FragmentView<ToolbarWeatherFragmentBinding>() {
     companion object {
+        /**
+         * Create a new instance of toolbar's weather view.
+         *
+         * @param inflater The object that can be used to inflate any views in the fragment
+         * @param container Parent view that the fragment's UI should be attached to
+         * @param activity Toolbar's weather activity
+         *
+         * @since 0.1.3
+         *
+         * @see [Activity]
+         * @see [FragmentView]
+         * @see [LayoutInflater]
+         * @see [ToolbarWeatherFragmentBinding]
+         * @see [ViewGroup]
+         */
         fun create(
             inflater: LayoutInflater,
             container: ViewGroup?,
-            fragment: ToolbarWeatherFragment
+            activity: Activity
         ): FragmentView<ToolbarWeatherFragmentBinding> =
-            ToolbarWeatherView(inflater, container, fragment)
+            ToolbarWeatherView(inflater, container, activity)
     }
 
-    private val activity: Activity?
-        get() = this.fragment.activity
     private var presenter: Presenter? = null
 
     override fun onCreateView() = this.bindViews()
@@ -52,9 +80,7 @@ internal class ToolbarWeatherView(
 
     private fun initPresenter() {
         val callback: ToolbarWeatherCallback = this.toolbarWeatherCallback()
-        this.presenter = this.activity?.let { activity: Activity ->
-            ToolbarWeatherPresenter.create(activity, callback)
-        }
+        this.presenter = ToolbarWeatherPresenter.create(this.activity, callback)
     }
 
     private fun setCondition(description: String) {
@@ -74,30 +100,25 @@ internal class ToolbarWeatherView(
     }
 
     private fun showWeatherInfo() {
-        val animationDuration: Int? = this.activity?.let { activity: Activity ->
-            activity.resources.getInteger(android.R.integer.config_mediumAnimTime)
-        }
+        val animationDuration: Int =
+            this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime)
         super.viewBinding?.weatherInfo?.apply {
             this.alpha = 0f
             this.visibility = View.VISIBLE
-            animationDuration?.toLong()?.let { duration: Long ->
-                this.animate()
-                    .alpha(1f)
-                    .setDuration(duration)
-                    .setListener(null)
-            }
+            this.animate()
+                .alpha(1f)
+                .setDuration(animationDuration.toLong())
+                .setListener(null)
         }
         super.viewBinding?.weatherProgressBar?.apply {
-            animationDuration?.toLong()?.let {
-                this.animate()
-                    .alpha(0f)
-                    .setDuration(it)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            this@apply.visibility = View.GONE
-                        }
-                    })
-            }
+            this.animate()
+                .alpha(0f)
+                .setDuration(animationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        this@apply.visibility = View.GONE
+                    }
+                })
         }
     }
 

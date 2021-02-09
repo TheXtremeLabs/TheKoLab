@@ -10,13 +10,44 @@ import fr.lvmvrquxl.thekolab.core.weather.dto.WeatherDTO
 import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
 import kotlinx.coroutines.*
 
-internal class ToolbarWeatherPresenter(
+/**
+ * Toolbar's weather presenter.
+ *
+ * @param activity Toolbar's weather activity
+ * @param callback Toolbar's weather callback
+ *
+ * @since 0.1.3
+ *
+ * @see [Activity]
+ * @see [Presenter]
+ * @see [ToolbarWeatherCallback]
+ * @see [WeatherTrackerListener]
+ */
+internal class ToolbarWeatherPresenter private constructor(
     private val activity: Activity,
     private val callback: ToolbarWeatherCallback
 ) : Presenter(), WeatherTrackerListener {
     companion object {
+        /**
+         * Code for resolving location settings.
+         *
+         * @since 0.1.3
+         */
         const val GPS_USABLE_REQUIRED: Int = 101
 
+        /**
+         * Create a new instance of toolbar's weather presenter.
+         *
+         * @param activity Toolbar's weather activity
+         * @param callback Toolbar's weather callback
+         *
+         * @since 0.1.3
+         *
+         * @see [Activity]
+         * @see [Presenter]
+         * @see [ToolbarWeatherCallback]
+         * @see [WeatherTrackerListener]
+         */
         fun create(activity: Activity, callback: ToolbarWeatherCallback): Presenter =
             ToolbarWeatherPresenter(activity, callback)
     }
