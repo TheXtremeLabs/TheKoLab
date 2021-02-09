@@ -53,7 +53,7 @@ internal class ToolbarWeatherPresenter private constructor(
     }
 
     init {
-        super.trackers = TrackerBuilder().withWeather(this).build()
+        super.trackers = TrackerBuilder.create().withWeather(this).build()
     }
 
     private var hasWeatherData: Boolean = false

@@ -12,12 +12,19 @@ import fr.lvmvrquxl.thekolab.core.tracker.weather.WeatherTrackerListener
  * This class should be used as an interface to build all trackers.
  *
  * @since 0.1.3
- *
- * @see [Tracker]
  */
-class TrackerBuilder {
+class TrackerBuilder private constructor() {
     companion object {
         private const val ERROR_MSG: String = "No tracker was provided!"
+
+        /**
+         * Create an instance of the builder.
+         *
+         * @return New instance of the builder
+         *
+         * @since 0.1.3
+         */
+        fun create(): TrackerBuilder = TrackerBuilder()
     }
 
     private var dateTracker: DateTracker? = null

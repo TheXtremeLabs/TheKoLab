@@ -34,7 +34,7 @@ internal class ToolbarTimePresenter private constructor(private val callback: To
     }
 
     init {
-        super.trackers = TrackerBuilder()
+        super.trackers = TrackerBuilder.create()
             .withDate { date: String -> this.updateDate(date) }
             .withTime { time: String -> this.updateTime(time) }
             .build()
