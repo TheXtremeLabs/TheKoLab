@@ -23,9 +23,15 @@ internal class ToolbarTimeFragment private constructor() : Fragment(LAYOUT) {
         private val LAYOUT: Int = R.layout.toolbar_time_fragment
 
         /**
-         * Create a new instance
+         * Create a new instance of toolbar's time fragment.
+         *
+         * @return New instance of toolbar's time fragment
+         *
+         * @since 0.1.3
+         *
+         * @see [Fragment]
          */
-        fun create(): ToolbarTimeFragment = ToolbarTimeFragment()
+        fun create(): Fragment = ToolbarTimeFragment()
     }
 
     private var view: FragmentView<ToolbarTimeFragmentBinding>? = null

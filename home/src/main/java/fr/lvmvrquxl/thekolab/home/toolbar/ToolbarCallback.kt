@@ -31,6 +31,8 @@ internal class ToolbarCallback private constructor(
          * @param activity Home page's activity
          * @param toolbar Toolbar's view binding
          *
+         * @return New instance of toolbar's callback implementation
+         *
          * @since 0.1.3
          *
          * @see [AppCompatActivity]

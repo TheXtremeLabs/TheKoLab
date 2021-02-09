@@ -6,15 +6,30 @@ import kotlinx.coroutines.*
 import java.util.*
 
 /**
- * Presenter's implementation of the toolbar's time display.
+ * Presenter of the toolbar's time display.
  *
- * @param callback Callback with time updater
+ * @param callback Toolbar's time callback
  *
  * @since 0.1.3
+ *
+ * @see [Presenter]
  * @see [ToolbarTimeCallback]
  */
-internal class ToolbarTimePresenter(private val callback: ToolbarTimeCallback) : Presenter() {
+internal class ToolbarTimePresenter private constructor(private val callback: ToolbarTimeCallback) :
+    Presenter() {
     companion object {
+        /**
+         * Create an instance of toolbar's time presenter.
+         *
+         * @param callback Toolbar's time callback
+         *
+         * @return New instance of toolbar's time presenter
+         *
+         * @since 0.1.3
+         *
+         * @see [Presenter]
+         * @see [ToolbarTimeCallback]
+         */
         fun create(callback: ToolbarTimeCallback): Presenter = ToolbarTimePresenter(callback)
     }
 

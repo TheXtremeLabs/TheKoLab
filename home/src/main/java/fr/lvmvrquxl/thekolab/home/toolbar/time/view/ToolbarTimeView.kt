@@ -9,20 +9,38 @@ import fr.lvmvrquxl.thekolab.shared.presenter.Presenter
 import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 
 /**
- * View of the home toolbar's time.
- *
- * This view is managing the elements of the toolbar's time fragment.
+ * View of the toolbar's time.
  *
  * @param inflater The object that can be used to inflate any views in the fragment
  * @param container Parent view that the fragment's UI should be attached to
  *
  * @since 0.1.3
+ *
+ * @see [FragmentView]
+ * @see [LayoutInflater]
+ * @see [ToolbarTimeFragmentBinding]
+ * @see [ViewGroup]
  */
-internal class ToolbarTimeView(
+internal class ToolbarTimeView private constructor(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?
 ) : FragmentView<ToolbarTimeFragmentBinding>() {
     companion object {
+        /**
+         * Create a new instance of the toolbar's time view.
+         *
+         * @param inflater The object that can be used to inflate any views in the fragment
+         * @param container Parent view that the fragment's UI should be attached to
+         *
+         * @return New instance of the toolbar's time view
+         *
+         * @since 0.1.3
+         *
+         * @see [FragmentView]
+         * @see [LayoutInflater]
+         * @see [ToolbarTimeFragmentBinding]
+         * @see [ViewGroup]
+         */
         fun create(
             inflater: LayoutInflater,
             container: ViewGroup?

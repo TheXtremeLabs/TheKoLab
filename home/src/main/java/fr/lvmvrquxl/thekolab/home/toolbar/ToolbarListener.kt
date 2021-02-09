@@ -27,6 +27,8 @@ internal class ToolbarListener private constructor(private val callback: IToolba
          *
          * @param callback Toolbar's callback
          *
+         * @return New instance of listener's implementation
+         *
          * @since 0.1.3
          *
          * @see [IToolbarCallback]
