@@ -11,8 +11,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarAdapter
-import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarCallback
-import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarListener
+import fr.lvmvrquxl.thekolab.home.toolbar.IToolbarCallback
+import fr.lvmvrquxl.thekolab.home.toolbar.IToolbarListener
 import fr.lvmvrquxl.thekolab.home.toolbar.time.view.ToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
@@ -93,11 +93,11 @@ internal class HomeView(private val activity: AppCompatActivity) :
     private fun initAppBar() {
         val appBar: AppBarLayout? = this.toolbar?.root
         appBar?.setExpanded(true)
-        val callback: ToolbarCallback? = this.toolbar?.let { toolbar: ToolbarBinding ->
-            ToolbarCallback.create(this.activity, toolbar)
+        val callback: IToolbarCallback? = this.toolbar?.let { toolbar: ToolbarBinding ->
+            IToolbarCallback.create(this.activity, toolbar)
         }
-        val toolbarListener: ToolbarListener? =
-            callback?.let { c: ToolbarCallback -> ToolbarListener.create(c) }
+        val toolbarListener: IToolbarListener? =
+            callback?.let { c: IToolbarCallback -> IToolbarListener.create(c) }
         appBar?.addOnOffsetChangedListener(toolbarListener)
     }
 

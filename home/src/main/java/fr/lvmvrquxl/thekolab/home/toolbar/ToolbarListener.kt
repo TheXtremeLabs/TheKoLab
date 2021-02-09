@@ -3,27 +3,38 @@ package fr.lvmvrquxl.thekolab.home.toolbar
 import com.google.android.material.appbar.AppBarLayout
 
 /**
- * Listener's of the home page's toolbar.
+ * Listener's implementation of the home page's toolbar.
  *
- * This interface is responsible for managing interactions with the collapsing toolbar.
+ * This class should not be used directly! Use [IToolbarListener] instead.
+ *
+ * @param callback Toolbar's callback
  *
  * @since 0.1.3
  *
- * @see [AppBarLayout.OnOffsetChangedListener]
+ * @see [IToolbarCallback]
+ * @see [IToolbarListener]
  */
-internal interface ToolbarListener : AppBarLayout.OnOffsetChangedListener {
+internal class ToolbarListener(private val callback: IToolbarCallback) :
+    IToolbarListener {
     companion object {
-        /**
-         * Create a new instance of toolbar's listener.
-         *
-         * @param callback Toolbar's callback
-         *
-         * @return The new instance of toolbar's listener
-         *
-         * @since 0.1.3
-         *
-         * @see [ToolbarCallback]
-         */
-        fun create(callback: ToolbarCallback): ToolbarListener = ToolbarListenerImpl(callback)
+        private const val INITIAL_SCROLL_RANGE: Int = -1
+        private const val OFFSET_MAX: Int = 589
+        private const val TAB_INDICATORS_OFFSET_LIMIT: Int = (OFFSET_MAX * 50) / 100
+        private const val TITLE_OFFSET_LIMIT: Int = (OFFSET_MAX * 5) / 100
+    }
+
+    private var scrollRange: Int = INITIAL_SCROLL_RANGE
+
+    override fun onOffsetChanged(appBar: AppBarLayout, verticalOffset: Int) {
+        if (INITIAL_SCROLL_RANGE == this.scrollRange) this.initScrollRange(appBar)
+        if (TITLE_OFFSET_LIMIT >= this.scrollRange + verticalOffset) this.callback.showTitle()
+        else this.callback.hideTitle()
+        if (TAB_INDICATORS_OFFSET_LIMIT >= this.scrollRange + verticalOffset)
+            this.callback.hideTabIndicators()
+        else this.callback.showTabIndicators()
+    }
+
+    private fun initScrollRange(appBar: AppBarLayout) {
+        this.scrollRange = appBar.totalScrollRange
     }
 }

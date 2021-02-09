@@ -1,76 +1,57 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
+import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
 
 /**
- * Callback of toolbar's interactions.
+ * Implementation of toolbar's interactions.
  *
- * This interface should be used to interact between the home page's view and
- * the toolbar's listener.
+ * This class should not be used directly! Use [IToolbarCallback] instead.
+ *
+ * @param activity Home page's activity
+ * @param toolbar Toolbar's view binding
  *
  * @since 0.1.3
+ *
+ * @see [AppCompatActivity]
+ * @see [IToolbarCallback]
  */
-internal interface ToolbarCallback {
-    companion object {
-        /**
-         * Create an instance of the toolbar's interactions callback.
-         *
-         * @param activity Home page's activity
-         * @param toolbar Toolbar's view binding
-         *
-         * @return New instance of the toolbar's interactions callback
-         *
-         * @since 0.1.3
-         *
-         * @see [AppCompatActivity]
-         * @see [ToolbarBinding]
-         */
-        fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): ToolbarCallback =
-            ToolbarCallbackImpl(activity, toolbar)
+internal class ToolbarCallback(
+    private val activity: AppCompatActivity,
+    private val toolbar: ToolbarBinding
+) : IToolbarCallback {
+    private val animationDuration: Int =
+        this.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
+
+    override fun hideTabIndicators() {
+        this.toolbar.tabIndicators.apply {
+            this.alpha = 0f
+            this.visibility = View.GONE
+        }
     }
 
-    /**
-     * Hide the tab indicators of the toolbar's view pager.
-     *
-     * Consider using the [showTabIndicators] method for showing the tab indicators.
-     *
-     * @since 0.1.3
-     *
-     * @see [showTabIndicators]
-     */
-    fun hideTabIndicators()
+    override fun hideTitle() {
+        this.toolbar.collapsingToolbar.title = " "
+    }
 
-    /**
-     * Hide the collapsing toolbar's title.
-     *
-     * Consider using the [showTitle] method for showing the collapsing toolbar's title.
-     *
-     * @since 0.1.3
-     *
-     * @see [showTitle]
-     */
-    fun hideTitle()
+    override fun showTabIndicators() {
+        this.toolbar.tabIndicators.apply {
+            this.animate()
+                .alpha(0.75f)
+                .setDuration(animationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: Animator?) {
+                        this@apply.visibility = View.VISIBLE
+                    }
+                })
+        }
+    }
 
-    /**
-     * Show the tab indicators of the toolbar's view pager.
-     *
-     * Consider using the [hideTabIndicators] method for hiding the tab indicators.
-     *
-     * @since 0.1.3
-     *
-     * @see [hideTabIndicators]
-     */
-    fun showTabIndicators()
-
-    /**
-     * Show the collapsing toolbar's title.
-     *
-     * Consider using the [hideTitle] method for hiding the collapsing toolbar's title.
-     *
-     * @since 0.1.3
-     *
-     * @see [hideTitle]
-     */
-    fun showTitle()
+    override fun showTitle() {
+        this.toolbar.collapsingToolbar.title = StringUtils.appName(this.activity)
+    }
 }
