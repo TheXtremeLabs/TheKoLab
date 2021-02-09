@@ -32,7 +32,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  * @see [AppCompatActivity]
  * @see [HomeActivity]
  */
-internal class HomeView(private val activity: AppCompatActivity) :
+internal class HomeView private constructor(private val activity: AppCompatActivity) :
     ActivityView<HomeActivityBinding>() {
     companion object {
         /**

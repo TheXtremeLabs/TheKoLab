@@ -24,6 +24,6 @@ internal interface IToolbarListener : AppBarLayout.OnOffsetChangedListener {
          *
          * @see [IToolbarCallback]
          */
-        fun create(callback: IToolbarCallback): IToolbarListener = ToolbarListener(callback)
+        fun create(callback: IToolbarCallback): IToolbarListener = ToolbarListener.create(callback)
     }
 }

@@ -14,13 +14,25 @@ import com.google.android.material.appbar.AppBarLayout
  * @see [IToolbarCallback]
  * @see [IToolbarListener]
  */
-internal class ToolbarListener(private val callback: IToolbarCallback) :
+internal class ToolbarListener private constructor(private val callback: IToolbarCallback) :
     IToolbarListener {
     companion object {
         private const val INITIAL_SCROLL_RANGE: Int = -1
         private const val OFFSET_MAX: Int = 589
         private const val TAB_INDICATORS_OFFSET_LIMIT: Int = (OFFSET_MAX * 50) / 100
         private const val TITLE_OFFSET_LIMIT: Int = (OFFSET_MAX * 5) / 100
+
+        /**
+         * Create a new instance of listener's implementation.
+         *
+         * @param callback Toolbar's callback
+         *
+         * @since 0.1.3
+         *
+         * @see [IToolbarCallback]
+         * @see [IToolbarListener]
+         */
+        fun create(callback: IToolbarCallback): IToolbarListener = ToolbarListener(callback)
     }
 
     private var scrollRange: Int = INITIAL_SCROLL_RANGE

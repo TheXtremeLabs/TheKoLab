@@ -23,7 +23,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @see [Lifecycle]
  * @see [List]
  */
-internal class ToolbarAdapter(
+internal class ToolbarAdapter private constructor(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
     private val fragments: List<Fragment>

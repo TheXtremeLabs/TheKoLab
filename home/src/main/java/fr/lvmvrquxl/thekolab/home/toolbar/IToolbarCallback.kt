@@ -27,7 +27,7 @@ internal interface IToolbarCallback {
          * @see [ToolbarBinding]
          */
         fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): IToolbarCallback =
-            ToolbarCallback(activity, toolbar)
+            ToolbarCallback.create(activity, toolbar)
     }
 
     /**

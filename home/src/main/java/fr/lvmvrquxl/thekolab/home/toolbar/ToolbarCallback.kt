@@ -20,10 +20,27 @@ import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
  * @see [AppCompatActivity]
  * @see [IToolbarCallback]
  */
-internal class ToolbarCallback(
+internal class ToolbarCallback private constructor(
     private val activity: AppCompatActivity,
     private val toolbar: ToolbarBinding
 ) : IToolbarCallback {
+    companion object {
+        /**
+         * Create a new instance of toolbar's callback implementation.
+         *
+         * @param activity Home page's activity
+         * @param toolbar Toolbar's view binding
+         *
+         * @since 0.1.3
+         *
+         * @see [AppCompatActivity]
+         * @see [IToolbarCallback]
+         * @see [ToolbarBinding]
+         */
+        fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): IToolbarCallback =
+            ToolbarCallback(activity, toolbar)
+    }
+
     private val animationDuration: Int =
         this.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
 
