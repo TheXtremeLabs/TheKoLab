@@ -12,7 +12,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * This activity is managing the lifecycle of the home page.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 class HomeActivity : AppCompatActivity() {
     private var view: ActivityView<HomeActivityBinding>? = null

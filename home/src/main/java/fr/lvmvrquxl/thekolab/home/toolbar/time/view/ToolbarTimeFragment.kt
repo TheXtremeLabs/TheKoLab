@@ -14,7 +14,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  *
  * This fragment is used for displaying date and time in the view pager of the home page activity.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Fragment]
  */
@@ -27,7 +27,7 @@ internal class ToolbarTimeFragment private constructor() : Fragment(LAYOUT) {
          *
          * @return New instance of toolbar's time fragment
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Fragment]
          */

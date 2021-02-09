@@ -4,11 +4,9 @@ import android.content.Context
 import fr.lvmvrquxl.thekolab.shared.R
 
 /**
- * String utilities.
+ * Utilities for accessing strings from resources.
  *
- * This class is responsible for accessing all the string resources of the application.
- *
- * @since 0.1.3
+ * @since 1.0.0
  */
 object StringUtils {
     private val APP_NAME: Int = R.string.app_name
@@ -21,24 +19,80 @@ object StringUtils {
     /**
      * Get the application's name.
      *
-     * This method retrieves the application's name from given context (ex : an activity).
+     * @param context Context for retrieving strings from resources
      *
-     * @param context The context for retrieving the application's
      * @return The application's name
      *
-     * @since 0.1.3
+     * @since 1.0.0
+     *
+     * @see [Context]
      */
     fun appName(context: Context): String = context.getString(APP_NAME)
 
+    /**
+     * Get the string `OK` from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string `OK`
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     */
     fun ok(context: Context): String = context.getString(OK)
 
+    /**
+     * Get the string corresponding to permission denied from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string `OK`
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     */
     internal fun permissionDenied(context: Context): String = context.getString(PERMISSION_DENIED)
 
+    /**
+     * Get the permission dialog's message from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The permission dialog's message
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     */
     internal fun permissionDialogMessage(context: Context): String =
         context.getString(PERMISSION_DIALOG_MSG)
 
+    /**
+     * Get the permission dialog's title from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The permission dialog's title
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     */
     internal fun permissionDialogTitle(context: Context): String =
         context.getString(PERMISSION_DIALOG_TITLE)
 
+    /**
+     * Get the string corresponding to permission granted from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string corresponding to permission granted
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     */
     internal fun permissionGranted(context: Context): String = context.getString(PERMISSION_GRANTED)
 }

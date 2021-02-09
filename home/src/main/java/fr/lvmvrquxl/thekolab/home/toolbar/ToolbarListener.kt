@@ -9,7 +9,7 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * @param callback Toolbar's callback
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [IToolbarCallback]
  * @see [IToolbarListener]
@@ -29,7 +29,7 @@ internal class ToolbarListener private constructor(private val callback: IToolba
          *
          * @return New instance of listener's implementation
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [IToolbarCallback]
          * @see [IToolbarListener]

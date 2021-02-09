@@ -16,7 +16,7 @@ import fr.lvmvrquxl.thekolab.shared.utils.ToastUtils
  * @param activity Activity that requests permission
  * @param identity Identity of the permission
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Activity]
  * @see [PermissionIdentity]
@@ -33,7 +33,7 @@ abstract class Permission(
      * On other devices running API <= 22, permissions are granted or not on installation of the
      * application.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @SuppressLint("NewApi")
     fun check() {
@@ -50,7 +50,7 @@ abstract class Permission(
      *
      * @param grantResults Grant results
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [IntArray]
      */
@@ -71,7 +71,7 @@ abstract class Permission(
      *  - `true` : permission is granted
      *  - `false` : permission is denied
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @SuppressLint("NewApi")
     fun isGranted(): Boolean = PackageManager.PERMISSION_GRANTED ==

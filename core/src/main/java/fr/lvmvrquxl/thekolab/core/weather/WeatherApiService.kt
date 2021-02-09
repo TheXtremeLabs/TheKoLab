@@ -10,14 +10,14 @@ import retrofit2.http.Query
  *
  * This interface is responsible for managing data from OpenWeatherMap API.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal interface WeatherApiService {
     companion object {
         /**
          * Base URL of the API.
          *
-         * @since 0.1.3
+         * @since 1.0.0
          */
         const val BASE_URL: String = "http://api.openweathermap.org/data/2.5/"
         private const val ID: String = "47faa3e3eb39a298e9608fb62362c0a1"
@@ -33,7 +33,7 @@ internal interface WeatherApiService {
      *
      * @return Representation of the HTTP request
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [Call]
      * @see [WeatherDTO]

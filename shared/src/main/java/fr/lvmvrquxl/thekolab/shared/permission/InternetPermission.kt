@@ -8,7 +8,7 @@ import android.app.Activity
  *
  * @param activity Activity that requests permission
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Activity]
  * @see [Permission]
@@ -26,7 +26,7 @@ internal class InternetPermission private constructor(activity: Activity) :
          *
          * @param activity Activity that needs the permission
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Activity]
          * @see [Permission]

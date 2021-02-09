@@ -7,7 +7,7 @@ import java.text.DateFormat
  *
  * @param listener Listener of the time tracker
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [DateTimeTracker]
  * @see [DateTimeTrackerListener]

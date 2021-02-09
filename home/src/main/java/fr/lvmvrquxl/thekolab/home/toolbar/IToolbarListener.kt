@@ -7,7 +7,7 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * This interface is responsible for managing interactions with the collapsing toolbar.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [AppBarLayout.OnOffsetChangedListener]
  */
@@ -20,7 +20,7 @@ internal interface IToolbarListener : AppBarLayout.OnOffsetChangedListener {
          *
          * @return The new instance of toolbar's listener
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [IToolbarCallback]
          */

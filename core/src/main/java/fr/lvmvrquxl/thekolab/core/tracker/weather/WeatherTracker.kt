@@ -17,7 +17,7 @@ import retrofit2.Response
  *
  * @param listener Listener of weather tracker
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Tracker]
  * @see [WeatherTrackerListener]

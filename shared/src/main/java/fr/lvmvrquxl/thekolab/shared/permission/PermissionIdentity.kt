@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.shared.permission
 /**
  * Identity of permissions.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 data class PermissionIdentity(
     internal val name: String,

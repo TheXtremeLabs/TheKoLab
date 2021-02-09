@@ -26,7 +26,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * @param activity Instance of the home page activity
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [ActivityView]
  * @see [AppCompatActivity]
@@ -42,7 +42,7 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
          *
          * @return New instance of the home page view
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [AppCompatActivity]
          * @see [ActivityView]
@@ -102,7 +102,7 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     }
 
     private fun initPermissions() {
-        this.permissions = PermissionBuilder(this.activity)
+        this.permissions = PermissionBuilder.create(this.activity)
             .withInternet()
             .withLocation()
             .build()

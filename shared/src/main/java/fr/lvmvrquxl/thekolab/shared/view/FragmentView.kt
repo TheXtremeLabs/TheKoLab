@@ -3,26 +3,49 @@ package fr.lvmvrquxl.thekolab.shared.view
 import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Parent of all fragments view.
+ *
+ * @since 1.0.0
+ *
+ * @see [ActivityView]
+ * @see [FragmentView]
+ * @see [ViewBinding]
+ */
 abstract class FragmentView<VB : ViewBinding> : ActivityView<VB>() {
+    /**
+     * Callback when the view is creating.
+     *
+     * @since 1.0.0
+     */
     open fun onCreateView() {}
 
     /**
-     * Destroy the view.
+     * Callback when the view is destroying.
      *
-     * Destroy the current view binding setting it to `null`.
-     * For reading purpose, this method should be called from views manipulating elements of a
-     * fragment.
-     * If your view is manipulating elements of an activity, consider using [onDestroy] instead.
-     *
-     * @since 0.1.3
-     * @see onDestroy
+     * @since 1.0.0
      */
     @CallSuper
     open fun onDestroyView() = this.onDestroy()
 
+    /**
+     * Callback when the view is saving instance state.
+     *
+     * @since 1.0.0
+     */
     open fun onSaveInstanceState() {}
 
+    /**
+     * Callback when the view is created.
+     *
+     * @since 1.0.0
+     */
     open fun onViewCreated() {}
 
+    /**
+     * Callback when the view state is restored.
+     *
+     * @since 1.0.0
+     */
     open fun onViewStateRestored() {}
 }

@@ -7,7 +7,7 @@ import android.app.Activity
  *
  * @param activity Activity that requests permission
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Activity]
  */
@@ -20,7 +20,7 @@ class PermissionBuilder private constructor(private val activity: Activity) {
          *
          * @param activity Activity that requests permission
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Activity]
          */
@@ -36,7 +36,7 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      *
      * @throws [NoSuchElementException] If no permission was provided
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [List]
      * @see [Permission]
@@ -51,7 +51,7 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      *
      * @return Current instance of builder
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun withInternet(): PermissionBuilder {
         val permission: Permission = InternetPermission.create(this.activity)
@@ -64,7 +64,7 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      *
      * @return Current instance of builder
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun withLocation(): PermissionBuilder {
         val permission: Permission = LocationPermission.create(this.activity)

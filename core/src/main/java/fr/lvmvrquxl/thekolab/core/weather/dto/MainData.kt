@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Main weather data.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 data class MainData(
     /**
@@ -17,7 +17,7 @@ data class MainData(
      * - Celsius (metric)
      * - Fahrenheit (imperial).
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @Expose @SerializedName("temp") val temperature: Double,
     @SerializedName("feels_like") private val feelsLike: Double,

@@ -11,7 +11,7 @@ import fr.lvmvrquxl.thekolab.core.tracker.weather.WeatherTrackerListener
  *
  * This class should be used as an interface to build all trackers.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 class TrackerBuilder private constructor() {
     companion object {
@@ -22,7 +22,7 @@ class TrackerBuilder private constructor() {
          *
          * @return New instance of the builder
          *
-         * @since 0.1.3
+         * @since 1.0.0
          */
         fun create(): TrackerBuilder = TrackerBuilder()
     }
@@ -38,7 +38,7 @@ class TrackerBuilder private constructor() {
      *
      * @throws [NoSuchElementException] When no tracker was provided
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [List]
      * @see [NoSuchElementException]
@@ -60,7 +60,7 @@ class TrackerBuilder private constructor() {
      *
      * @return Current instance of the builder
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [DateTimeTrackerListener]
      * @see [TrackerBuilder]
@@ -77,7 +77,7 @@ class TrackerBuilder private constructor() {
      *
      * @return Current instance of the builder
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [DateTimeTrackerListener]
      * @see [TrackerBuilder]
@@ -94,7 +94,7 @@ class TrackerBuilder private constructor() {
      *
      * @return Current instance of the builder
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [TrackerBuilder]
      * @see [WeatherTrackerListener]

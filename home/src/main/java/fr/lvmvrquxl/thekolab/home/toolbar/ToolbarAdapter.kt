@@ -15,7 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
  * @param lifecycle Lifecycle of the view pager's host
  * @param fragments List of fragments to display in the view pager
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Fragment]
  * @see [FragmentManager]
@@ -37,7 +37,7 @@ internal class ToolbarAdapter private constructor(
          *
          * @return New instance of home toolbar's adapter
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [AppCompatActivity]
          * @see [Fragment]

@@ -5,13 +5,13 @@ import fr.lvmvrquxl.thekolab.core.weather.dto.WeatherDTO
 /**
  * Callback of the toolbar's weather.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal interface ToolbarWeatherCallback {
     /**
      * Show weather info.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun showWeather()
 
@@ -20,7 +20,7 @@ internal interface ToolbarWeatherCallback {
      *
      * @param weather Next weather info
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [WeatherDTO]
      */

@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
 /**
  * Callback of the toolbar's time view.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal interface ToolbarTimeCallback {
     /**
@@ -11,7 +11,7 @@ internal interface ToolbarTimeCallback {
      *
      * @param date New date text
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun updateDate(date: String)
 
@@ -20,7 +20,7 @@ internal interface ToolbarTimeCallback {
      *
      * @param time New time to display
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun updateTime(time: String)
 }

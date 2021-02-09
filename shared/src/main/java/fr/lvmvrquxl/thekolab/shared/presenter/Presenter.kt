@@ -7,7 +7,7 @@ import kotlinx.coroutines.*
 /**
  * Parent of all presenters.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 abstract class Presenter {
     companion object {
@@ -17,7 +17,7 @@ abstract class Presenter {
     /**
      * Scope of the coroutines.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [CoroutineName]
      * @see [CoroutineScope]
@@ -27,7 +27,7 @@ abstract class Presenter {
     /**
      * Trackers to use.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [List]
      * @see [Tracker]
@@ -37,7 +37,7 @@ abstract class Presenter {
     /**
      * Cancel all coroutines in the presenter's scope.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @CallSuper
     fun cancelCoroutines() = runBlocking(Dispatchers.Default) {
@@ -48,7 +48,7 @@ abstract class Presenter {
     /**
      * Launch background coroutines.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun startBackgroundCoroutines() = runBlocking(Dispatchers.Default) {
         this@Presenter.trackers.forEach { t: Tracker -> t.start() }

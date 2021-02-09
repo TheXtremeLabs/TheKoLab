@@ -14,7 +14,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @param inflater The object that can be used to inflate any views in the fragment
  * @param container Parent view that the fragment's UI should be attached to
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [FragmentView]
  * @see [LayoutInflater]
@@ -34,7 +34,7 @@ internal class ToolbarTimeView private constructor(
          *
          * @return New instance of the toolbar's time view
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [FragmentView]
          * @see [LayoutInflater]

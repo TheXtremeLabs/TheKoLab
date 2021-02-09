@@ -8,19 +8,19 @@ import com.google.gson.annotations.SerializedName
  *
  * This class is a representation of the JSON data returns by OpenWeatherMap API.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 data class WeatherDTO(
     /**
      * City name.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @Expose @SerializedName("name") val cityName: String,
     /**
      * Main weather data.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [MainData]
      */
@@ -28,7 +28,7 @@ data class WeatherDTO(
     /**
      * System data.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [System]
      */
@@ -36,7 +36,7 @@ data class WeatherDTO(
     /**
      * Weather info.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [List]
      * @see [Weather]

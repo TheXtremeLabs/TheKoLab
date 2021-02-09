@@ -13,7 +13,7 @@ import java.util.*
  * @param interval Interval between tracker's updating
  * @param listener Listener of date and time tracker
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [DateTimeTrackerListener]
  * @see [Tracker]
@@ -27,7 +27,7 @@ internal abstract class DateTimeTracker(
      *
      * This field should be an instance of date or an instance of time.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [DateFormat.getDateInstance]
      * @see [DateFormat.getTimeInstance]

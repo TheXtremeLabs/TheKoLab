@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.core.tracker.time
 /**
  * Listener of date and time trackers.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [DateTracker]
  * @see [TimeTracker]
@@ -14,7 +14,7 @@ fun interface DateTimeTrackerListener {
      *
      * @param value New value
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     fun updateValue(value: String)
 }

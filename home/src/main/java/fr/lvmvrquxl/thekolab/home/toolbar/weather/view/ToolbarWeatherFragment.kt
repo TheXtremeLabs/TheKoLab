@@ -13,7 +13,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
 /**
  * Toolbar's weather fragment.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Fragment]
  */
@@ -26,7 +26,7 @@ internal class ToolbarWeatherFragment private constructor() : Fragment(LAYOUT) {
          *
          * @return New instance of the toolbar's weather
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Fragment]
          */

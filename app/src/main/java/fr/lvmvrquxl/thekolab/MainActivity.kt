@@ -11,7 +11,7 @@ import fr.lvmvrquxl.thekolab.home.base.HomeActivity
  * This class is the entry point of the application.
  * It is responsible for loading the first view, which is currently [HomeActivity].
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

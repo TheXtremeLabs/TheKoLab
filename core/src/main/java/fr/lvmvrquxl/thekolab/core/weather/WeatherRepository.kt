@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  * This singleton object should be used for accessing weather info from API.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal object WeatherRepository {
     private var apiService: WeatherApiService? = null
@@ -33,7 +33,7 @@ internal object WeatherRepository {
      * @param longitude Location's longitude
      * @param callback Weather callback
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [Callback]
      */

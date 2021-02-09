@@ -16,7 +16,7 @@ import kotlinx.coroutines.*
  * @param activity Toolbar's weather activity
  * @param callback Toolbar's weather callback
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Activity]
  * @see [Presenter]
@@ -31,7 +31,7 @@ internal class ToolbarWeatherPresenter private constructor(
         /**
          * Code for resolving location settings.
          *
-         * @since 0.1.3
+         * @since 1.0.0
          */
         const val GPS_USABLE_REQUIRED: Int = 101
 
@@ -41,7 +41,7 @@ internal class ToolbarWeatherPresenter private constructor(
          * @param activity Toolbar's weather activity
          * @param callback Toolbar's weather callback
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Activity]
          * @see [Presenter]

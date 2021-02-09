@@ -8,7 +8,7 @@ import kotlinx.coroutines.cancel
 /**
  * Base class of all trackers.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 abstract class Tracker {
     companion object {
@@ -18,7 +18,7 @@ abstract class Tracker {
     /**
      * Coroutine's scope of the tracker.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [CoroutineName]
      * @see [CoroutineScope]
@@ -30,7 +30,7 @@ abstract class Tracker {
      *
      * @return Job of the coroutine that starts the tracker
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [coroutineScope]
      * @see [Job]
@@ -40,7 +40,7 @@ abstract class Tracker {
     /**
      * Cancel all coroutines of the tracker.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [coroutineScope]
      */

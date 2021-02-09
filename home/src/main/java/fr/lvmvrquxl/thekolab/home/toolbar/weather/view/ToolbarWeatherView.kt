@@ -20,7 +20,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @param container Parent view that the fragment's UI should be attached to
  * @param activity Toolbar's weather activity
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Activity]
  * @see [FragmentView]
@@ -41,7 +41,7 @@ internal class ToolbarWeatherView private constructor(
          * @param container Parent view that the fragment's UI should be attached to
          * @param activity Toolbar's weather activity
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Activity]
          * @see [FragmentView]

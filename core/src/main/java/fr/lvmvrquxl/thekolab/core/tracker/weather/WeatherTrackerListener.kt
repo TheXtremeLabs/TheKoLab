@@ -9,7 +9,7 @@ import kotlin.Exception
 /**
  * Listener of the weather tracker.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [WeatherTracker]
  */
@@ -19,7 +19,7 @@ interface WeatherTrackerListener {
      *
      * @return The location's provider
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [FusedLocationProviderClient]
      */
@@ -30,7 +30,7 @@ interface WeatherTrackerListener {
      *
      * @return Location's settings of the running device
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [SettingsClient]
      */
@@ -43,7 +43,7 @@ interface WeatherTrackerListener {
      *
      * @return Job of the coroutine that resolves the location settings
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [Exception]
      * @see [Job]
@@ -57,7 +57,7 @@ interface WeatherTrackerListener {
      *
      * @return Job of the coroutine that updates the weather info
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [Job]
      * @see [WeatherDTO]

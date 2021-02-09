@@ -15,7 +15,7 @@ import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
  * @param activity Home page's activity
  * @param toolbar Toolbar's view binding
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [AppCompatActivity]
  * @see [IToolbarCallback]
@@ -33,7 +33,7 @@ internal class ToolbarCallback private constructor(
          *
          * @return New instance of toolbar's callback implementation
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [AppCompatActivity]
          * @see [IToolbarCallback]

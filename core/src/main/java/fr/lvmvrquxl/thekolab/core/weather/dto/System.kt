@@ -5,13 +5,13 @@ import com.google.gson.annotations.Expose
 /**
  * System data.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 data class System(
     /**
      * Country code.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      */
     @Expose val country: String,
     private val id: Int,

@@ -10,7 +10,7 @@ import java.util.*
  *
  * @param callback Toolbar's time callback
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see [Presenter]
  * @see [ToolbarTimeCallback]
@@ -25,7 +25,7 @@ internal class ToolbarTimePresenter private constructor(private val callback: To
          *
          * @return New instance of toolbar's time presenter
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [Presenter]
          * @see [ToolbarTimeCallback]

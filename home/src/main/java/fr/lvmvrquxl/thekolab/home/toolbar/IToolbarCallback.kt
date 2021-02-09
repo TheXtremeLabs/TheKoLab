@@ -9,7 +9,7 @@ import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
  * This interface should be used to interact between the home page's view and
  * the toolbar's listener.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 internal interface IToolbarCallback {
     companion object {
@@ -21,7 +21,7 @@ internal interface IToolbarCallback {
          *
          * @return New instance of the toolbar's interactions callback
          *
-         * @since 0.1.3
+         * @since 1.0.0
          *
          * @see [AppCompatActivity]
          * @see [ToolbarBinding]
@@ -35,7 +35,7 @@ internal interface IToolbarCallback {
      *
      * Consider using the [showTabIndicators] method for showing the tab indicators.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [showTabIndicators]
      */
@@ -46,7 +46,7 @@ internal interface IToolbarCallback {
      *
      * Consider using the [showTitle] method for showing the collapsing toolbar's title.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [showTitle]
      */
@@ -57,7 +57,7 @@ internal interface IToolbarCallback {
      *
      * Consider using the [hideTabIndicators] method for hiding the tab indicators.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [hideTabIndicators]
      */
@@ -68,7 +68,7 @@ internal interface IToolbarCallback {
      *
      * Consider using the [hideTitle] method for hiding the collapsing toolbar's title.
      *
-     * @since 0.1.3
+     * @since 1.0.0
      *
      * @see [hideTitle]
      */
