@@ -2,8 +2,6 @@
 <resources>
 
     <style name="TheKoLab.Colors.Button" parent="">
-        <item name="android:letterSpacing">0.2</item>
-        <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/dark_grey</item>
         <item name="android:textSize">16sp</item>
@@ -19,14 +17,10 @@
     </style>
 
     <style name="TheKoLab.Colors.Name" parent="TheKoLab.TextAppearance.Display">
-        <item name="android:letterSpacing">0.2</item>
-        <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TheKoLab.Colors.Title" parent="">
-        <item name="android:letterSpacing">0.2</item>
-        <item name="android:textAlignment">center</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">32sp</item>
     </style>

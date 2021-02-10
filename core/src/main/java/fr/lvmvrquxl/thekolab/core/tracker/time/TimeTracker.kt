@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.core.tracker.time
 
 import java.text.DateFormat
+import java.util.*
 
 /**
  * Time tracker.
@@ -20,6 +21,6 @@ internal class TimeTracker(listener: DateTimeTrackerListener) :
     }
 
     init {
-        super.dateFormat = DateFormat.getTimeInstance(TIME_STYLE)
+        super.dateFormat = DateFormat.getTimeInstance(TIME_STYLE, Locale.FRENCH)
     }
 }

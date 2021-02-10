@@ -2,8 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="TheKoLab" parent="Theme.MaterialComponents">
+        <item name="android:colorEdgeEffect">@color/grey_700</item>
+        <item name="android:letterSpacing">0.2</item>
         <item name="android:navigationBarColor">@color/dark_grey</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_grey</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:windowContentTransitions" tools:ignore="NewApi">true</item>
         <item name="colorOnPrimary">@color/dark_grey</item>
