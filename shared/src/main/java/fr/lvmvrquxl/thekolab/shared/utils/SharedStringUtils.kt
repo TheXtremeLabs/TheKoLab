@@ -8,13 +8,16 @@ import fr.lvmvrquxl.thekolab.shared.R
  *
  * @since 1.0.0
  */
-object StringUtils {
-    private val APP_NAME: Int = R.string.app_name
-    private val PERMISSION_DENIED: Int = R.string.permission_denied
-    private val PERMISSION_DIALOG_MSG: Int = R.string.permission_dialog_msg
-    private val PERMISSION_DIALOG_TITLE: Int = R.string.permission_dialog_title
-    private val PERMISSION_GRANTED: Int = R.string.permission_granted
-    private val OK: Int = R.string.ok
+object SharedStringUtils {
+    private val appName: Int = R.string.app_name
+    private val ok: Int = R.string.ok
+    private val orange: Int = R.string.orange
+    private val permissionDenied: Int = R.string.permission_denied
+    private val permissionDialogMsg: Int = R.string.permission_dialog_msg
+    private val permissionDialogTitle: Int = R.string.permission_dialog_title
+    private val permissionGranted: Int = R.string.permission_granted
+    private val purple: Int = R.string.purple
+    private val white: Int = R.string.white
 
     /**
      * Get the application's name.
@@ -27,7 +30,7 @@ object StringUtils {
      *
      * @see [Context]
      */
-    fun appName(context: Context): String = context.getString(APP_NAME)
+    fun appName(context: Context): String = context.getString(this.appName)
 
     /**
      * Get the string `OK` from resources.
@@ -40,7 +43,13 @@ object StringUtils {
      *
      * @see [Context]
      */
-    fun ok(context: Context): String = context.getString(OK)
+    fun ok(context: Context): String = context.getString(this.ok)
+
+    fun orange(context: Context): String = context.getString(this.orange)
+
+    fun purple(context: Context): String = context.getString(this.purple)
+
+    fun white(context: Context): String = context.getString(this.white)
 
     /**
      * Get the string corresponding to permission denied from resources.
@@ -53,7 +62,8 @@ object StringUtils {
      *
      * @see [Context]
      */
-    internal fun permissionDenied(context: Context): String = context.getString(PERMISSION_DENIED)
+    internal fun permissionDenied(context: Context): String =
+        context.getString(this.permissionDenied)
 
     /**
      * Get the permission dialog's message from resources.
@@ -67,7 +77,7 @@ object StringUtils {
      * @see [Context]
      */
     internal fun permissionDialogMessage(context: Context): String =
-        context.getString(PERMISSION_DIALOG_MSG)
+        context.getString(this.permissionDialogMsg)
 
     /**
      * Get the permission dialog's title from resources.
@@ -81,7 +91,7 @@ object StringUtils {
      * @see [Context]
      */
     internal fun permissionDialogTitle(context: Context): String =
-        context.getString(PERMISSION_DIALOG_TITLE)
+        context.getString(this.permissionDialogTitle)
 
     /**
      * Get the string corresponding to permission granted from resources.
@@ -94,5 +104,6 @@ object StringUtils {
      *
      * @see [Context]
      */
-    internal fun permissionGranted(context: Context): String = context.getString(PERMISSION_GRANTED)
+    internal fun permissionGranted(context: Context): String =
+        context.getString(this.permissionGranted)
 }

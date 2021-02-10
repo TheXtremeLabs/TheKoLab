@@ -47,11 +47,6 @@ class HomeActivity : AppCompatActivity() {
         this.view?.onRequestPermissionsResult(grantResults)
     }
 
-    override fun onResume() {
-        super.onResume()
-        this.view?.onResume()
-    }
-
     override fun onStart() {
         super.onStart()
         this.view?.onStart()

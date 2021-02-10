@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.TextAppearance.Body" />
+
+    <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.TextAppearance.Display" />
+
+    <style name="TheKoLab.Toolbar.Weather.Degree" parent="TheKoLab.TextAppearance.Display" />
+
+    <style name="TheKoLab.Toolbar.Weather.Description" parent="TheKoLab.TextAppearance.Body" />
+
+    <style name="TheKoLab.Toolbar.Weather.Location" parent="TheKoLab.TextAppearance.Headline" />
+
+</resources>

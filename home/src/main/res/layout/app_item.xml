@@ -1,101 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:layout_marginTop="@dimen/extra_small"
+    android:layout_marginVertical="@dimen/extra_small"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="?android:attr/colorBackground"
+    app:cardBackgroundColor="@color/grey_800"
     app:cardCornerRadius="@dimen/small"
     app:cardElevation="@dimen/small"
     app:cardPreventCornerOverlap="true"
     app:cardUseCompatPadding="true"
-    tools:cardBackgroundColor="@color/oil">
-
-    <include layout="@layout/app_item_background" />
+    app:rippleColor="@color/grey_700">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/small">
+        android:padding="@dimen/small"
+        tools:background="@color/grey_800">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middle_vertical_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middle_horizontal_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_item_icon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:fitsSystemWindows="true"
-            android:padding="@dimen/small"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/left_guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/thekolab_logo_white" />
+            app:layout_constraintGuide_percent="0.9" />
 
         <TextView
-            android:id="@+id/app_item_title"
+            android:id="@+id/app_item_name"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="bottom"
-            android:paddingHorizontal="16dp"
-            android:textAppearance="@style/TheKoLab.AppItem.Title"
+            android:alpha="0.75"
+            android:gravity="center"
+            android:letterSpacing="0.2"
+            android:paddingHorizontal="8dp"
+            android:textAlignment="center"
+            android:textAllCaps="true"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/middle_horizontal_guideline"
-            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
-            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/left_guideline"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title app" />
+            tools:text="App title"
+            tools:textColor="@color/white" />
 
         <TextView
             android:id="@+id/app_item_description"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:gravity="center|start"
             android:paddingHorizontal="16dp"
-            android:textAppearance="@style/TheKoLab.AppItem.Subhead"
+            android:textAppearance="@style/TheKoLab.TextAppearance.Subhead"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
-            app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@id/middle_horizontal_guideline"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintStart_toEndOf="@id/left_guideline"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="NewApi"
-            tools:text="App description" />
+            tools:text="A little description of the application"
+            tools:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="match_parent"
+            android:alpha="0.75"
             android:fitsSystemWindows="true"
             android:src="@drawable/keyboard_arrow_right_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -105,4 +82,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
-import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 
 /**
  * Implementation of toolbar's interactions.
@@ -71,6 +71,6 @@ internal class ToolbarCallback private constructor(
     }
 
     override fun showTitle() {
-        this.toolbar.collapsingToolbar.title = StringUtils.appName(this.activity)
+        this.toolbar.collapsingToolbar.title = SharedStringUtils.appName(this.activity)
     }
 }

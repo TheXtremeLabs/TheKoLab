@@ -3,11 +3,16 @@ package fr.lvmvrquxl.thekolab.home.base
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import fr.lvmvrquxl.thekolab.colors.ColorsActivity
+import fr.lvmvrquxl.thekolab.home.app.AppAdapter
+import fr.lvmvrquxl.thekolab.home.app.model.App
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.ToolbarAdapter
@@ -51,6 +56,11 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
             HomeView(activity)
     }
 
+    private val apps: List<App> = mutableListOf(
+        App("Colors", "Change colors programmatically", ColorsActivity::class.java)
+    )
+    private val appAdapter: AppAdapter = AppAdapter(this.apps)
+    private var appsRecyclerView: RecyclerView? = null
     private var collapsingToolbar: CollapsingToolbarLayout? = null
     private var permissions: List<Permission>? = null
     private var toolbar: ToolbarBinding? = null
@@ -77,6 +87,14 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         this.initPermissions()
         this.checkPermissions()
         this.setViewPager()
+        this.applyAppsRecyclerView()
+    }
+
+    private fun applyAppsRecyclerView() {
+        this.appsRecyclerView?.apply {
+            this.layoutManager = LinearLayoutManager(this@HomeView.activity)
+            this.adapter = this@HomeView.appAdapter
+        }
     }
 
     private fun arePermissionsGranted(): Boolean =
@@ -86,6 +104,7 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
         this.toolbar = super.viewBinding?.homeToolbar
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
+        this.appsRecyclerView = super.viewBinding?.appList?.appsRecyclerView
     }
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
