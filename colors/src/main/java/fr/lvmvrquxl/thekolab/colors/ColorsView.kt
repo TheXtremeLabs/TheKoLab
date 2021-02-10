@@ -29,9 +29,9 @@ internal class ColorsView private constructor(private val activity: Activity) :
     override fun onCreate() = this.bindViews()
 
     override fun onStart() {
-        super.viewBinding?.backArrow?.setOnClickListener { this.activity.onBackPressed() }
+        super.viewBinding?.colorsToolbar?.backArrow?.setOnClickListener { this.activity.onBackPressed() }
         super.viewBinding?.let { binding: ColorsActivityBinding ->
-            binding.changeColors.setOnClickListener { view: View ->
+            binding.colorsContent.changeColors.setOnClickListener { view: View ->
                 val shortDuration: Int =
                     this.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
                 val animators: MutableList<ObjectAnimator> = mutableListOf()
@@ -52,7 +52,7 @@ internal class ColorsView private constructor(private val activity: Activity) :
                 )
                 animators.add(
                     ObjectAnimator.ofObject(
-                        binding.title,
+                        binding.colorsToolbar.title,
                         "textColor",
                         ArgbEvaluator(),
                         previousBackgroundColor,
@@ -61,7 +61,7 @@ internal class ColorsView private constructor(private val activity: Activity) :
                 )
                 animators.add(
                     ObjectAnimator.ofObject(
-                        binding.backArrow,
+                        binding.colorsToolbar.backArrow,
                         "colorFilter",
                         ArgbEvaluator(),
                         previousBackgroundColor,
@@ -71,7 +71,7 @@ internal class ColorsView private constructor(private val activity: Activity) :
                 animators.forEach { it.setDuration(shortDuration.toLong()).start() }
                 val mediumDuration: Int =
                     this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime)
-                binding.currentColor.apply {
+                binding.colorsContent.colorName.apply {
                     this.animate()
                         .alpha(0f)
                         .setDuration(shortDuration.toLong())

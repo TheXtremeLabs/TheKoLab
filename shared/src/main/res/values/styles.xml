@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="TheKoLab.ShapeAppearance.Image.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="TheKoLab.TextAppearance.Body" parent="TextAppearance.AppCompat.Body2" />
 
     <style name="TheKoLab.TextAppearance.Display" parent="TextAppearance.AppCompat.Display3" />

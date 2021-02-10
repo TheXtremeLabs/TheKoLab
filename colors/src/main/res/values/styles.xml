@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="circle_image">
-        <item name="cornerSize">50%</item>
-        <item name="cornerFamily">rounded</item>
+    <style name="TheKoLab.Colors.Button" parent="">
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="TheKoLab.Colors.Button.Back" parent="">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:layout_margin">@dimen/medium</item>
+        <item name="android:rotation">180</item>
+        <item name="shapeAppearance">@style/TheKoLab.ShapeAppearance.Image.Circle</item>
+        <item name="srcCompat">@drawable/keyboard_arrow</item>
+    </style>
+
+    <style name="TheKoLab.Colors.Name" parent="TheKoLab.TextAppearance.Display">
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TheKoLab.Colors.Title" parent="">
+        <item name="android:letterSpacing">0.2</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="TheKoLab.Colors.Toolbar" parent="">
+        <item name="android:alpha">0.75</item>
     </style>
 
 </resources>
