@@ -3,15 +3,15 @@
 
     <style name="TheKoLab.Colors.Button" parent="">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/dark_grey</item>
-        <item name="android:textSize">16sp</item>
-        <item name="cornerRadius">16dp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="cornerRadius">@dimen/medium</item>
     </style>
 
     <style name="TheKoLab.Colors.Button.Back" parent="">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/medium</item>
-        <item name="android:rotation">180</item>
+        <item name="android:rotation">@dimen/rotation_mirror</item>
         <item name="shapeAppearance">@style/TheKoLab.ShapeAppearance.Image.Circle</item>
         <item name="srcCompat">@drawable/keyboard_arrow</item>
     </style>
@@ -22,11 +22,11 @@
 
     <style name="TheKoLab.Colors.Title" parent="">
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">@dimen/text_title</item>
     </style>
 
     <style name="TheKoLab.Colors.Toolbar" parent="">
-        <item name="android:alpha">0.75</item>
+        <item name="android:alpha">@dimen/alpha_smooth</item>
     </style>
 
 </resources>
