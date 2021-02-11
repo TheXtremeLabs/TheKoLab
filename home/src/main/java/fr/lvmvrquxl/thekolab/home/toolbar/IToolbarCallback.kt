@@ -42,15 +42,15 @@ internal interface IToolbarCallback {
     fun hideTabIndicators()
 
     /**
-     * Hide the collapsing toolbar's title.
+     * Hide the toolbar's content.
      *
-     * Consider using the [showTitle] method for showing the collapsing toolbar's title.
+     * Consider using the [showToolbarContent] method for showing the toolbar's content.
      *
      * @since 1.0.0
      *
-     * @see [showTitle]
+     * @see [showToolbarContent]
      */
-    fun hideTitle()
+    fun hideToolbarContent()
 
     /**
      * Show the tab indicators of the toolbar's view pager.
@@ -64,13 +64,13 @@ internal interface IToolbarCallback {
     fun showTabIndicators()
 
     /**
-     * Show the collapsing toolbar's title.
+     * Show the toolbar's content.
      *
-     * Consider using the [hideTitle] method for hiding the collapsing toolbar's title.
+     * Consider using the [hideToolbarContent] method for hiding the toolbar's content.
      *
      * @since 1.0.0
      *
-     * @see [hideTitle]
+     * @see [hideToolbarContent]
      */
-    fun showTitle()
+    fun showToolbarContent()
 }

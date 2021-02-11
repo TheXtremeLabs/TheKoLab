@@ -22,6 +22,7 @@ import fr.lvmvrquxl.thekolab.home.toolbar.time.view.ToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
 import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
+import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
@@ -109,15 +110,13 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
-    private fun initAppBar() {
-        val appBar: AppBarLayout? = this.toolbar?.root
-        appBar?.setExpanded(true)
-        val callback: IToolbarCallback? = this.toolbar?.let { toolbar: ToolbarBinding ->
-            IToolbarCallback.create(this.activity, toolbar)
-        }
-        val toolbarListener: IToolbarListener? =
-            callback?.let { c: IToolbarCallback -> IToolbarListener.create(c) }
-        appBar?.addOnOffsetChangedListener(toolbarListener)
+    private fun initAppBar() = this.toolbar?.let { binding: ToolbarBinding ->
+        val appBar: AppBarLayout = binding.root
+        appBar.setExpanded(true)
+        val callback: IToolbarCallback = IToolbarCallback.create(this.activity, binding)
+        val toolbarListener: IToolbarListener = IToolbarListener.create(callback)
+        appBar.addOnOffsetChangedListener(toolbarListener)
+        binding.versionName.text = SharedStringUtils.versionName(this.activity)
     }
 
     private fun initPermissions() {

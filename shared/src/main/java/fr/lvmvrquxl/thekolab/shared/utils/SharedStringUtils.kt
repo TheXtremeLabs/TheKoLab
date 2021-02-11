@@ -9,7 +9,6 @@ import fr.lvmvrquxl.thekolab.shared.R
  * @since 1.0.0
  */
 object SharedStringUtils {
-    private val appName: Int = R.string.app_name
     private val ok: Int = R.string.ok
     private val orange: Int = R.string.orange
     private val permissionDenied: Int = R.string.permission_denied
@@ -18,19 +17,6 @@ object SharedStringUtils {
     private val permissionGranted: Int = R.string.permission_granted
     private val purple: Int = R.string.purple
     private val white: Int = R.string.white
-
-    /**
-     * Get the application's name.
-     *
-     * @param context Context for retrieving strings from resources
-     *
-     * @return The application's name
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
-     */
-    fun appName(context: Context): String = context.getString(this.appName)
 
     /**
      * Get the string `OK` from resources.
@@ -48,6 +34,9 @@ object SharedStringUtils {
     fun orange(context: Context): String = context.getString(this.orange)
 
     fun purple(context: Context): String = context.getString(this.purple)
+
+    fun versionName(context: Context): String =
+        context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
     fun white(context: Context): String = context.getString(this.white)
 
