@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="TheKoLab" parent="Theme.MaterialComponents">
+    <style name="TheKoLab.Theme" parent="Theme.MaterialComponents">
         <item name="android:colorEdgeEffect">@color/grey_700</item>
         <item name="android:letterSpacing">0.2</item>
         <item name="android:navigationBarColor">@color/dark_grey</item>
@@ -15,9 +15,10 @@
         <item name="colorPrimaryVariant">@color/orange_300</item>
         <item name="colorSecondary">@color/purple_300</item>
         <item name="colorSecondaryVariant">@color/purple_700</item>
+        <item name="colorSurface">@color/dark_grey</item>
     </style>
 
-    <style name="TheKoLab.NoActionBar" parent="TheKoLab">
+    <style name="TheKoLab.Theme.NoActionBar" parent="TheKoLab.Theme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

@@ -61,7 +61,7 @@ internal class ToolbarCallback private constructor(
         this.toolbar.tabIndicators.apply {
             this.animate()
                 .alpha(0.75f)
-                .setDuration(animationDuration.toLong())
+                .setDuration(this@ToolbarCallback.animationDuration.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: Animator?) {
                         this@apply.visibility = View.VISIBLE

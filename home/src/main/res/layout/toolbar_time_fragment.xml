@@ -3,31 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/backdrop_height"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:background="@color/purple_700">
+    android:layout_height="match_parent"
+    tools:background="@color/dark_grey">
 
     <TextView
         android:id="@+id/toolbar_time"
         style="@style/TheKoLab.Toolbar.Time"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/toolbar_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="15:20" />
+        tools:alpha="0.75"
+        tools:text="15:20"
+        tools:textColor="@color/white" />
 
     <TextView
         android:id="@+id/toolbar_date"
         style="@style/TheKoLab.Toolbar.Date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_time"
-        tools:text="20 janv. 2021" />
+        tools:text="20 janv. 2021"
+        tools:textColor="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

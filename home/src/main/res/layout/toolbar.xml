@@ -1,44 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/TheKoLab.Toolbar.AppBar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fitsSystemWindows="true">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsing_toolbar"
+        style="@style/TheKoLab.Toolbar.Collapsing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_grey"
-        app:contentScrim="@color/dark_grey"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:scrimAnimationDuration="275"
-        app:statusBarScrim="@color/dark_grey">
+        android:layout_height="match_parent">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
+            style="@style/TheKoLab.Toolbar.Pager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/backdrop_height"
-            android:fitsSystemWindows="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_collapseMode="parallax" />
+            android:layout_height="@dimen/backdrop_height" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_indicators"
+            style="@style/TheKoLab.Toolbar.Tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:alpha="0.75"
-            android:background="@color/transparent"
-            app:tabBackground="@drawable/toolbar_tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp" />
+            android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/TheKoLab.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin" />
+            android:layout_height="?attr/actionBarSize" />
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 

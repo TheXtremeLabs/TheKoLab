@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.TextAppearance.Body" />
+    <style name="TheKoLab.App.Arrow" parent="">
+        <item name="android:alpha">0.75</item>
+        <item name="android:src">@drawable/keyboard_arrow</item>
+    </style>
 
-    <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.TextAppearance.Display" />
+    <style name="TheKoLab.App.Card" parent="">
+        <item name="android:layout_marginVertical" tools:targetApi="o">@dimen/extra_small</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="cardBackgroundColor">@color/grey_800</item>
+        <item name="cardCornerRadius">@dimen/small</item>
+        <item name="cardElevation">@dimen/small</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="rippleColor">@color/grey_700</item>
+    </style>
+
+    <style name="TheKoLab.App.Description" parent="">
+        <item name="android:gravity">center|start</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/small</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TheKoLab.App.Name" parent="">
+        <item name="android:alpha">0.75</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/small</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TheKoLab.App.NestedScroll" parent="">
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarFadeDuration">0</item>
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+    </style>
+
+    <style name="TheKoLab.App.Recycler" parent="">
+        <item name="android:orientation">vertical</item>
+        <item name="android:scrollbarFadeDuration">800</item>
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar" parent="">
+        <item name="layout_collapseMode">pin</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.AppBar" parent="">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Collapsing" parent="">
+        <item name="android:background">?attr/colorSurface</item>
+        <item name="collapsedTitleTextAppearance">@style/TheKoLab.Toolbar.Collapsing.Title</item>
+        <item name="contentScrim">?attr/colorSurface</item>
+        <item name="expandedTitleTextAppearance">@style/TheKoLab.Toolbar.Collapsing.Title</item>
+        <item name="layout_scrollFlags">exitUntilCollapsed|scroll</item>
+        <item name="scrimAnimationDuration">275</item>
+        <item name="statusBarScrim">?attr/colorSurface</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Collapsing.Title" parent="TheKoLab.TextAppearance.Headline" />
+
+    <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.TextAppearance.Body">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.TextAppearance.Display">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Pager" parent="">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="layout_behavior">@string/appbar_scrolling_view_behavior</item>
+        <item name="layout_collapseMode">parallax</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Tab" parent="">
+        <item name="android:alpha">0.75</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="tabBackground">@drawable/toolbar_tab_selector</item>
+        <item name="tabGravity">center</item>
+        <item name="tabIndicatorHeight">0dp</item>
+    </style>
+
+    <style name="TheKoLab.Toolbar.Weather.Condition" parent="TheKoLab.TextAppearance.Body" />
+
+    <style name="TheKoLab.Toolbar.Weather.Country" parent="TheKoLab.Toolbar.Weather.Location">
+        <item name="android:layout_marginStart">@dimen/extra_small</item>
+    </style>
 
     <style name="TheKoLab.Toolbar.Weather.Degree" parent="TheKoLab.TextAppearance.Display" />
 
-    <style name="TheKoLab.Toolbar.Weather.Description" parent="TheKoLab.TextAppearance.Body" />
-
     <style name="TheKoLab.Toolbar.Weather.Location" parent="TheKoLab.TextAppearance.Headline" />
+
+    <style name="TheKoLab.Toolbar.Weather.Progress.Circle" parent="">
+        <item name="android:indeterminateDrawable">@drawable/circle_progress_bar</item>
+        <item name="android:indeterminateDuration">1500</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
 
 </resources>
