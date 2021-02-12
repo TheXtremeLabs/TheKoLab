@@ -17,6 +17,7 @@
     </style>
 
     <style name="TheKoLab.Colors.Name" parent="TheKoLab.TextAppearance.Display">
+        <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
