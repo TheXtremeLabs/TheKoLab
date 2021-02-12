@@ -18,23 +18,23 @@
         style="@style/TheKoLab.Colors.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/white"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/change_colors"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/top_guideline"
+        tools:text="@string/white"
+        tools:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/change_colors"
         style="@style/TheKoLab.Colors.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
         android:text="@string/change_colors"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/color_name" />
+        app:layout_constraintTop_toBottomOf="@id/color_name"
+        tools:backgroundTint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

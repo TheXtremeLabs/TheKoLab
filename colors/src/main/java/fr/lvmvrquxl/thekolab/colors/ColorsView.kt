@@ -31,6 +31,12 @@ internal class ColorsView private constructor(private val activity: Activity) :
     override fun onStart() {
         super.viewBinding?.colorsToolbar?.backArrow?.setOnClickListener { this.activity.onBackPressed() }
         super.viewBinding?.let { binding: ColorsActivityBinding ->
+            val currentColor: Int = this.previousColor.getColor(this@ColorsView.activity)
+            binding.colorsContent.colorName.apply {
+                this.text = this@ColorsView.previousColor.name
+                this.setTextColor(currentColor)
+            }
+            binding.colorsContent.changeColors.setBackgroundColor(currentColor)
             binding.colorsContent.changeColors.setOnClickListener { view: View ->
                 val shortDuration: Int =
                     this.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
