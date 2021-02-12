@@ -53,11 +53,7 @@
         <item name="layout_collapseMode">pin</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.AppBar" parent="">
-        <item name="android:fitsSystemWindows">true</item>
-    </style>
-
-    <style name="TheKoLab.Toolbar.Collapsing" parent="">
+    <style name="TheKoLab.Toolbar.Collapsing" parent="TheKoLab.Layout">
         <item name="android:background">?attr/colorSurface</item>
         <item name="collapsedTitleTextAppearance">@style/TheKoLab.Toolbar.Collapsing.Title</item>
         <item name="contentScrim">?attr/colorSurface</item>
@@ -67,17 +63,17 @@
         <item name="statusBarScrim">?attr/colorSurface</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Collapsing.Title" parent="TheKoLab.TextAppearance.Headline" />
+    <style name="TheKoLab.Toolbar.Collapsing.Title" parent="TheKoLab.Text.Headline" />
 
-    <style name="TheKoLab.Toolbar.Content.Layout" parent="">
+    <style name="TheKoLab.Toolbar.Content.Layout" parent="TheKoLab.Layout">
         <item name="android:alpha">@dimen/alpha_smooth</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.TextAppearance.Body">
+    <style name="TheKoLab.Toolbar.Date" parent="TheKoLab.Text.Body">
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.TextAppearance.Display">
+    <style name="TheKoLab.Toolbar.Time" parent="TheKoLab.Text.Display">
         <item name="android:gravity">center</item>
     </style>
 
@@ -87,7 +83,7 @@
         <item name="layout_collapseMode">parallax</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Tab" parent="">
+    <style name="TheKoLab.Toolbar.Tab" parent="TheKoLab.Layout">
         <item name="android:alpha">0.75</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:background">@color/transparent</item>
@@ -102,15 +98,15 @@
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Weather.Condition" parent="TheKoLab.TextAppearance.Body" />
+    <style name="TheKoLab.Toolbar.Weather.Condition" parent="TheKoLab.Text.Body" />
 
     <style name="TheKoLab.Toolbar.Weather.Country" parent="TheKoLab.Toolbar.Weather.Location">
         <item name="android:layout_marginStart">@dimen/extra_small</item>
     </style>
 
-    <style name="TheKoLab.Toolbar.Weather.Degree" parent="TheKoLab.TextAppearance.Display" />
+    <style name="TheKoLab.Toolbar.Weather.Degree" parent="TheKoLab.Text.Display" />
 
-    <style name="TheKoLab.Toolbar.Weather.Location" parent="TheKoLab.TextAppearance.Headline" />
+    <style name="TheKoLab.Toolbar.Weather.Location" parent="TheKoLab.Text.Headline" />
 
     <style name="TheKoLab.Toolbar.Weather.Progress.Circle" parent="">
         <item name="android:indeterminateDrawable">@drawable/circle_progress_bar</item>

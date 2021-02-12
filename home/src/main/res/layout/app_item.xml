@@ -7,6 +7,7 @@
     android:layout_height="128dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/TheKoLab.Layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/small"
@@ -14,15 +15,13 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/TheKoLab.Guideline"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/TheKoLab.Guideline"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9" />
 

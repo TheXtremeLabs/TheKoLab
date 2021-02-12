@@ -12,11 +12,11 @@
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/medium</item>
         <item name="android:rotation">@dimen/rotation_mirror</item>
-        <item name="shapeAppearance">@style/TheKoLab.ShapeAppearance.Image.Circle</item>
+        <item name="shapeAppearance">@style/TheKoLab.Shape.Image.Circle</item>
         <item name="srcCompat">@drawable/keyboard_arrow</item>
     </style>
 
-    <style name="TheKoLab.Colors.Name" parent="TheKoLab.TextAppearance.Display">
+    <style name="TheKoLab.Colors.Name" parent="TheKoLab.Text.Display">
         <item name="android:gravity">center</item>
         <item name="android:textAllCaps">true</item>
     </style>
@@ -26,7 +26,7 @@
         <item name="android:textSize">@dimen/text_title</item>
     </style>
 
-    <style name="TheKoLab.Colors.Toolbar" parent="">
+    <style name="TheKoLab.Colors.Toolbar" parent="TheKoLab.Layout">
         <item name="android:alpha">@dimen/alpha_smooth</item>
     </style>
 
