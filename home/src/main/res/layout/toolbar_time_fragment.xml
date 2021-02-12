@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:background="@color/dark_grey">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/toolbar_time"
         style="@style/TheKoLab.Toolbar.Time"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         tools:text="15:20"
         tools:textColor="@color/white" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/toolbar_date"
         style="@style/TheKoLab.Toolbar.Date"
         android:layout_width="match_parent"

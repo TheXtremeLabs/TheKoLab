@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_city"
                 style="@style/TheKoLab.Toolbar.Weather.Location"
                 android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/paris" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_comma"
                 style="@style/TheKoLab.Toolbar.Weather.Location"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 app:layout_constraintStart_toEndOf="@id/weather_location_city"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_country"
                 style="@style/TheKoLab.Toolbar.Weather.Country"
                 android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
             app:layout_constraintBottom_toTopOf="@id/weather_condition"
             app:layout_constraintTop_toBottomOf="@id/weather_location">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_number"
                 style="@style/TheKoLab.Toolbar.Weather.Degree"
                 android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/x" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_celsius"
                 style="@style/TheKoLab.Toolbar.Weather.Degree"
                 android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/weather_condition"
             style="@style/TheKoLab.Toolbar.Weather.Condition"
             android:layout_width="wrap_content"

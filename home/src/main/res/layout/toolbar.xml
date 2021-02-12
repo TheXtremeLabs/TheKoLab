@@ -61,7 +61,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/thekolab_logo_white" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/v"
                     style="@style/TheKoLab.Toolbar.Version"
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                     app:layout_constraintStart_toEndOf="@id/right_guideline"
                     tools:textColor="@color/white" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/version_name"
                     style="@style/TheKoLab.Toolbar.Version"
                     android:layout_width="wrap_content"

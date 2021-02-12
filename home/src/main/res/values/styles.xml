@@ -3,7 +3,7 @@
 
     <style name="TheKoLab.App.Arrow" parent="">
         <item name="android:alpha">0.75</item>
-        <item name="android:src">@drawable/keyboard_arrow</item>
+        <item name="srcCompat">@drawable/keyboard_arrow</item>
     </style>
 
     <style name="TheKoLab.App.Card" parent="">

@@ -26,7 +26,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_item_name"
             style="@style/TheKoLab.App.Name"
             android:layout_width="0dp"
@@ -36,7 +36,7 @@
             tools:text="App title"
             tools:textColor="@color/white" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_item_description"
             style="@style/TheKoLab.App.Description"
             android:layout_width="0dp"
@@ -46,7 +46,8 @@
             tools:text="A little description of the application"
             tools:textColor="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/back_arrow"
             style="@style/TheKoLab.App.Arrow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
