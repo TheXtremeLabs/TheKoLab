@@ -1,7 +1,7 @@
-package fr.lvmvrquxl.thekolab.colors
+package fr.lvmvrquxl.thekolab.colors.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 

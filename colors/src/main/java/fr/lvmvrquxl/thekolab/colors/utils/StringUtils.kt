@@ -1,6 +1,7 @@
-package fr.lvmvrquxl.thekolab.colors
+package fr.lvmvrquxl.thekolab.colors.utils
 
 import android.content.Context
+import fr.lvmvrquxl.thekolab.colors.R
 import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 
 internal object StringUtils {

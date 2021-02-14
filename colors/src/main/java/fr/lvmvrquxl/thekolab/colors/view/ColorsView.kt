@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors
+package fr.lvmvrquxl.thekolab.colors.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -7,7 +7,10 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import fr.lvmvrquxl.thekolab.colors.utils.ColorUtils
+import fr.lvmvrquxl.thekolab.colors.utils.StringUtils
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
+import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 internal class ColorsView private constructor(private val activity: Activity) :

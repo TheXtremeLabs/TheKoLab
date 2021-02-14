@@ -1,7 +1,8 @@
-package fr.lvmvrquxl.thekolab.colors
+package fr.lvmvrquxl.thekolab.colors.utils
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import fr.lvmvrquxl.thekolab.colors.R
 import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 
 internal object ColorUtils {

@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors
+package fr.lvmvrquxl.thekolab.colors.model
 
 import android.content.Context
 
