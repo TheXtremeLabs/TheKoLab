@@ -16,7 +16,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/color_name"
-        style="@style/TheKoLab.Colors.Name"
+        style="@style/TheKoLab.Text.Headline2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/change_colors"

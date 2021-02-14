@@ -38,7 +38,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_city"
-                style="@style/TheKoLab.Toolbar.Weather.Location"
+                style="@style/TheKoLab.Text.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_comma"
-                style="@style/TheKoLab.Toolbar.Weather.Location"
+                style="@style/TheKoLab.Text.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/comma"
@@ -82,7 +82,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_number"
-                style="@style/TheKoLab.Toolbar.Weather.Degree"
+                style="@style/TheKoLab.Text.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +94,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_celsius"
-                style="@style/TheKoLab.Toolbar.Weather.Degree"
+                style="@style/TheKoLab.Text.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/degree_celsius"
@@ -107,12 +107,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/weather_condition"
-            style="@style/TheKoLab.Toolbar.Weather.Condition"
-            android:layout_width="wrap_content"
+            style="@style/TheKoLab.Text.Body"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weather_degree"
             tools:text="@string/light_rain" />
 

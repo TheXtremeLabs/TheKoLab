@@ -10,19 +10,37 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
-    <style name="TheKoLab.Shape.Image.Circle" parent="">
+    <style name="TheKoLab.Layout.Smooth" parent="TheKoLab.Layout">
+        <item name="android:alpha">@dimen/alpha_smooth</item>
+    </style>
+
+    <style name="TheKoLab.Shape.Arrow" parent="">
+        <item name="srcCompat">@drawable/keyboard_arrow</item>
+    </style>
+
+    <style name="TheKoLab.Shape.Circle.Image" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="TheKoLab.Text.Body" parent="TextAppearance.AppCompat.Body2" />
+    <style name="TheKoLab.Text.Body" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:gravity">center</item>
+        <item name="android:letterSpacing">?android:letterSpacing</item>
+    </style>
 
-    <style name="TheKoLab.Text.Display" parent="TextAppearance.AppCompat.Display3" />
+    <style name="TheKoLab.Text.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">true</item>
+        <item name="cornerRadius">@dimen/medium</item>
+    </style>
 
-    <style name="TheKoLab.Text.Headline" parent="TextAppearance.AppCompat.Headline" />
+    <style name="TheKoLab.Text.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:gravity">center</item>
+        <item name="android:letterSpacing">?android:letterSpacing</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 
-    <style name="TheKoLab.Text.Subhead" parent="TextAppearance.MaterialComponents.Subtitle1" />
-
-    <style name="TheKoLab.Text.Title" parent="@android:style/TextAppearance.Material.Title" />
+    <style name="TheKoLab.Text.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:letterSpacing">@dimen/letter_spacing_smooth</item>
+    </style>
 
 </resources>

@@ -1,33 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="TheKoLab.Colors.Button" parent="">
-        <item name="android:textAllCaps">true</item>
+    <style name="TheKoLab.Colors.Button" parent="TheKoLab.Text.Button">
         <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:textSize">@dimen/text_normal</item>
-        <item name="cornerRadius">@dimen/medium</item>
     </style>
 
-    <style name="TheKoLab.Colors.Button.Back" parent="">
+    <style name="TheKoLab.Colors.Arrow.Back" parent="TheKoLab.Shape.Arrow">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/medium</item>
         <item name="android:rotation">@dimen/rotation_mirror</item>
-        <item name="shapeAppearance">@style/TheKoLab.Shape.Image.Circle</item>
-        <item name="srcCompat">@drawable/keyboard_arrow</item>
+        <item name="shapeAppearance">@style/TheKoLab.Shape.Circle.Image</item>
     </style>
 
-    <style name="TheKoLab.Colors.Name" parent="TheKoLab.Text.Display">
-        <item name="android:gravity">center</item>
+    <style name="TheKoLab.Colors.Title" parent="TheKoLab.Text.Headline5">
         <item name="android:textAllCaps">true</item>
-    </style>
-
-    <style name="TheKoLab.Colors.Title" parent="">
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">@dimen/text_title</item>
-    </style>
-
-    <style name="TheKoLab.Colors.Toolbar" parent="TheKoLab.Layout">
-        <item name="android:alpha">@dimen/alpha_smooth</item>
+        <item name="android:letterSpacing">?android:letterSpacing</item>
     </style>
 
 </resources>

@@ -3,7 +3,7 @@
 
     <style name="TheKoLab.Theme" parent="Theme.MaterialComponents">
         <item name="android:colorEdgeEffect">@color/grey_700</item>
-        <item name="android:letterSpacing">0.2</item>
+        <item name="android:letterSpacing">@dimen/letter_spacing</item>
         <item name="android:navigationBarColor">@color/dark_grey</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/dark_grey</item>
         <item name="android:textAlignment">center</item>

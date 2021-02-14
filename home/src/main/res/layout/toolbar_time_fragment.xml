@@ -9,7 +9,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/toolbar_time"
-        style="@style/TheKoLab.Toolbar.Time"
+        style="@style/TheKoLab.Text.Headline2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/toolbar_date"
