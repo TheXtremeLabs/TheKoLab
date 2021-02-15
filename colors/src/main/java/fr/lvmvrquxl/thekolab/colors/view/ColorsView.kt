@@ -1,37 +1,37 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
-import android.app.Activity
-import android.view.View
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
-import fr.lvmvrquxl.thekolab.colors.presenter.ColorsPresenter
+import fr.lvmvrquxl.thekolab.colors.model.Color
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
-internal class ColorsView private constructor(private val activity: Activity) :
+internal class ColorsView private constructor(private val activity: AppCompatActivity) :
     ActivityView<ColorsActivityBinding>() {
     companion object {
-        fun create(activity: Activity): ActivityView<ColorsActivityBinding> = ColorsView(activity)
+        fun create(activity: AppCompatActivity): ActivityView<ColorsActivityBinding> =
+            ColorsView(activity)
     }
 
-    private var presenter: ColorsPresenter? = null
+    private val viewModel: ColorsViewModel = ColorsViewModel.create(this.activity)
     private var content: ColorsContentBinding? = null
     private var toolbar: ColorsToolbarBinding? = null
 
     override fun onCreate() {
         this.bindViews()
-        this.presenter = ColorsPresenter.create(this.activity)
-    }
-
-    override fun onDestroy() {
-        this.presenter = null
-        super.onDestroy()
+        this.observeViewModelColor()
     }
 
     override fun onStart() {
-        this.initColor()
         this.setBackArrowListener()
         this.setChangeColorsListener()
+        this.viewModel.onStart()
     }
 
     private fun bindContent() {
@@ -48,40 +48,139 @@ internal class ColorsView private constructor(private val activity: Activity) :
         this.bindToolbar()
     }
 
+    private fun getMediumDuration() =
+        this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+
+    private fun getShortDuration() =
+        this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+
     private fun inflateViewBinding() {
         super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater)
     }
 
-    private fun initChangeColors(color: Int) = this.content?.let { content: ColorsContentBinding ->
-        content.changeColors.setBackgroundColor(color)
-    }
+    private fun observeViewModelColor() =
+        this.viewModel.color().observe(this.activity) { color: Color ->
+            this.setColorInfo(color)
+            val colorValue: Int = color.value(this.activity)
+            this.setTitleColor(colorValue)
+            this.setChangeColorsBackground(colorValue)
+            this.setBackArrowColor(colorValue)
+        }
 
-    private fun initColor() = this.presenter?.let { presenter: ColorsPresenter ->
-        val color: Int = presenter.currentColor()
-        val name: String = presenter.currentColorName()
-        this.initColorName(name, color)
-        this.initChangeColors(color)
-    }
-
-    private fun initColorName(name: String, color: Int) =
+    private fun onColorInfoAnimationEnd(color: Color) {
+        val colorValue: Int = color.value(this.activity)
+        val mediumDuration: Long = this.getMediumDuration()
         this.content?.let { content: ColorsContentBinding ->
             content.colorName.apply {
-                this.text = name
-                this.setTextColor(color)
+                this.text = color.name
+                this.setTextColor(colorValue)
+                this.animate()
+                    .alpha(1f)
+                    .setDuration(mediumDuration)
+                    .start()
             }
         }
+    }
+
+    private fun setBackArrowColor(color: Int) {
+        val previousColor: Color? = this.viewModel.previousColor()
+        if (null == previousColor) {
+            val duration: Long = this.getMediumDuration()
+            this.toolbar?.backArrow?.apply {
+                this.alpha = 0f
+                this.isClickable = false
+                this.setColorFilter(color)
+                this.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setStartDelay(1500)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationStart(animation: Animator?) {
+                            this@apply.isClickable = true
+                        }
+                    })
+                    .start()
+            }
+        } else ObjectAnimator.ofObject(
+            this.toolbar?.backArrow,
+            "colorFilter",
+            ArgbEvaluator(),
+            previousColor.value(this.activity),
+            color
+        ).start()
+    }
 
     private fun setBackArrowListener() = this.toolbar?.let { toolbar: ColorsToolbarBinding ->
         toolbar.backArrow.setOnClickListener { this.activity.onBackPressed() }
     }
 
-    private fun setChangeColorsListener() = this.content?.let { content: ColorsContentBinding ->
-        this.presenter?.let { p: ColorsPresenter ->
-            super.viewBinding?.let { binding: ColorsActivityBinding ->
-                val listener: View.OnClickListener =
-                    ColorsClickListener.create(p, binding, this.activity)
-                content.changeColors.setOnClickListener(listener)
+    private fun setColorInfo(color: Color) {
+        val shortDuration: Long = this.getShortDuration()
+        this.content?.let { content: ColorsContentBinding ->
+            content.colorName.apply {
+                this.animate()
+                    .alpha(0f)
+                    .setDuration(shortDuration)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) =
+                            this@ColorsView.onColorInfoAnimationEnd(color)
+                    })
+                    .start()
             }
         }
+    }
+
+    private fun setChangeColorsBackground(color: Int) {
+        val previousColor: Color? = this.viewModel.previousColor()
+        if (null == previousColor) {
+            val duration: Long = this.getMediumDuration()
+            this.content?.changeColors?.apply {
+                this.alpha = 0f
+                this.isClickable = false
+                this.setBackgroundColor(color)
+                this.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setStartDelay(1000)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            this@apply.isClickable = true
+                        }
+                    })
+                    .start()
+            }
+        } else ObjectAnimator.ofObject(
+            this.content?.changeColors,
+            "backgroundColor",
+            ArgbEvaluator(),
+            previousColor.value(this.activity),
+            color
+        ).start()
+    }
+
+    private fun setChangeColorsListener() {
+        this.content?.changeColors?.setOnClickListener { this.viewModel.updateColor() }
+    }
+
+    private fun setTitleColor(color: Int) {
+        val previousColor: Color? = this.viewModel.previousColor()
+        if (null == previousColor) {
+            val duration: Long = this.getMediumDuration()
+            this.toolbar?.title?.apply {
+                this.alpha = 0f
+                this.setTextColor(color)
+                this.animate()
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setStartDelay(500)
+                    .start()
+            }
+        } else ObjectAnimator.ofObject(
+            this.toolbar?.title,
+            "textColor",
+            ArgbEvaluator(),
+            previousColor.value(this.activity),
+            color
+        ).start()
     }
 }

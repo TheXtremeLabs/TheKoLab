@@ -9,9 +9,11 @@ object SharedColorUtils {
     private val purple: Int = R.color.purple_300
     private val white: Int = R.color.white
 
-    fun orange(context: Context): Int = ContextCompat.getColor(context, this.orange)
+    fun orange(context: Context): Int = this.color(context, this.orange)
 
-    fun purple(context: Context): Int = ContextCompat.getColor(context, this.purple)
+    fun purple(context: Context): Int = this.color(context, this.purple)
 
-    fun white(context: Context): Int = ContextCompat.getColor(context, this.white)
+    fun white(context: Context): Int = this.color(context, this.white)
+
+    private fun color(context: Context, color: Int): Int = ContextCompat.getColor(context, color)
 }
