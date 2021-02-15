@@ -31,14 +31,26 @@ internal class ColorsViewModel private constructor(private val context: Context)
     fun previousColor(): Color? = this.previousColor
 
     fun updateColor() {
-        var nextColor: Color = this.colors.random()
-        while (this.currentColor == nextColor) nextColor = this.colors.random()
-        this.previousColor = this.currentColor
-        this.currentColor = nextColor
+        this.updatePreviousColor()
+        this.updateCurrentColor()
         this.syncColor()
+    }
+
+    private fun pickRandomColor(): Color {
+        var color: Color = this.colors.random()
+        while (this.currentColor == color) color = this.colors.random()
+        return color
     }
 
     private fun syncColor() {
         this.color.value = this.currentColor
+    }
+
+    private fun updateCurrentColor() {
+        this.currentColor = this.pickRandomColor()
+    }
+
+    private fun updatePreviousColor() {
+        this.previousColor = this.currentColor
     }
 }
