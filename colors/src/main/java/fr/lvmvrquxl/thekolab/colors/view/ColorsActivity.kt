@@ -11,8 +11,10 @@ class ColorsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.view = ColorsView.create(this)
-        this.view?.onCreate()
-        super.setContentView(this.view?.root)
+        this.view?.let { view: ActivityView<ColorsActivityBinding> ->
+            view.onCreate()
+            super.setContentView(view.root)
+        }
     }
 
     override fun onDestroy() {
