@@ -9,7 +9,7 @@ import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
 import fr.lvmvrquxl.thekolab.colors.model.Color
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
+import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 internal class ColorsView private constructor(private val activity: AppCompatActivity) :
@@ -19,7 +19,7 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
             ColorsView(activity)
     }
 
-    private val viewModel: ColorsViewModel = ColorsViewModel.create(this.activity)
+    private val viewModel: IColorsViewModel = IColorsViewModel.create(this.activity)
     private var content: ColorsContentBinding? = null
     private var toolbar: ColorsToolbarBinding? = null
 
@@ -64,7 +64,7 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     }
 
     private fun observeViewModelColor() =
-        this.viewModel.color().observe(this.activity) { color: Color ->
+        this.viewModel.color.observe(this.activity) { color: Color ->
             this.setColorInfo(color)
             val colorValue: Int = color.value(this.activity)
             this.setTitleColor(colorValue)

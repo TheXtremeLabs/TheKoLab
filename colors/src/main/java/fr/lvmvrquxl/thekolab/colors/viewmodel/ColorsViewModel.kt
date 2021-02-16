@@ -7,28 +7,30 @@ import androidx.lifecycle.ViewModel
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.repository.IColorsRepository
 
-internal class ColorsViewModel private constructor(private val context: Context) : ViewModel() {
+internal class ColorsViewModel private constructor(private val context: Context) : ViewModel(),
+    IColorsViewModel {
     companion object {
-        fun create(context: Context): ColorsViewModel = ColorsViewModel(context)
+        fun create(context: Context): IColorsViewModel = ColorsViewModel(context)
     }
 
-    private val color: MutableLiveData<Color> = MutableLiveData()
+    override val color: LiveData<Color>
+        get() = this.colorData
+
+    private val colorData: MutableLiveData<Color> = MutableLiveData()
     private val repository: IColorsRepository = IColorsRepository.withContext(this.context)
     private var currentColor: Color = this.repository.firstColor
     private var previousColor: Color? = null
 
-    fun color(): LiveData<Color> = this.color
-
-    fun onDestroy() {
+    override fun onDestroy() {
         this.repository.backupColor(this.currentColor)
         this.previousColor = null
     }
 
-    fun onStart() = this.syncColor()
+    override fun onStart() = this.syncColor()
 
-    fun previousColor(): Color? = this.previousColor
+    override fun previousColor(): Color? = this.previousColor
 
-    fun updateColor() {
+    override fun updateColor() {
         this.updatePreviousColor()
         this.updateCurrentColor()
         this.syncColor()
@@ -41,7 +43,7 @@ internal class ColorsViewModel private constructor(private val context: Context)
     }
 
     private fun syncColor() {
-        this.color.value = this.currentColor
+        this.colorData.value = this.currentColor
     }
 
     private fun updateCurrentColor() {
