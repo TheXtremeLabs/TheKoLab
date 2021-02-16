@@ -28,6 +28,11 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
         this.observeViewModelColor()
     }
 
+    override fun onDestroy() {
+        this.viewModel.onDestroy()
+        super.onDestroy()
+    }
+
     override fun onStart() {
         this.setBackArrowListener()
         this.setChangeColorsListener()
