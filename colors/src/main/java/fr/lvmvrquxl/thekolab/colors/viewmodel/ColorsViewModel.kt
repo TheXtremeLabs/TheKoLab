@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.lvmvrquxl.thekolab.colors.model.Color
-import fr.lvmvrquxl.thekolab.colors.repository.ColorsRepository
+import fr.lvmvrquxl.thekolab.colors.repository.IColorsRepository
 
 internal class ColorsViewModel private constructor(private val context: Context) : ViewModel() {
     companion object {
@@ -13,7 +13,7 @@ internal class ColorsViewModel private constructor(private val context: Context)
     }
 
     private val color: MutableLiveData<Color> = MutableLiveData()
-    private val repository: ColorsRepository = ColorsRepository.withContext(this.context)
+    private val repository: IColorsRepository = IColorsRepository.withContext(this.context)
     private var currentColor: Color = this.repository.firstColor
     private var previousColor: Color? = null
 
