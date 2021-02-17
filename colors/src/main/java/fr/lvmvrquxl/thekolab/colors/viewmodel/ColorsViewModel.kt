@@ -18,17 +18,27 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     private val actionStatusData: MutableLiveData<ColorsActionStatus> = MutableLiveData()
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private var context: Context? = null
+    private var currentActionStatus: ColorsActionStatus? = null
     private var currentColor: Color? = null
     private var previousColor: Color? = null
     private var repository: IColorsRepository? = null
 
+    override fun close() {
+        this.setCurrentActionStatusToClosable()
+        this.syncActionStatus()
+    }
+
     override fun exit() {
-        this.actionStatusData.value = ColorsActionStatus.EXIT
+        if (ColorsActionStatus.EXIT != this.currentActionStatus) {
+            this.setCurrentActionStatusToExit()
+            this.syncActionStatus()
+        }
     }
 
     override fun onDestroy() {
         this.backupColor()
         this.context = null
+        this.currentActionStatus = null
         this.currentColor = null
         this.previousColor = null
         this.repository = null
@@ -36,8 +46,9 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
 
     override fun onStart() {
         this.initCurrentColor()
+        this.setCurrentActionStatusToStart()
         this.syncColor()
-        this.actionStatusData.value = ColorsActionStatus.START
+        this.syncActionStatus()
     }
 
     override fun previousColor(): Color? = this.previousColor
@@ -45,8 +56,9 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     override fun updateColor() {
         this.updatePreviousColor()
         this.updateCurrentColor()
+        this.setCurrentActionStatusToUpdate()
         this.syncColor()
-        this.actionStatusData.value = ColorsActionStatus.UPDATE
+        this.syncActionStatus()
     }
 
     fun withContext(context: Context): IColorsViewModel = runBlocking(Dispatchers.Default) {
@@ -62,7 +74,7 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     }
 
     private fun initContext(context: Context) = runBlocking(Dispatchers.Default) {
-        if (this@ColorsViewModel.context != context) this@ColorsViewModel.context = context
+        if (null == this@ColorsViewModel.context) this@ColorsViewModel.context = context
     }
 
     private fun initCurrentColor() = runBlocking(Dispatchers.Default) {
@@ -82,6 +94,26 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         while (this@ColorsViewModel.currentColor == color)
             color = this@ColorsViewModel.repository?.randomColor
         color
+    }
+
+    private fun setCurrentActionStatusToClosable() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.CLOSABLE
+    }
+
+    private fun setCurrentActionStatusToExit() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.EXIT
+    }
+
+    private fun setCurrentActionStatusToStart() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.START
+    }
+
+    private fun setCurrentActionStatusToUpdate() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.UPDATE
+    }
+
+    private fun syncActionStatus() {
+        this.actionStatusData.value = this.currentActionStatus
     }
 
     private fun syncColor() {

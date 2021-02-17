@@ -12,6 +12,8 @@ internal interface IColorsViewModel {
     val actionStatus: LiveData<ColorsActionStatus>
     val color: LiveData<Color>
 
+    fun close()
+
     fun exit()
 
     fun onDestroy()

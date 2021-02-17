@@ -42,7 +42,7 @@ internal class ExitView private constructor(
             .medium()
             .emptyAlpha()
             .delay(EXIT_ANIMATION_DELAY)
-            .onEnd { this.activity.onBackPressed() }
+            .onEnd { this.viewModel.close() }
             .start()
     }
 
@@ -77,6 +77,8 @@ internal class ExitView private constructor(
                 ColorsActionStatus.START -> this.showStartAnimation()
                 ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
                 ColorsActionStatus.EXIT -> this.showExitAnimation()
+                else -> {
+                }
             }
         }
 

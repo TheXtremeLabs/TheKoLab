@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
@@ -15,7 +14,6 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
             ColorsView(activity)
     }
 
-    private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
     private val views: MutableList<LifecycleView> = mutableListOf()
 
     override fun onCreate() {
@@ -24,7 +22,6 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     }
 
     override fun onDestroy() {
-        this.viewModel.onDestroy()
         this.views.forEach { view: LifecycleView -> view.onDestroy() }
         this.views.clear()
         super.onDestroy()
@@ -32,7 +29,6 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
 
     override fun onStart() {
         this.views.forEach { view: LifecycleView -> view.onStart() }
-        this.viewModel.onStart()
     }
 
     private fun bindContent() =
