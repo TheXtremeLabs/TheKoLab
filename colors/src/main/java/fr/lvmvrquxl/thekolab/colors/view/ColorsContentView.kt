@@ -21,7 +21,10 @@ internal class ColorsContentView private constructor(
         this.views.forEach { view: LifecycleView -> view.onCreate() }
     }
 
-    override fun onDestroy() = this.views.clear()
+    override fun onDestroy() {
+        this.views.forEach { view: LifecycleView -> view.onDestroy() }
+        this.views.clear()
+    }
 
     override fun onStart() = this.views.forEach { view: LifecycleView -> view.onStart() }
 
