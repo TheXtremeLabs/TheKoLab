@@ -1,12 +1,10 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ArgbEvaluator
-import android.animation.ObjectAnimator
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
 import fr.lvmvrquxl.thekolab.colors.model.Color
+import fr.lvmvrquxl.thekolab.colors.utils.Animation
+import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
@@ -16,15 +14,15 @@ internal class ColorsToolbarView private constructor(
     private val viewModel: IColorsViewModel
 ) : ActivityView<ColorsToolbarBinding>() {
     companion object {
+        private const val HALF_SECOND: Long = 500
+        private const val ONE_SECOND_AND_A_HALF: Long = 1500
+
         fun create(
             activity: AppCompatActivity,
             toolbar: ColorsToolbarBinding,
             viewModel: IColorsViewModel
-        ) : ActivityView<ColorsToolbarBinding> = ColorsToolbarView(activity, toolbar, viewModel)
+        ): ActivityView<ColorsToolbarBinding> = ColorsToolbarView(activity, toolbar, viewModel)
     }
-
-    private val mediumDuration: Long
-        get() = this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
 
     override fun onCreate() = this.observeViewModelColor()
 
@@ -39,29 +37,21 @@ internal class ColorsToolbarView private constructor(
 
     private fun setBackArrowColor(color: Int) {
         val previousColor: Color? = this.viewModel.previousColor()
-        if (null == previousColor) {
-            this.toolbar.backArrow.apply {
-                this.alpha = 0f
-                this.isClickable = false
-                this.setColorFilter(color)
-                this.animate()
-                    .alpha(1f)
-                    .setDuration(this@ColorsToolbarView.mediumDuration)
-                    .setStartDelay(1500)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationStart(animation: Animator?) {
-                            this@apply.isClickable = true
-                        }
-                    })
-                    .start()
-            }
-        } else ObjectAnimator.ofObject(
+        if (null == previousColor) this.toolbar.backArrow.apply {
+            this.alpha = 0f
+            this.isClickable = false
+            this.setColorFilter(color)
+            Animation.create(this@ColorsToolbarView.activity, this)
+                .medium()
+                .delay(ONE_SECOND_AND_A_HALF)
+                .onEnd { this.isClickable = true }
+                .start()
+        } else ArgbAnimation.show(
             this.toolbar.backArrow,
-            "colorFilter",
-            ArgbEvaluator(),
+            ArgbAnimation.Property.COLOR_FILTER,
             previousColor.value,
             color
-        ).start()
+        )
     }
 
     private fun setBackArrowListener() =
@@ -72,17 +62,15 @@ internal class ColorsToolbarView private constructor(
         if (null == previousColor) this.toolbar.title.apply {
             this.alpha = 0f
             this.setTextColor(color)
-            this.animate()
-                .alpha(1f)
-                .setDuration(this@ColorsToolbarView.mediumDuration)
-                .setStartDelay(500)
+            Animation.create(this@ColorsToolbarView.activity, this)
+                .medium()
+                .delay(HALF_SECOND)
                 .start()
-        } else ObjectAnimator.ofObject(
+        } else ArgbAnimation.show(
             this.toolbar.title,
-            "textColor",
-            ArgbEvaluator(),
+            ArgbAnimation.Property.TEXT_COLOR,
             previousColor.value,
             color
-        ).start()
+        )
     }
 }
