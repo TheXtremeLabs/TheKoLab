@@ -76,6 +76,8 @@ internal class ChangeColorsView private constructor(
                 ColorsActionStatus.START -> this.showStartAnimation()
                 ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
                 ColorsActionStatus.EXIT -> this.showExitAnimation()
+                else -> {
+                }
             }
         }
 

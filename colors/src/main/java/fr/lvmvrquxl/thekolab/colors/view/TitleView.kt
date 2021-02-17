@@ -71,6 +71,8 @@ internal class TitleView private constructor(
                 ColorsActionStatus.START -> this.showStartAnimation()
                 ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
                 ColorsActionStatus.EXIT -> this.showExitAnimation()
+                else -> {
+                }
             }
         }
 
