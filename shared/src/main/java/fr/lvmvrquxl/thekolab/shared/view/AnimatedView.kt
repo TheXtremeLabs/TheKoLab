@@ -1,9 +1,9 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
-abstract class AnimatedView : LifecycleView {
-    open fun showEntryAnimation() {}
+interface AnimatedView : LifecycleView {
+    fun showStartAnimation()
 
-    open fun showExitAnimation() {}
+    fun showExitAnimation()
 
-    open fun showUpdateAnimation(): Unit? = null
+    fun showUpdateAnimation(): Unit?
 }

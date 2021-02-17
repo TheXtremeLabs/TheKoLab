@@ -10,14 +10,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 internal object ColorsViewModel : ViewModel(), IColorsViewModel {
+    override val actionStatus: LiveData<ColorsActionStatus>
+        get() = this.actionStatusData
     override val color: LiveData<Color>
         get() = this.colorData
 
+    private val actionStatusData: MutableLiveData<ColorsActionStatus> = MutableLiveData()
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private var context: Context? = null
     private var currentColor: Color? = null
     private var previousColor: Color? = null
     private var repository: IColorsRepository? = null
+
+    override fun exit() {
+        this.actionStatusData.value = ColorsActionStatus.EXIT
+    }
 
     override fun onDestroy() {
         this.backupColor()
@@ -30,6 +37,7 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     override fun onStart() {
         this.initCurrentColor()
         this.syncColor()
+        this.actionStatusData.value = ColorsActionStatus.START
     }
 
     override fun previousColor(): Color? = this.previousColor
@@ -38,6 +46,7 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         this.updatePreviousColor()
         this.updateCurrentColor()
         this.syncColor()
+        this.actionStatusData.value = ColorsActionStatus.UPDATE
     }
 
     fun withContext(context: Context): IColorsViewModel = runBlocking(Dispatchers.Default) {

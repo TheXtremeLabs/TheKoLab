@@ -5,6 +5,7 @@ import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionStatus
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
@@ -12,9 +13,10 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 internal class TitleView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialTextView
-) : AnimatedView() {
+) : AnimatedView {
     companion object {
-        private const val HALF_SECOND: Long = 500
+        private const val EXIT_ANIMATION_DELAY: Long = 500
+        private const val START_ANIMATION_DELAY: Long = 500
 
         fun create(activity: AppCompatActivity, view: MaterialTextView): LifecycleView =
             TitleView(activity, view)
@@ -24,21 +26,30 @@ internal class TitleView private constructor(
     private var color: Color? = null
 
     override fun onCreate() {
-        this.observeViewModelColor()
+        this.observeColor()
+        this.observeActionStatus()
     }
 
     override fun onDestroy() {
         this.color = null
     }
 
-    override fun showEntryAnimation() {
+    override fun showExitAnimation() {
+        Animation.create(this.activity, this.view)
+            .medium()
+            .emptyAlpha()
+            .delay(EXIT_ANIMATION_DELAY)
+            .start()
+    }
+
+    override fun showStartAnimation() {
         this.view.apply {
             this.alpha = 0f
             this@TitleView.color?.let { color: Color -> this.setTextColor(color.value) }
         }
         Animation.create(this.activity, this.view)
             .medium()
-            .delay(HALF_SECOND)
+            .delay(START_ANIMATION_DELAY)
             .start()
     }
 
@@ -54,12 +65,16 @@ internal class TitleView private constructor(
             }
         }
 
-    private fun observeViewModelColor() =
-        this.viewModel.color.observe(this.activity) { color: Color ->
-            this.color = color
-            when (this.viewModel.previousColor()) {
-                null -> this.showEntryAnimation()
-                else -> this.showUpdateAnimation()
+    private fun observeActionStatus() =
+        this.viewModel.actionStatus.observe(this.activity) { status: ColorsActionStatus ->
+            when (status) {
+                ColorsActionStatus.START -> this.showStartAnimation()
+                ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
+                ColorsActionStatus.EXIT -> this.showExitAnimation()
             }
         }
+
+    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
+        this.color = color
+    }
 }

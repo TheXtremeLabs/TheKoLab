@@ -9,7 +9,10 @@ internal interface IColorsViewModel {
         fun instance(context: Context): IColorsViewModel = ColorsViewModel.withContext(context)
     }
 
+    val actionStatus: LiveData<ColorsActionStatus>
     val color: LiveData<Color>
+
+    fun exit()
 
     fun onDestroy()
 

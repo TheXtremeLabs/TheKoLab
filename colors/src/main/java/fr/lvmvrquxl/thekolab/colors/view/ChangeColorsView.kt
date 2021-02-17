@@ -5,6 +5,7 @@ import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionStatus
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
@@ -12,9 +13,9 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 internal class ChangeColorsView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialButton
-) : AnimatedView() {
+) : AnimatedView {
     companion object {
-        private const val ONE_SECOND: Long = 1000
+        private const val START_ANIMATION_DELAY: Long = 750
 
         fun create(activity: AppCompatActivity, view: MaterialButton): LifecycleView =
             ChangeColorsView(activity, view)
@@ -23,7 +24,10 @@ internal class ChangeColorsView private constructor(
     private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
     private var color: Color? = null
 
-    override fun onCreate() = this.observeViewModelColor()
+    override fun onCreate() {
+        this.observeColor()
+        this.observeActionStatus()
+    }
 
     override fun onDestroy() {
         this.color = null
@@ -31,7 +35,15 @@ internal class ChangeColorsView private constructor(
 
     override fun onStart() = this.setClickListener()
 
-    override fun showEntryAnimation() {
+    override fun showExitAnimation() {
+        this.view.isClickable = false
+        Animation.create(this.activity, this.view)
+            .medium()
+            .emptyAlpha()
+            .start()
+    }
+
+    override fun showStartAnimation() {
         this.view.apply {
             this.alpha = 0f
             this.isClickable = false
@@ -41,7 +53,7 @@ internal class ChangeColorsView private constructor(
         }
         Animation.create(this.activity, this.view)
             .medium()
-            .delay(ONE_SECOND)
+            .delay(START_ANIMATION_DELAY)
             .onEnd { this.view.isClickable = true }
             .start()
     }
@@ -58,14 +70,18 @@ internal class ChangeColorsView private constructor(
             }
         }
 
-    private fun observeViewModelColor() =
-        this.viewModel.color.observe(this.activity) { color: Color ->
-            this.color = color
-            when (this.viewModel.previousColor()) {
-                null -> this.showEntryAnimation()
-                else -> this.showUpdateAnimation()
+    private fun observeActionStatus() =
+        this.viewModel.actionStatus.observe(this.activity) { status: ColorsActionStatus ->
+            when (status) {
+                ColorsActionStatus.START -> this.showStartAnimation()
+                ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
+                ColorsActionStatus.EXIT -> this.showExitAnimation()
             }
         }
+
+    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
+        this.color = color
+    }
 
     private fun setClickListener() = this.view.setOnClickListener { this.viewModel.updateColor() }
 }
