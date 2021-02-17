@@ -6,6 +6,7 @@ import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
+import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class ColorsView private constructor(private val activity: AppCompatActivity) :
     ActivityView<ColorsActivityBinding>() {
@@ -15,11 +16,11 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     }
 
     private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
-    private val views: MutableList<ActivityView<*>> = mutableListOf()
+    private val views: MutableList<LifecycleView> = mutableListOf()
 
     override fun onCreate() {
         this.bindViews()
-        this.views.forEach { view: ActivityView<*> -> view.onCreate() }
+        this.views.forEach { view: LifecycleView -> view.onCreate() }
     }
 
     override fun onDestroy() {
@@ -29,21 +30,19 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     }
 
     override fun onStart() {
-        this.views.forEach { view: ActivityView<*> -> view.onStart() }
+        this.views.forEach { view: LifecycleView -> view.onStart() }
         this.viewModel.onStart()
     }
 
     private fun bindContent() =
         super.viewBinding?.colorsContent?.let { content: ColorsContentBinding ->
-            val view: ActivityView<ColorsContentBinding> =
-                ColorsContentView.create(this.activity, content)
+            val view: LifecycleView = ColorsContentView.create(this.activity, content)
             this.views.add(view)
         }
 
     private fun bindToolbar() =
         super.viewBinding?.colorsToolbar?.let { toolbar: ColorsToolbarBinding ->
-            val view: ActivityView<ColorsToolbarBinding> =
-                ColorsToolbarView.create(this.activity, toolbar)
+            val view: LifecycleView = ColorsToolbarView.create(this.activity, toolbar)
             this.views.add(view)
         }
 

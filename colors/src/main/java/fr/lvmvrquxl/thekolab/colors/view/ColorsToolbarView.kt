@@ -6,20 +6,18 @@ import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
-import fr.lvmvrquxl.thekolab.shared.view.ActivityView
+import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class ColorsToolbarView private constructor(
     private val activity: AppCompatActivity,
     private val toolbar: ColorsToolbarBinding
-) : ActivityView<ColorsToolbarBinding>() {
+) : LifecycleView {
     companion object {
         private const val HALF_SECOND: Long = 500
         private const val ONE_SECOND_AND_A_HALF: Long = 1500
 
-        fun create(
-            activity: AppCompatActivity,
-            toolbar: ColorsToolbarBinding
-        ): ActivityView<ColorsToolbarBinding> = ColorsToolbarView(activity, toolbar)
+        fun create(activity: AppCompatActivity, toolbar: ColorsToolbarBinding): LifecycleView =
+            ColorsToolbarView(activity, toolbar)
     }
 
     private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
