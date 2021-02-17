@@ -2,14 +2,14 @@ package fr.lvmvrquxl.thekolab.colors.model
 
 import android.content.Context
 
-internal class Colors private constructor(private val context: Context) {
+internal class Colors private constructor(private val context: Context) : IColors {
     companion object {
         fun create(context: Context): Colors = Colors(context)
     }
 
-    val first: Color
+    override val first: Color
         get() = this.colors.first()
-    val random: Color
+    override val random: Color
         get() = this.colors.random()
 
     private val colors: List<Color> = listOf(

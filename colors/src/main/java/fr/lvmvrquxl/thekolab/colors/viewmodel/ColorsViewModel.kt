@@ -23,6 +23,7 @@ internal class ColorsViewModel private constructor(private val context: Context)
 
     override fun onDestroy() {
         this.currentColor?.let { color: Color -> this.repository.backupColor(color) }
+        this.currentColor = null
         this.previousColor = null
     }
 

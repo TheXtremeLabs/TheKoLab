@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.colors.repository
 
 import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.Color
-import fr.lvmvrquxl.thekolab.colors.model.Colors
+import fr.lvmvrquxl.thekolab.colors.model.IColors
 
 internal object ColorsRepository : IColorsRepository {
     override val firstColor: Color?
@@ -14,14 +14,14 @@ internal object ColorsRepository : IColorsRepository {
         get() = this.colors?.random
 
     private var colorBackup: Color? = null
-    private var colors: Colors? = null
+    private var colors: IColors? = null
 
     override fun backupColor(color: Color) {
         this.colorBackup = color
     }
 
     fun withContext(context: Context): IColorsRepository {
-        this.colors = Colors.create(context)
+        this.colors = IColors.create(context)
         return this
     }
 }
