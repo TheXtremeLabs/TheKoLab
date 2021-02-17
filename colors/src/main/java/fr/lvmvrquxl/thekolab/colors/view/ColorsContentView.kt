@@ -59,7 +59,7 @@ internal class ColorsContentView private constructor(
         this.content.changeColors.setOnClickListener { this.viewModel.updateColor() }
 
     private fun setColorInfo(color: Color) {
-        this.content.colorName.apply {
+        this.content.colorInfo.apply {
             Animation.create(this@ColorsContentView.activity, this)
                 .emptyAlpha()
                 .onEnd {
