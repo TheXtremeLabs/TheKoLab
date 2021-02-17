@@ -25,6 +25,7 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
 
     override fun onDestroy() {
         this.viewModel.onDestroy()
+        this.views.forEach { view: LifecycleView -> view.onDestroy() }
         this.views.clear()
         super.onDestroy()
     }
