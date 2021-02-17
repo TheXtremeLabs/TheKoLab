@@ -1,5 +1,8 @@
 package fr.lvmvrquxl.thekolab.colors.model
 
-import android.content.Context
+internal abstract class Color(val name: String, val value: Int) {
+    override fun equals(other: Any?): Boolean =
+        other is Color && this.name == other.name && this.value == other.value
 
-internal data class Color(val name: String, val value: (context: Context) -> Int)
+    override fun hashCode(): Int = this.name.hashCode() + this.value.hashCode()
+}

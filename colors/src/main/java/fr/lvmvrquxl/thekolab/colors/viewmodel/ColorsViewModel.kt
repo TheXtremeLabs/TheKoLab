@@ -18,11 +18,11 @@ internal class ColorsViewModel private constructor(private val context: Context)
 
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private val repository: IColorsRepository = IColorsRepository.withContext(this.context)
-    private var currentColor: Color = this.repository.firstColor
+    private var currentColor: Color? = this.repository.firstColor
     private var previousColor: Color? = null
 
     override fun onDestroy() {
-        this.repository.backupColor(this.currentColor)
+        this.currentColor?.let { color: Color -> this.repository.backupColor(color) }
         this.previousColor = null
     }
 
@@ -36,8 +36,8 @@ internal class ColorsViewModel private constructor(private val context: Context)
         this.syncColor()
     }
 
-    private fun pickRandomColor(): Color {
-        var color: Color = this.repository.randomColor
+    private fun pickRandomColor(): Color? {
+        var color: Color? = this.repository.randomColor
         while (this.currentColor == color) color = this.repository.randomColor
         return color
     }

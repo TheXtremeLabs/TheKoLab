@@ -8,8 +8,8 @@ internal interface IColorsRepository {
         fun withContext(context: Context): IColorsRepository = ColorsRepository.withContext(context)
     }
 
-    val firstColor: Color
-    val randomColor: Color
+    val firstColor: Color?
+    val randomColor: Color?
 
     fun backupColor(color: Color)
 }

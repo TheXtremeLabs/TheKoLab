@@ -42,12 +42,12 @@ internal class ColorsContentView private constructor(
     private fun observeViewModelColor() =
         this.viewModel.color.observe(this.activity) { color: Color ->
             this.setColorInfo(color)
-            val colorValue: Int = color.value(this.activity)
+            val colorValue: Int = color.value
             this.setChangeColorsBackground(colorValue)
         }
 
     private fun onColorInfoAnimationEnd(color: Color) {
-        val colorValue: Int = color.value(this.activity)
+        val colorValue: Int = color.value
         this.content.colorName.apply {
             this.text = color.name
             this.setTextColor(colorValue)
@@ -75,7 +75,7 @@ internal class ColorsContentView private constructor(
                 this.content.changeColors,
                 "backgroundColor",
                 ArgbEvaluator(),
-                previousColor.value(this.activity),
+                previousColor.value,
                 color
             ).start()
         }

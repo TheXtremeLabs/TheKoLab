@@ -32,7 +32,7 @@ internal class ColorsToolbarView private constructor(
 
     private fun observeViewModelColor() =
         this.viewModel.color.observe(this.activity) { color: Color ->
-            val colorValue: Int = color.value(this.activity)
+            val colorValue: Int = color.value
             this.setTitleColor(colorValue)
             this.setBackArrowColor(colorValue)
         }
@@ -59,7 +59,7 @@ internal class ColorsToolbarView private constructor(
             this.toolbar.backArrow,
             "colorFilter",
             ArgbEvaluator(),
-            previousColor.value(this.activity),
+            previousColor.value,
             color
         ).start()
     }
@@ -81,7 +81,7 @@ internal class ColorsToolbarView private constructor(
             this.toolbar.title,
             "textColor",
             ArgbEvaluator(),
-            previousColor.value(this.activity),
+            previousColor.value,
             color
         ).start()
     }
