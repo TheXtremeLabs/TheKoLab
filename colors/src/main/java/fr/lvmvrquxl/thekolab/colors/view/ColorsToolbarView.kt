@@ -26,18 +26,18 @@ internal class ColorsToolbarView private constructor(
 
     override fun onCreate() = this.observeViewModelColor()
 
-    override fun onStart() = this.setBackArrowListener()
+    override fun onStart() = this.setExitListener()
 
     private fun observeViewModelColor() =
         this.viewModel.color.observe(this.activity) { color: Color ->
             val colorValue: Int = color.value
             this.setTitleColor(colorValue)
-            this.setBackArrowColor(colorValue)
+            this.setExitColor(colorValue)
         }
 
-    private fun setBackArrowColor(color: Int) {
+    private fun setExitColor(color: Int) {
         val previousColor: Color? = this.viewModel.previousColor()
-        if (null == previousColor) this.toolbar.backArrow.apply {
+        if (null == previousColor) this.toolbar.exit.apply {
             this.alpha = 0f
             this.isClickable = false
             this.setColorFilter(color)
@@ -47,15 +47,15 @@ internal class ColorsToolbarView private constructor(
                 .onEnd { this.isClickable = true }
                 .start()
         } else ArgbAnimation.show(
-            this.toolbar.backArrow,
+            this.toolbar.exit,
             ArgbAnimation.Property.COLOR_FILTER,
             previousColor.value,
             color
         )
     }
 
-    private fun setBackArrowListener() =
-        this.toolbar.backArrow.setOnClickListener { this.activity.onBackPressed() }
+    private fun setExitListener() =
+        this.toolbar.exit.setOnClickListener { this.activity.onBackPressed() }
 
     private fun setTitleColor(color: Int) {
         val previousColor: Color? = this.viewModel.previousColor()
