@@ -10,8 +10,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 internal class ColorsToolbarView private constructor(
     private val activity: AppCompatActivity,
-    private val toolbar: ColorsToolbarBinding,
-    private val viewModel: IColorsViewModel
+    private val toolbar: ColorsToolbarBinding
 ) : ActivityView<ColorsToolbarBinding>() {
     companion object {
         private const val HALF_SECOND: Long = 500
@@ -19,10 +18,11 @@ internal class ColorsToolbarView private constructor(
 
         fun create(
             activity: AppCompatActivity,
-            toolbar: ColorsToolbarBinding,
-            viewModel: IColorsViewModel
-        ): ActivityView<ColorsToolbarBinding> = ColorsToolbarView(activity, toolbar, viewModel)
+            toolbar: ColorsToolbarBinding
+        ): ActivityView<ColorsToolbarBinding> = ColorsToolbarView(activity, toolbar)
     }
+
+    private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
 
     override fun onCreate() = this.observeViewModelColor()
 

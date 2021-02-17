@@ -10,18 +10,18 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 internal class ColorsContentView private constructor(
     private val activity: AppCompatActivity,
-    private val content: ColorsContentBinding,
-    private val viewModel: IColorsViewModel
+    private val content: ColorsContentBinding
 ) : ActivityView<ColorsContentBinding>() {
     companion object {
         private const val ONE_SECOND: Long = 1000
 
         fun create(
             activity: AppCompatActivity,
-            content: ColorsContentBinding,
-            viewModel: IColorsViewModel
-        ): ActivityView<ColorsContentBinding> = ColorsContentView(activity, content, viewModel)
+            content: ColorsContentBinding
+        ): ActivityView<ColorsContentBinding> = ColorsContentView(activity, content)
     }
+
+    private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
 
     override fun onCreate() = this.observeViewModelColor()
 

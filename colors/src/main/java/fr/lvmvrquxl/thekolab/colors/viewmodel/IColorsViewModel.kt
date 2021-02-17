@@ -6,7 +6,7 @@ import fr.lvmvrquxl.thekolab.colors.model.Color
 
 internal interface IColorsViewModel {
     companion object {
-        fun create(context: Context): IColorsViewModel = ColorsViewModel.create(context)
+        fun instance(context: Context): IColorsViewModel = ColorsViewModel.withContext(context)
     }
 
     val color: LiveData<Color>
