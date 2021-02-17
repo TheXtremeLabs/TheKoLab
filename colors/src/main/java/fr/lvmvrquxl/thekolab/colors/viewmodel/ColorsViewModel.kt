@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.repository.IColorsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 internal class ColorsViewModel private constructor(private val context: Context) : ViewModel(),
     IColorsViewModel {
@@ -18,16 +20,19 @@ internal class ColorsViewModel private constructor(private val context: Context)
 
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private val repository: IColorsRepository = IColorsRepository.withContext(this.context)
-    private var currentColor: Color? = this.repository.firstColor
+    private var currentColor: Color? = null
     private var previousColor: Color? = null
 
     override fun onDestroy() {
-        this.currentColor?.let { color: Color -> this.repository.backupColor(color) }
+        this.backupColor()
         this.currentColor = null
         this.previousColor = null
     }
 
-    override fun onStart() = this.syncColor()
+    override fun onStart() {
+        this.initCurrentColor()
+        this.syncColor()
+    }
 
     override fun previousColor(): Color? = this.previousColor
 
@@ -37,21 +42,32 @@ internal class ColorsViewModel private constructor(private val context: Context)
         this.syncColor()
     }
 
-    private fun pickRandomColor(): Color? {
-        var color: Color? = this.repository.randomColor
-        while (this.currentColor == color) color = this.repository.randomColor
-        return color
+    private fun backupColor() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentColor?.let { color: Color ->
+            this@ColorsViewModel.repository.backupColor(color)
+        }
+    }
+
+    private fun initCurrentColor() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentColor = this@ColorsViewModel.repository.firstColor
+    }
+
+    private fun pickRandomColor(): Color? = runBlocking(Dispatchers.Default) {
+        var color: Color? = this@ColorsViewModel.repository.randomColor
+        while (this@ColorsViewModel.currentColor == color)
+            color = this@ColorsViewModel.repository.randomColor
+        color
     }
 
     private fun syncColor() {
         this.colorData.value = this.currentColor
     }
 
-    private fun updateCurrentColor() {
-        this.currentColor = this.pickRandomColor()
+    private fun updateCurrentColor() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentColor = this@ColorsViewModel.pickRandomColor()
     }
 
-    private fun updatePreviousColor() {
-        this.previousColor = this.currentColor
+    private fun updatePreviousColor() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.previousColor = this@ColorsViewModel.currentColor
     }
 }
