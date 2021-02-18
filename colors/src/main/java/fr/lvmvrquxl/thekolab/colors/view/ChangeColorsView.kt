@@ -5,32 +5,17 @@ import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
-import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class ChangeColorsView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialButton
-) : AnimatedView {
+) : ColorsAnimatedView(activity) {
     companion object {
         private const val START_ANIMATION_DELAY: Long = 750
 
         fun create(activity: AppCompatActivity, view: MaterialButton): LifecycleView =
             ChangeColorsView(activity, view)
-    }
-
-    private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
-    private var color: Color? = null
-
-    override fun onCreate() {
-        this.observeColor()
-        this.observeActionState()
-    }
-
-    override fun onDestroy() {
-        this.color = null
     }
 
     override fun onStart() = this.setClickListener()
@@ -47,7 +32,7 @@ internal class ChangeColorsView private constructor(
         this.view.apply {
             this.alpha = 0f
             this.isClickable = false
-            this@ChangeColorsView.color?.let { color: Color ->
+            super@ChangeColorsView.color?.let { color: Color ->
                 this.setBackgroundColor(color.value)
             }
         }
@@ -59,8 +44,8 @@ internal class ChangeColorsView private constructor(
     }
 
     override fun showUpdateAnimation() =
-        this.viewModel.previousColor()?.let { previousColor: Color ->
-            this.color?.let { color: Color ->
+        super.viewModel.previousColor()?.let { previousColor: Color ->
+            super.color?.let { color: Color ->
                 ArgbAnimation.show(
                     this.view,
                     ArgbAnimation.Property.BACKGROUND_COLOR,
@@ -70,20 +55,5 @@ internal class ChangeColorsView private constructor(
             }
         }
 
-    private fun observeActionState() =
-        this.viewModel.actionState.observe(this.activity) { state: ColorsActionState ->
-            when (state) {
-                ColorsActionState.START -> this.showStartAnimation()
-                ColorsActionState.UPDATE -> this.showUpdateAnimation()
-                ColorsActionState.EXIT -> this.showExitAnimation()
-                else -> {
-                }
-            }
-        }
-
-    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
-        this.color = color
-    }
-
-    private fun setClickListener() = this.view.setOnClickListener { this.viewModel.updateColor() }
+    private fun setClickListener() = this.view.setOnClickListener { super.viewModel.updateColor() }
 }

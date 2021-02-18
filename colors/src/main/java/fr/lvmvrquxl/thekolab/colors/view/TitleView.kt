@@ -5,33 +5,18 @@ import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
-import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class TitleView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialTextView
-) : AnimatedView {
+) : ColorsAnimatedView(activity) {
     companion object {
         private const val EXIT_ANIMATION_DELAY: Long = 500
         private const val START_ANIMATION_DELAY: Long = 500
 
         fun create(activity: AppCompatActivity, view: MaterialTextView): LifecycleView =
             TitleView(activity, view)
-    }
-
-    private val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
-    private var color: Color? = null
-
-    override fun onCreate() {
-        this.observeColor()
-        this.observeActionState()
-    }
-
-    override fun onDestroy() {
-        this.color = null
     }
 
     override fun showExitAnimation() {
@@ -45,7 +30,7 @@ internal class TitleView private constructor(
     override fun showStartAnimation() {
         this.view.apply {
             this.alpha = 0f
-            this@TitleView.color?.let { color: Color -> this.setTextColor(color.value) }
+            super@TitleView.color?.let { color: Color -> this.setTextColor(color.value) }
         }
         Animation.create(this.activity, this.view)
             .medium()
@@ -54,8 +39,8 @@ internal class TitleView private constructor(
     }
 
     override fun showUpdateAnimation(): Unit? =
-        this.viewModel.previousColor()?.let { previousColor: Color ->
-            this.color?.let { color: Color ->
+        super.viewModel.previousColor()?.let { previousColor: Color ->
+            super.color?.let { color: Color ->
                 ArgbAnimation.show(
                     this.view,
                     ArgbAnimation.Property.TEXT_COLOR,
@@ -64,19 +49,4 @@ internal class TitleView private constructor(
                 )
             }
         }
-
-    private fun observeActionState() =
-        this.viewModel.actionState.observe(this.activity) { state: ColorsActionState ->
-            when (state) {
-                ColorsActionState.START -> this.showStartAnimation()
-                ColorsActionState.UPDATE -> this.showUpdateAnimation()
-                ColorsActionState.EXIT -> this.showExitAnimation()
-                else -> {
-                }
-            }
-        }
-
-    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
-        this.color = color
-    }
 }
