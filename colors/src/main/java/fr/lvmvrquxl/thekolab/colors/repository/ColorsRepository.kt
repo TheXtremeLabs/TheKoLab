@@ -7,8 +7,8 @@ import kotlinx.coroutines.*
 
 internal object ColorsRepository : IColorsRepository {
     override val firstColor: Color?
-        get() = when (null == this.colorBackup) {
-            true -> this.colors?.first
+        get() = when (this.colorBackup) {
+            null -> this.colors?.first
             else -> this.colorBackup
         }
     override val randomColor: Color?

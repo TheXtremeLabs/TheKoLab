@@ -85,7 +85,7 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         if (null == this@ColorsViewModel.repository)
             this@ColorsViewModel.repository =
                 this@ColorsViewModel.context?.let { context: Context ->
-                    IColorsRepository.withContext(context)
+                    IColorsRepository.instance(context)
                 }
     }
 

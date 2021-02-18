@@ -6,7 +6,7 @@ import kotlinx.coroutines.Job
 
 internal interface IColorsRepository {
     companion object {
-        fun withContext(context: Context): IColorsRepository = ColorsRepository.withContext(context)
+        fun instance(context: Context): IColorsRepository = ColorsRepository.withContext(context)
     }
 
     val firstColor: Color?
