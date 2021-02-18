@@ -4,7 +4,7 @@ import android.content.Context
 
 internal class Colors private constructor(private val context: Context) : IColors {
     companion object {
-        fun create(context: Context): Colors = Colors(context)
+        fun create(context: Context): IColors = Colors(context)
     }
 
     override val first: Color
