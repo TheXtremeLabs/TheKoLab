@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionStatus
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
@@ -19,7 +19,7 @@ class ColorsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.initView()
         this.initViewModel()
-        this.observeActionStatus()
+        this.observeActionState()
     }
 
     override fun onDestroy() {
@@ -48,8 +48,8 @@ class ColorsActivity : AppCompatActivity() {
         this.viewModel = IColorsViewModel.instance(this)
     }
 
-    private fun observeActionStatus() =
-        this.viewModel?.actionStatus?.observe(this) { status: ColorsActionStatus ->
-            if (ColorsActionStatus.CLOSABLE == status) super.onBackPressed()
+    private fun observeActionState() =
+        this.viewModel?.actionState?.observe(this) { state: ColorsActionState ->
+            if (ColorsActionState.CLOSABLE == state) super.onBackPressed()
         }
 }

@@ -10,35 +10,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 internal object ColorsViewModel : ViewModel(), IColorsViewModel {
-    override val actionStatus: LiveData<ColorsActionStatus>
-        get() = this.actionStatusData
+    override val actionState: LiveData<ColorsActionState>
+        get() = this.actionStateData
     override val color: LiveData<Color>
         get() = this.colorData
 
-    private val actionStatusData: MutableLiveData<ColorsActionStatus> = MutableLiveData()
+    private val actionStateData: MutableLiveData<ColorsActionState> = MutableLiveData()
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private var context: Context? = null
-    private var currentActionStatus: ColorsActionStatus? = null
+    private var currentActionState: ColorsActionState? = null
     private var currentColor: Color? = null
     private var previousColor: Color? = null
     private var repository: IColorsRepository? = null
 
     override fun close() {
-        this.setCurrentActionStatusToClosable()
-        this.syncActionStatus()
+        this.setCurrentActionStateToClosable()
+        this.syncActionState()
     }
 
     override fun exit() {
-        if (ColorsActionStatus.EXIT != this.currentActionStatus) {
-            this.setCurrentActionStatusToExit()
-            this.syncActionStatus()
+        if (ColorsActionState.EXIT != this.currentActionState) {
+            this.setCurrentActionStateToExit()
+            this.syncActionState()
         }
     }
 
     override fun onDestroy() {
         this.backupColor()
         this.context = null
-        this.currentActionStatus = null
+        this.currentActionState = null
         this.currentColor = null
         this.previousColor = null
         this.repository = null
@@ -46,9 +46,9 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
 
     override fun onStart() {
         this.initCurrentColor()
-        this.setCurrentActionStatusToStart()
+        this.setCurrentActionStateToStart()
         this.syncColor()
-        this.syncActionStatus()
+        this.syncActionState()
     }
 
     override fun previousColor(): Color? = this.previousColor
@@ -56,9 +56,9 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     override fun updateColor() {
         this.updatePreviousColor()
         this.updateCurrentColor()
-        this.setCurrentActionStatusToUpdate()
+        this.setCurrentActionStateToUpdate()
         this.syncColor()
-        this.syncActionStatus()
+        this.syncActionState()
     }
 
     fun withContext(context: Context): IColorsViewModel = runBlocking(Dispatchers.Default) {
@@ -96,24 +96,24 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         color
     }
 
-    private fun setCurrentActionStatusToClosable() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.CLOSABLE
+    private fun setCurrentActionStateToClosable() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionState = ColorsActionState.CLOSABLE
     }
 
-    private fun setCurrentActionStatusToExit() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.EXIT
+    private fun setCurrentActionStateToExit() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionState = ColorsActionState.EXIT
     }
 
-    private fun setCurrentActionStatusToStart() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.START
+    private fun setCurrentActionStateToStart() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionState = ColorsActionState.START
     }
 
-    private fun setCurrentActionStatusToUpdate() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModel.currentActionStatus = ColorsActionStatus.UPDATE
+    private fun setCurrentActionStateToUpdate() = runBlocking(Dispatchers.Default) {
+        this@ColorsViewModel.currentActionState = ColorsActionState.UPDATE
     }
 
-    private fun syncActionStatus() {
-        this.actionStatusData.value = this.currentActionStatus
+    private fun syncActionState() {
+        this.actionStateData.value = this.currentActionState
     }
 
     private fun syncColor() {

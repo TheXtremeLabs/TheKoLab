@@ -5,7 +5,7 @@ import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionStatus
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
@@ -26,7 +26,7 @@ internal class ChangeColorsView private constructor(
 
     override fun onCreate() {
         this.observeColor()
-        this.observeActionStatus()
+        this.observeActionState()
     }
 
     override fun onDestroy() {
@@ -70,12 +70,12 @@ internal class ChangeColorsView private constructor(
             }
         }
 
-    private fun observeActionStatus() =
-        this.viewModel.actionStatus.observe(this.activity) { status: ColorsActionStatus ->
-            when (status) {
-                ColorsActionStatus.START -> this.showStartAnimation()
-                ColorsActionStatus.UPDATE -> this.showUpdateAnimation()
-                ColorsActionStatus.EXIT -> this.showExitAnimation()
+    private fun observeActionState() =
+        this.viewModel.actionState.observe(this.activity) { state: ColorsActionState ->
+            when (state) {
+                ColorsActionState.START -> this.showStartAnimation()
+                ColorsActionState.UPDATE -> this.showUpdateAnimation()
+                ColorsActionState.EXIT -> this.showExitAnimation()
                 else -> {
                 }
             }
