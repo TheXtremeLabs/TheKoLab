@@ -60,7 +60,10 @@ internal class ToolbarTimeView private constructor(
 
     override fun onResume() = this.presenter?.startBackgroundCoroutines()
 
-    override fun onStart() = this.initPresenter()
+    override fun onStart() {
+        this.initPresenter()
+        super.onStart()
+    }
 
     private fun bindViews() {
         val attachToParent = false

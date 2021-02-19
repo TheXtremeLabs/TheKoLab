@@ -66,7 +66,10 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     private var permissions: List<Permission>? = null
     private var toolbar: ToolbarBinding? = null
 
-    override fun onCreate() = this.bindViews()
+    override fun onCreate() {
+        this.bindViews()
+        super.onCreate()
+    }
 
     override fun onDestroy() {
         this.collapsingToolbar = null
@@ -89,6 +92,7 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         this.checkPermissions()
         this.setViewPager()
         this.applyAppsRecyclerView()
+        super.onStart()
     }
 
     private fun applyAppsRecyclerView() {
