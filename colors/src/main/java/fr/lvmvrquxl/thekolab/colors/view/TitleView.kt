@@ -42,12 +42,11 @@ internal class TitleView private constructor(
     override fun showUpdateAnimation(): Unit? =
         super.viewModel.previousColor()?.let { previousColor: Color ->
             super.color?.let { color: Color ->
-                ArgbAnimation.show(
-                    this.view,
-                    ArgbAnimationProperty.TEXT_COLOR,
-                    previousColor.value,
-                    color.value
-                )
+                ArgbAnimation.animate(this.view)
+                    .withProperty(ArgbAnimationProperty.TEXT_COLOR)
+                    .withStartColor(previousColor.value)
+                    .withEndColor(color.value)
+                    .start()
             }
         }
 }

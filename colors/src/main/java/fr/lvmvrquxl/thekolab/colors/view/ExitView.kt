@@ -48,12 +48,11 @@ internal class ExitView private constructor(
     override fun showUpdateAnimation() =
         super.viewModel.previousColor()?.let { previousColor: Color ->
             super.color?.let { color: Color ->
-                ArgbAnimation.show(
-                    this.view,
-                    ArgbAnimationProperty.COLOR_FILTER,
-                    previousColor.value,
-                    color.value
-                )
+                ArgbAnimation.animate(this.view)
+                    .withProperty(ArgbAnimationProperty.COLOR_FILTER)
+                    .withStartColor(previousColor.value)
+                    .withEndColor(color.value)
+                    .start()
             }
         }
 
