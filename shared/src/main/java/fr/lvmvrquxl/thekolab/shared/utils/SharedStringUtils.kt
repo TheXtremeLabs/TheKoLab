@@ -27,17 +27,61 @@ object SharedStringUtils {
      *
      * @since 1.0.0
      *
-     * @see [Context]
+     * @see Context
      */
     fun ok(context: Context): String = context.getString(this.ok)
 
+    /**
+     * Get the string `Orange` from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string `Orange`
+     *
+     * @since 1.0.0
+     *
+     * @see Context
+     */
     fun orange(context: Context): String = context.getString(this.orange)
 
+    /**
+     * Get the string `Purple` from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string `Purple`
+     *
+     * @since 1.0.0
+     *
+     * @see Context
+     */
     fun purple(context: Context): String = context.getString(this.purple)
 
+    /**
+     * Get the version name of the application from the package information.
+     *
+     * @param context Context for retrieving package manager
+     *
+     * @return The version name of the application
+     *
+     * @since 1.0.0
+     *
+     * @see Context
+     */
     fun versionName(context: Context): String =
         context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
+    /**
+     * Get the string `White` from resources.
+     *
+     * @param context Context for retrieving strings from resources
+     *
+     * @return The string `White`
+     *
+     * @since 1.0.0
+     *
+     * @see Context
+     */
     fun white(context: Context): String = context.getString(this.white)
 
     /**
