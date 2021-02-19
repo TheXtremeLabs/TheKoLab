@@ -11,16 +11,15 @@ internal interface IColorsViewModel {
 
     val actionState: LiveData<ColorsActionState>
     val color: LiveData<Color>
+    val previousColor: Color?
 
-    fun close()
+    fun destroyActivity()
 
-    fun exit()
+    fun onBackPressed()
 
     fun onDestroy()
 
     fun onStart()
-
-    fun previousColor(): Color?
 
     fun updateColor()
 }

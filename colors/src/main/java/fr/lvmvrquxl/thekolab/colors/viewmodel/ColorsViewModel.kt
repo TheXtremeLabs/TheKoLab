@@ -14,21 +14,23 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         get() = this.actionStateData
     override val color: LiveData<Color>
         get() = this.colorData
+    override val previousColor: Color?
+        get() = this.previousColorData
 
     private val actionStateData: MutableLiveData<ColorsActionState> = MutableLiveData()
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private var context: Context? = null
     private var currentActionState: ColorsActionState? = null
     private var currentColor: Color? = null
-    private var previousColor: Color? = null
+    private var previousColorData: Color? = null
     private var repository: IColorsRepository? = null
 
-    override fun close() {
+    override fun destroyActivity() {
         this.setCurrentActionStateToClosable()
         this.syncActionState()
     }
 
-    override fun exit() {
+    override fun onBackPressed() {
         if (ColorsActionState.EXIT != this.currentActionState) {
             this.setCurrentActionStateToExit()
             this.syncActionState()
@@ -40,7 +42,7 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         this.context = null
         this.currentActionState = null
         this.currentColor = null
-        this.previousColor = null
+        this.previousColorData = null
         this.repository = null
     }
 
@@ -50,8 +52,6 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
         this.syncColor()
         this.syncActionState()
     }
-
-    override fun previousColor(): Color? = this.previousColor
 
     override fun updateColor() {
         this.updatePreviousColor()
@@ -125,6 +125,6 @@ internal object ColorsViewModel : ViewModel(), IColorsViewModel {
     }
 
     private fun updatePreviousColor() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModel.previousColor = this@ColorsViewModel.currentColor
+        this@ColorsViewModel.previousColorData = this@ColorsViewModel.currentColor
     }
 }

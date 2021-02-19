@@ -12,7 +12,7 @@ class ColorsActivity : AppCompatActivity() {
     private var viewModel: IColorsViewModel? = null
 
     override fun onBackPressed() {
-        this.viewModel?.exit()
+        this.viewModel?.onBackPressed()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

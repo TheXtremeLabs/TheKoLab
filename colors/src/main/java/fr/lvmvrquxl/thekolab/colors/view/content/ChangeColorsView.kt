@@ -29,7 +29,7 @@ internal class ChangeColorsView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
-            super.viewModel.previousColor()?.let { color: Color -> this.startColor(color.value) }
+            super.viewModel.previousColor?.let { color: Color -> this.startColor(color.value) }
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
