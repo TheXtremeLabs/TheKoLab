@@ -41,6 +41,8 @@ internal class ToolbarWeatherView private constructor(
          * @param container Parent view that the fragment's UI should be attached to
          * @param activity Toolbar's weather activity
          *
+         * @return New instance of toolbar's weather view
+         *
          * @since 1.0.0
          *
          * @see [Activity]
