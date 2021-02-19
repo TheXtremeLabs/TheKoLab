@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.shared.view
 
 import androidx.annotation.CallSuper
 
-abstract class ContainerView : LifecycleView {
+abstract class ContainerView : LifecycleView() {
     protected val views: MutableList<LifecycleView> = mutableListOf()
 
     @CallSuper

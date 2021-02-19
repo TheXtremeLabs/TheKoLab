@@ -26,7 +26,7 @@ import kotlinx.coroutines.Runnable
 internal abstract class ColorsAnimatedView(
     private val activity: AppCompatActivity,
     private val view: View
-) : AnimatedView {
+) : AnimatedView() {
     /**
      * Animation instance for the view.
      *
