@@ -5,6 +5,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
+import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class ExitView private constructor(
@@ -49,7 +50,7 @@ internal class ExitView private constructor(
             super.color?.let { color: Color ->
                 ArgbAnimation.show(
                     this.view,
-                    ArgbAnimation.Property.COLOR_FILTER,
+                    ArgbAnimationProperty.COLOR_FILTER,
                     previousColor.value,
                     color.value
                 )

@@ -13,11 +13,10 @@ internal class Animation private constructor(
             Animation(activity, target)
     }
 
-    private val mediumDuration: Long
-        get() = this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-    private val shortDuration: Long
-        get() = this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
-
+    private val mediumDuration: Long =
+        this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+    private val shortDuration: Long =
+        this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
     private var alpha: Float = 1f
     private var delay: Long = 0
     private var duration: Long = this.shortDuration

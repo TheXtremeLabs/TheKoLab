@@ -5,6 +5,7 @@ import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
+import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 internal class TitleView private constructor(
@@ -43,7 +44,7 @@ internal class TitleView private constructor(
             super.color?.let { color: Color ->
                 ArgbAnimation.show(
                     this.view,
-                    ArgbAnimation.Property.TEXT_COLOR,
+                    ArgbAnimationProperty.TEXT_COLOR,
                     previousColor.value,
                     color.value
                 )
