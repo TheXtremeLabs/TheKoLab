@@ -5,6 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.lvmvrquxl.thekolab.home.app.model.App
 
+/**
+ * Application's adapter of the recycler view.
+ *
+ * @param apps List of applications
+ *
+ * @since 1.0.0
+ *
+ * @see AppViewHolder
+ * @see RecyclerView.Adapter
+ */
 internal class AppAdapter(private val apps: List<App>) : RecyclerView.Adapter<AppViewHolder>() {
     override fun getItemCount(): Int = this.apps.size
 
