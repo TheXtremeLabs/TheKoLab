@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
@@ -26,7 +26,7 @@ class ColorsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.initView()
         this.initViewModel()
-        this.observeActionState()
+        this.observeState()
         this.setContentView()
     }
 
@@ -61,10 +61,9 @@ class ColorsActivity : AppCompatActivity() {
         this.viewModel = IColorsViewModel.instance(this)
     }
 
-    private fun observeActionState() =
-        this.viewModel?.actionState?.observe(this) { state: ColorsActionState ->
-            if (ColorsActionState.CLOSABLE == state) super.onBackPressed()
-        }
+    private fun observeState() = this.viewModel?.state?.observe(this) { state: ColorsState ->
+        if (ColorsState.CLOSABLE == state) super.onBackPressed()
+    }
 
     private fun setContentView() = this.view?.let { view: ActivityView<ColorsActivityBinding> ->
         super.setContentView(view.root)
