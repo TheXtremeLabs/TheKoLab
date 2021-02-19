@@ -39,19 +39,18 @@ internal class ContentView private constructor(
     }
 
     override fun onCreate() {
-        this.registerChangeColors()
-        this.registerColorInfo()
+        this.registerChangeColorsView()
+        this.registerColorInfoView()
         super.onCreate()
     }
 
-    private fun registerChangeColors() {
-        val changeColors: LifecycleView =
-            ChangeColorsView.create(this.activity, this.content.changeColors)
-        super.views.add(changeColors)
+    private fun registerChangeColorsView() {
+        val view: LifecycleView = ChangeColorsView.create(this.activity, this.content.changeColors)
+        super.addView(view)
     }
 
-    private fun registerColorInfo() {
-        val colorInfo: LifecycleView = ColorInfoView.create(this.activity, this.content.colorInfo)
-        super.views.add(colorInfo)
+    private fun registerColorInfoView() {
+        val view: LifecycleView = ColorInfoView.create(this.activity, this.content.colorInfo)
+        super.addView(view)
     }
 }

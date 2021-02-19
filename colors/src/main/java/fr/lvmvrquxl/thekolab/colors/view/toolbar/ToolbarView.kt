@@ -39,18 +39,18 @@ internal class ToolbarView private constructor(
     }
 
     override fun onCreate() {
-        this.registerExit()
-        this.registerTitle()
+        this.registerExitView()
+        this.registerTitleView()
         super.onCreate()
     }
 
-    private fun registerExit() {
-        val exit: LifecycleView = ExitView.create(this.activity, this.toolbar.exit)
-        super.views.add(exit)
+    private fun registerExitView() {
+        val view: LifecycleView = ExitView.create(this.activity, this.toolbar.exit)
+        super.addView(view)
     }
 
-    private fun registerTitle() {
-        val title: LifecycleView = TitleView.create(this.activity, this.toolbar.title)
-        super.views.add(title)
+    private fun registerTitleView() {
+        val view: LifecycleView = TitleView.create(this.activity, this.toolbar.title)
+        super.addView(view)
     }
 }

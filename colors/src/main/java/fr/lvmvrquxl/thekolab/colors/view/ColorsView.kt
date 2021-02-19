@@ -52,12 +52,12 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     private fun registerContentView() =
         super.viewBinding?.colorsContent?.let { content: ColorsContentBinding ->
             val view: LifecycleView = ContentView.create(this.activity, content)
-            super.views.add(view)
+            super.addView(view)
         }
 
     private fun registerToolbarView() =
         super.viewBinding?.colorsToolbar?.let { toolbar: ColorsToolbarBinding ->
             val view: LifecycleView = ToolbarView.create(this.activity, toolbar)
-            super.views.add(view)
+            super.addView(view)
         }
 }

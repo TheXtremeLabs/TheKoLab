@@ -1,5 +1,10 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
+/**
+ * Parent of all views that should follow the lifecycle of the application.
+ *
+ * @since 1.0.0
+ */
 abstract class LifecycleView {
     /**
      * Callback when the view is creating.
