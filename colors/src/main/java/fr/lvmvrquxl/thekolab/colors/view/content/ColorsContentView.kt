@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.view
+package fr.lvmvrquxl.thekolab.colors.view.content
 
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding

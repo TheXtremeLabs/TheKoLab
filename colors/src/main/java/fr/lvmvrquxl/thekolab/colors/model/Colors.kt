@@ -1,6 +1,12 @@
 package fr.lvmvrquxl.thekolab.colors.model
 
 import android.content.Context
+import fr.lvmvrquxl.thekolab.colors.model.color.*
+import fr.lvmvrquxl.thekolab.colors.model.color.Blue
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.colors.model.color.Purple
+import fr.lvmvrquxl.thekolab.colors.model.color.Red
+import fr.lvmvrquxl.thekolab.colors.model.color.White
 
 internal class Colors private constructor(private val context: Context) : IColors {
     companion object {

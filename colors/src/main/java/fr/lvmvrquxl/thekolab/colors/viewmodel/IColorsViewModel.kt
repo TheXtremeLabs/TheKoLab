@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.colors.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import fr.lvmvrquxl.thekolab.colors.model.Color
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
 
 internal interface IColorsViewModel {
     companion object {

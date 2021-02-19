@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
+import fr.lvmvrquxl.thekolab.colors.view.content.ColorsContentView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.ColorsToolbarView
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 

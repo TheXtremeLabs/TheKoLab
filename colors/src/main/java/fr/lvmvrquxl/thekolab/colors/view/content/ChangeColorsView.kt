@@ -1,9 +1,10 @@
-package fr.lvmvrquxl.thekolab.colors.view
+package fr.lvmvrquxl.thekolab.colors.view.content
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
-import fr.lvmvrquxl.thekolab.colors.model.Color
-import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
 

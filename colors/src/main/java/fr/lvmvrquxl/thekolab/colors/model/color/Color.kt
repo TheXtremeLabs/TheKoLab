@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.model
+package fr.lvmvrquxl.thekolab.colors.model.color
 
 internal abstract class Color(val name: String, val value: Int) {
     override fun equals(other: Any?): Boolean =

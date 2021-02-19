@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.colors.repository
 
 import android.content.Context
-import fr.lvmvrquxl.thekolab.colors.model.Color
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.model.IColors
 import kotlinx.coroutines.*
 

@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.utils
+package fr.lvmvrquxl.thekolab.colors.utils.animation
 
 internal enum class ArgbAnimationProperty(val value: String) {
     BACKGROUND_COLOR("backgroundColor"),

@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.colors.model
 
 import android.content.Context
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
 
 internal interface IColors {
     companion object {

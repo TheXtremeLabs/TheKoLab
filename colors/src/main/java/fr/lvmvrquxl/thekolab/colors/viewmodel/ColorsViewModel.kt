@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import fr.lvmvrquxl.thekolab.colors.model.Color
+import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.repository.IColorsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
