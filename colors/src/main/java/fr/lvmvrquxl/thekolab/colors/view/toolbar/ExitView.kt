@@ -8,6 +8,18 @@ import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
 
+/**
+ * View of the exit button.
+ *
+ * @param activity Instance of the colors activity
+ * @param view Binding of the button
+ *
+ * @since 1.0.0
+ *
+ * @see AppCompatActivity
+ * @see ColorsAnimatedView
+ * @see ShapeableImageView
+ */
 internal class ExitView private constructor(
     activity: AppCompatActivity,
     private val view: ShapeableImageView
@@ -16,6 +28,20 @@ internal class ExitView private constructor(
         private const val EXIT_ANIMATION_DELAY: Long = 750
         private const val START_ANIMATION_DELAY: Long = 1000
 
+        /**
+         * Create an instance of the exit button's view.
+         *
+         * @param activity Instance of the colors activity
+         * @param view Binding of the button
+         *
+         * @return New instance of the view
+         *
+         * @since 1.0.0
+         *
+         * @see AppCompatActivity
+         * @see LifecycleView
+         * @see ShapeableImageView
+         */
         fun create(activity: AppCompatActivity, view: ShapeableImageView): LifecycleView =
             ExitView(activity, view)
     }

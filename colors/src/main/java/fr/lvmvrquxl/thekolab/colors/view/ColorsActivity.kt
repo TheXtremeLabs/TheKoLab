@@ -7,6 +7,13 @@ import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsActionState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
+/**
+ * Activity of the colors feature.
+ *
+ * @since 1.0.0
+ *
+ * @see AppCompatActivity
+ */
 class ColorsActivity : AppCompatActivity() {
     private var view: ActivityView<ColorsActivityBinding>? = null
     private var viewModel: IColorsViewModel? = null

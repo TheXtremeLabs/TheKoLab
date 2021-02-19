@@ -8,6 +8,18 @@ import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
 
+/**
+ * View of the change colors button.
+ *
+ * @param activity Instance of the colors activity
+ * @param view Binding of the button
+ *
+ * @since 1.0.0
+ *
+ * @see AppCompatActivity
+ * @see ColorsAnimatedView
+ * @see MaterialButton
+ */
 internal class ChangeColorsView private constructor(
     activity: AppCompatActivity,
     private val view: MaterialButton
@@ -15,6 +27,20 @@ internal class ChangeColorsView private constructor(
     companion object {
         private const val START_ANIMATION_DELAY: Long = 750
 
+        /**
+         * Create an instance of the change colors button.
+         *
+         * @param activity Instance of the colors activity
+         * @param view Binding of the button
+         *
+         * @return New instance of the button
+         *
+         * @since 1.0.0
+         *
+         * @see AppCompatActivity
+         * @see LifecycleView
+         * @see MaterialButton
+         */
         fun create(activity: AppCompatActivity, view: MaterialButton): LifecycleView =
             ChangeColorsView(activity, view)
     }

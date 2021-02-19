@@ -8,6 +8,18 @@ import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
 
+/**
+ * View of the title.
+ *
+ * @param activity Instance of the colors activity
+ * @param view Binding of the view
+ *
+ * @since 1.0.0
+ *
+ * @see AppCompatActivity
+ * @see ColorsAnimatedView
+ * @see MaterialTextView
+ */
 internal class TitleView private constructor(
     activity: AppCompatActivity,
     private val view: MaterialTextView
@@ -16,6 +28,20 @@ internal class TitleView private constructor(
         private const val EXIT_ANIMATION_DELAY: Long = 500
         private const val START_ANIMATION_DELAY: Long = 500
 
+        /**
+         * Create an instance of the title's view.
+         *
+         * @param activity Instance of the colors activity
+         * @param view Binding of the view
+         *
+         * @return New instance of the view
+         *
+         * @since 1.0.0
+         *
+         * @see AppCompatActivity
+         * @see LifecycleView
+         * @see MaterialTextView
+         */
         fun create(activity: AppCompatActivity, view: MaterialTextView): LifecycleView =
             TitleView(activity, view)
     }

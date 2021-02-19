@@ -9,9 +9,31 @@ import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarView
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
+/**
+ * Main view of the colors activity.
+ *
+ * @param activity Instance of the colors activity
+ *
+ * @since 1.0.0
+ *
+ * @see ActivityView
+ * @see AppCompatActivity
+ */
 internal class ColorsView private constructor(private val activity: AppCompatActivity) :
     ActivityView<ColorsActivityBinding>() {
     companion object {
+        /**
+         * Create an instance of the view.
+         *
+         * @param activity Instance of the colors activity
+         *
+         * @return New instance of the view
+         *
+         * @since 1.0.0
+         *
+         * @see ActivityView
+         * @see AppCompatActivity
+         */
         fun create(activity: AppCompatActivity): ActivityView<ColorsActivityBinding> =
             ColorsView(activity)
     }
