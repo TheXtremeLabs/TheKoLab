@@ -7,11 +7,12 @@ import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import kotlinx.coroutines.Runnable
 
 internal class TitleView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialTextView
-) : ColorsAnimatedView(activity) {
+) : ColorsAnimatedView(activity, view) {
     companion object {
         private const val EXIT_ANIMATION_DELAY: Long = 500
         private const val START_ANIMATION_DELAY: Long = 500
@@ -20,33 +21,30 @@ internal class TitleView private constructor(
             TitleView(activity, view)
     }
 
-    override fun showExitAnimation() {
-        Animation.create(this.activity, this.view)
-            .medium()
-            .emptyAlpha()
-            .delay(EXIT_ANIMATION_DELAY)
-            .start()
-    }
+    override val exitAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.emptyAlpha()
+            this.delay(EXIT_ANIMATION_DELAY)
+        }
+    override val startAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.delay(START_ANIMATION_DELAY)
+        }
+    override val updateAnimation: Runnable
+        get() = ArgbAnimation.animate(this.view).apply {
+            this.property(ArgbAnimationProperty.TEXT_COLOR)
+            super.viewModel.previousColor()?.let { color: Color -> this.startColor(color.value) }
+            super.color?.let { color: Color -> this.endColor(color.value) }
+        }
 
     override fun showStartAnimation() {
-        this.view.apply {
-            this.alpha = 0f
-            super@TitleView.color?.let { color: Color -> this.setTextColor(color.value) }
-        }
-        Animation.create(this.activity, this.view)
-            .medium()
-            .delay(START_ANIMATION_DELAY)
-            .start()
+        super.hide()
+        this.setTextColor()
+        super.showStartAnimation()
     }
 
-    override fun showUpdateAnimation(): Unit? =
-        super.viewModel.previousColor()?.let { previousColor: Color ->
-            super.color?.let { color: Color ->
-                ArgbAnimation.animate(this.view)
-                    .withProperty(ArgbAnimationProperty.TEXT_COLOR)
-                    .withStartColor(previousColor.value)
-                    .withEndColor(color.value)
-                    .start()
-            }
-        }
+    private fun setTextColor() =
+        super.color?.let { color: Color -> this.view.setTextColor(color.value) }
 }

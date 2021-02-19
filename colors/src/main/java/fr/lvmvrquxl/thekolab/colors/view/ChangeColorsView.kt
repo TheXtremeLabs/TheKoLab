@@ -7,11 +7,12 @@ import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.utils.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import kotlinx.coroutines.Runnable
 
 internal class ChangeColorsView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialButton
-) : ColorsAnimatedView(activity) {
+) : ColorsAnimatedView(activity, view) {
     companion object {
         private const val START_ANIMATION_DELAY: Long = 750
 
@@ -19,41 +20,40 @@ internal class ChangeColorsView private constructor(
             ChangeColorsView(activity, view)
     }
 
+    override val exitAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.emptyAlpha()
+        }
+    override val startAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.delay(START_ANIMATION_DELAY)
+            this.onEnd { super.enableClick() }
+        }
+    override val updateAnimation: Runnable
+        get() = ArgbAnimation.animate(this.view).apply {
+            this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
+            super.viewModel.previousColor()?.let { color: Color -> this.startColor(color.value) }
+            super.color?.let { color: Color -> this.endColor(color.value) }
+        }
+
     override fun onStart() = this.setClickListener()
 
     override fun showExitAnimation() {
-        this.view.isClickable = false
-        Animation.create(this.activity, this.view)
-            .medium()
-            .emptyAlpha()
-            .start()
+        super.disableClick()
+        super.showExitAnimation()
     }
 
     override fun showStartAnimation() {
-        this.view.apply {
-            this.alpha = 0f
-            this.isClickable = false
-            super@ChangeColorsView.color?.let { color: Color ->
-                this.setBackgroundColor(color.value)
-            }
-        }
-        Animation.create(this.activity, this.view)
-            .medium()
-            .delay(START_ANIMATION_DELAY)
-            .onEnd { this.view.isClickable = true }
-            .start()
+        super.disableClick()
+        super.hide()
+        this.setBackgroundColor()
+        super.showStartAnimation()
     }
 
-    override fun showUpdateAnimation() =
-        super.viewModel.previousColor()?.let { previousColor: Color ->
-            super.color?.let { color: Color ->
-                ArgbAnimation.animate(this.view)
-                    .withProperty(ArgbAnimationProperty.BACKGROUND_COLOR)
-                    .withStartColor(previousColor.value)
-                    .withEndColor(color.value)
-                    .start()
-            }
-        }
+    private fun setBackgroundColor() =
+        super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }
 
     private fun setClickListener() = this.view.setOnClickListener { super.viewModel.updateColor() }
 }

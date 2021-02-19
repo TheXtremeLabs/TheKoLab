@@ -5,11 +5,12 @@ import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.Color
 import fr.lvmvrquxl.thekolab.colors.utils.Animation
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import kotlinx.coroutines.Runnable
 
 internal class ColorInfoView private constructor(
     private val activity: AppCompatActivity,
     private val view: MaterialTextView
-) : ColorsAnimatedView(activity) {
+) : ColorsAnimatedView(activity, view) {
     companion object {
         private const val EXIT_ANIMATION_DELAY: Long = 250
         private const val START_ANIMATION_DELAY: Long = 250
@@ -18,37 +19,38 @@ internal class ColorInfoView private constructor(
             ColorInfoView(activity, view)
     }
 
-    override fun showExitAnimation() = Animation.create(this.activity, this.view)
-        .medium()
-        .emptyAlpha()
-        .delay(EXIT_ANIMATION_DELAY)
-        .start()
-
-    override fun showStartAnimation() {
-        super.color?.let { color: Color ->
-            this.view.apply {
-                this.alpha = 0f
-                this.text = color.name
-                this.setTextColor(color.value)
+    override val exitAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.emptyAlpha()
+            this.delay(EXIT_ANIMATION_DELAY)
+        }
+    override val startAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.medium()
+            this.delay(START_ANIMATION_DELAY)
+        }
+    override val updateAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply {
+            this.emptyAlpha()
+            this.onEnd {
+                this@ColorInfoView.setText()
+                this@ColorInfoView.setTextColor()
+                this@ColorInfoView.updateEndAnimation.run()
             }
         }
-        Animation.create(this.activity, this.view)
-            .medium()
-            .delay(START_ANIMATION_DELAY)
-            .start()
+    private val updateEndAnimation: Runnable
+        get() = Animation.animate(this.activity, this.view).apply { this.medium() }
+
+    override fun showStartAnimation() {
+        super.hide()
+        this.setText()
+        this.setTextColor()
+        super.showStartAnimation()
     }
 
-    override fun showUpdateAnimation() = Animation.create(this.activity, this.view)
-        .emptyAlpha()
-        .onEnd {
-            super.color?.let { color: Color ->
-                this.view.apply {
-                    this.text = color.name
-                    this.setTextColor(color.value)
-                }
-            }
-            Animation.create(this.activity, this.view)
-                .medium()
-                .start()
-        }.start()
+    private fun setText() = super.color?.let { color: Color -> this.view.text = color.name }
+
+    private fun setTextColor() =
+        super.color?.let { color: Color -> this.view.setTextColor(color.value) }
 }

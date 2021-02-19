@@ -5,5 +5,5 @@ interface AnimatedView : LifecycleView {
 
     fun showExitAnimation()
 
-    fun showUpdateAnimation(): Unit?
+    fun showUpdateAnimation()
 }

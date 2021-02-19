@@ -3,13 +3,14 @@ package fr.lvmvrquxl.thekolab.colors.utils
 import android.animation.AnimatorListenerAdapter
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.Runnable
 
 internal class Animation private constructor(
     private val activity: AppCompatActivity,
     private val target: View
-) {
+) : Runnable {
     companion object {
-        fun create(activity: AppCompatActivity, target: View): Animation =
+        fun animate(activity: AppCompatActivity, target: View): Animation =
             Animation(activity, target)
     }
 
@@ -22,27 +23,7 @@ internal class Animation private constructor(
     private var duration: Long = this.shortDuration
     private var onEnd: () -> Unit = {}
 
-    fun delay(delay: Long): Animation {
-        this.delay = delay
-        return this
-    }
-
-    fun emptyAlpha(): Animation {
-        this.alpha = 0f
-        return this
-    }
-
-    fun medium(): Animation {
-        this.duration = this.mediumDuration
-        return this
-    }
-
-    fun onEnd(callback: () -> Unit): Animation {
-        this.onEnd = callback
-        return this
-    }
-
-    fun start() = this.target.animate()
+    override fun run() = this.target.animate()
         .alpha(this.alpha)
         .setDuration(this.duration)
         .setStartDelay(this.delay)
@@ -52,4 +33,20 @@ internal class Animation private constructor(
             }
         })
         .start()
+
+    fun delay(delay: Long) {
+        this.delay = delay
+    }
+
+    fun emptyAlpha() {
+        this.alpha = 0f
+    }
+
+    fun medium() {
+        this.duration = this.mediumDuration
+    }
+
+    fun onEnd(callback: () -> Unit) {
+        this.onEnd = callback
+    }
 }

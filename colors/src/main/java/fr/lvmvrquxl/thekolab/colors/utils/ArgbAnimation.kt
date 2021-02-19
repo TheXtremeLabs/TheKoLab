@@ -3,8 +3,9 @@ package fr.lvmvrquxl.thekolab.colors.utils
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.view.View
+import kotlinx.coroutines.Runnable
 
-internal class ArgbAnimation private constructor(private val target: View) {
+internal class ArgbAnimation private constructor(private val target: View) : Runnable {
     companion object {
         private const val END_COLOR_ERROR_MSG: String = "No end color was provided!"
         private const val PROPERTY_ERROR_MSG: String = "No property was provided!"
@@ -13,41 +14,39 @@ internal class ArgbAnimation private constructor(private val target: View) {
         fun animate(target: View): ArgbAnimation = ArgbAnimation(target)
     }
 
+    private val animator: ObjectAnimator
+        get() = ObjectAnimator.ofObject(
+            this.target,
+            this.propertyValue?.value,
+            this.evaluator,
+            this.startColor,
+            this.endColor
+        )
+
     private val evaluator: ArgbEvaluator = ArgbEvaluator()
     private var endColor: Int? = null
-    private var property: ArgbAnimationProperty? = null
+    private var propertyValue: ArgbAnimationProperty? = null
     private var startColor: Int? = null
 
-    fun start() {
+    override fun run() {
         this.checkFields()
-        this.buildAnimator().start()
+        this.animator.start()
     }
 
-    fun withEndColor(endColor: Int): ArgbAnimation {
+    fun endColor(endColor: Int) {
         this.endColor = endColor
-        return this
     }
 
-    fun withProperty(property: ArgbAnimationProperty): ArgbAnimation {
-        this.property = property
-        return this
+    fun property(property: ArgbAnimationProperty) {
+        this.propertyValue = property
     }
 
-    fun withStartColor(startColor: Int): ArgbAnimation {
+    fun startColor(startColor: Int) {
         this.startColor = startColor
-        return this
     }
-
-    private fun buildAnimator(): ObjectAnimator = ObjectAnimator.ofObject(
-        this.target,
-        this.property?.value,
-        this.evaluator,
-        this.startColor,
-        this.endColor
-    )
 
     private fun checkFields() {
-        if (null == this.property) throw NoSuchElementException(PROPERTY_ERROR_MSG)
+        if (null == this.propertyValue) throw NoSuchElementException(PROPERTY_ERROR_MSG)
         if (null == this.startColor) throw NoSuchElementException(START_COLOR_ERROR_MSG)
         if (null == this.endColor) throw NoSuchElementException(END_COLOR_ERROR_MSG)
     }
