@@ -5,6 +5,13 @@ import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.model.IColors
 import kotlinx.coroutines.*
 
+/**
+ * Implementation of the colors repository.
+ *
+ * @since 1.0.0
+ *
+ * @see [IColorsRepository]
+ */
 internal object ColorsRepository : IColorsRepository {
     override val firstColor: Color?
         get() = when (this.colorBackup) {
@@ -23,6 +30,18 @@ internal object ColorsRepository : IColorsRepository {
         this@ColorsRepository.colorBackup = color
     }
 
+    /**
+     * Update context and init new colors to display.
+     *
+     * @param context New context
+     *
+     * @return Instance of repository
+     *
+     * @since 1.0.0
+     *
+     * @see [Context]
+     * @see [IColorsRepository]
+     */
     fun withContext(context: Context): IColorsRepository = runBlocking(Dispatchers.Default) {
         this@ColorsRepository.initColors(context)
         this@ColorsRepository
