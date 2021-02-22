@@ -15,8 +15,15 @@ Visit [*Keep a Changelog*][changelog] for more information.
 
 ## List of releases
 
+- [Version 1.0.1](#v1.0.1) - 2021/02/22
 - [Version 1.0.0](#v1.0.0) - 2021/02/22
 - [Version 0.1.0](#v0.1.0) - 2021/01/18
+
+## Version 1.0.1 <a name="v1.0.1"></a>
+
+### Fixed
+
+- Documentation's generation in Continuous Delivery (CD)
 
 ## Version 1.0.0 <a name="v1.0.0"></a>
 

@@ -41,8 +41,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Generate Kotlin documentation with Dokka
         run: ./gradlew dokkaHtml
-      - name: Upload APKs
+      - name: Upload documentation
         uses: actions/upload-artifact@v2
         with:
           name: documentation
-          path: app/build/dokka
+          path: ./**/build/dokka
