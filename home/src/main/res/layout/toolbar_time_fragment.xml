@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/dark_grey">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/toolbar_time"
+        style="@style/TheKoLab.Text.Headline2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/toolbar_date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:alpha="0.75"
+        tools:text="15:20"
+        tools:textColor="@color/white" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/toolbar_date"
+        style="@style/TheKoLab.Toolbar.Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_time"
+        tools:text="20 janv. 2021"
+        tools:textColor="@color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

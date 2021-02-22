@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.Layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/backdrop_height"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:background="@color/purple_700">
+
+    <ProgressBar
+        android:id="@+id/weather_progress_bar"
+        style="@style/TheKoLab.Toolbar.Weather.Progress.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/weather_info"
+        style="@style/TheKoLab.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/weather_location"
+            style="@style/TheKoLab.Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/weather_degree"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weather_location_city"
+                style="@style/TheKoLab.Text.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/weather_location_comma"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/paris" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weather_location_comma"
+                style="@style/TheKoLab.Text.Headline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/comma"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/weather_location_country"
+                app:layout_constraintStart_toEndOf="@id/weather_location_city"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weather_location_country"
+                style="@style/TheKoLab.Toolbar.Weather.Country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/weather_location_comma"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/fr" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/weather_degree"
+            style="@style/TheKoLab.Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/weather_condition"
+            app:layout_constraintTop_toBottomOf="@id/weather_location">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weather_degree_number"
+                style="@style/TheKoLab.Text.Headline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/weather_degree_celsius"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/x" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weather_degree_celsius"
+                style="@style/TheKoLab.Text.Headline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/degree_celsius"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/weather_degree_number"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/weather_condition"
+            style="@style/TheKoLab.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_degree"
+            tools:text="@string/light_rain" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

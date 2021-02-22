@@ -1,2 +1,6 @@
 include ':app'
+include ':colors'
+include ':core'
+include ':home'
+include ':shared'
 rootProject.name = "TheKoLab"

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.App.Card"
+    android:layout_width="match_parent"
+    android:layout_height="128dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/TheKoLab.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/small"
+        tools:background="@color/grey_800">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/left_guideline"
+            style="@style/TheKoLab.Guideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/right_guideline"
+            style="@style/TheKoLab.Guideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/app_item_name"
+            style="@style/TheKoLab.App.Name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@id/left_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="App title"
+            tools:textColor="@color/white" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/app_item_description"
+            style="@style/TheKoLab.App.Description"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintStart_toEndOf="@id/left_guideline"
+            tools:text="A little description of the application"
+            tools:textColor="@color/white" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/back_arrow"
+            style="@style/TheKoLab.App.Arrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/right_guideline" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

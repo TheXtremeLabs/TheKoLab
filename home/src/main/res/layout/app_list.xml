@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.App.NestedScroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/TheKoLab.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="@dimen/medium">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/apps_recycler_view"
+            style="@style/TheKoLab.App.Recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/app_item" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

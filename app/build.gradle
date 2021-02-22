@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'org.jetbrains.dokka'
 }
 
 android {
@@ -33,21 +34,23 @@ android {
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
+    dokkaHtml.configure {
+        dokkaSourceSets {
+            named("main") {
+                noAndroidSdkLink.set(false)
+                skipDeprecated.set(true)
+            }
+        }
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintlayout_version"
-    implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx_version"
-    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.recyclerview_version"
-    implementation "com.google.android.material:material:$rootProject.ext.material_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.android_espresso_core_version"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.android_junit_version"
-
-    testImplementation "junit:junit:$rootProject.ext.junit_version"
+    implementation project(':home')
+    implementation rootProject.ext.dependencies.appcompat
+    implementation rootProject.ext.dependencies.core_ktx
+    implementation rootProject.ext.dependencies.kotlin_stdlib
 }
