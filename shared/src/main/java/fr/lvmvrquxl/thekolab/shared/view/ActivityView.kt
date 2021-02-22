@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
-import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -17,7 +16,7 @@ import androidx.viewbinding.ViewBinding
  *
  * @see [ViewBinding]
  */
-abstract class ActivityView<VB : ViewBinding> {
+abstract class ActivityView<VB : ViewBinding> : ContainerView() {
     /**
      * Root of the view.
      *
@@ -35,29 +34,10 @@ abstract class ActivityView<VB : ViewBinding> {
      */
     protected var viewBinding: VB? = null
 
-    /**
-     * Callback when the view is creating.
-     *
-     * @since 1.0.0
-     */
-    open fun onCreate() {}
-
-    /**
-     * Callback when the view is destroying.
-     *
-     * @since 1.0.0
-     */
-    @CallSuper
-    open fun onDestroy() {
-        this.viewBinding = null
+    override fun onDestroy() {
+        this.destroyViewBinding()
+        super.onDestroy()
     }
-
-    /**
-     * Callback when the view is pausing.
-     *
-     * @since 1.0.0
-     */
-    open fun onPause(): Unit? = null
 
     /**
      * Callback when the view is requesting permissions.
@@ -66,24 +46,7 @@ abstract class ActivityView<VB : ViewBinding> {
      */
     open fun onRequestPermissionsResult(grantResults: IntArray) {}
 
-    /**
-     * Callback when the view is resuming.
-     *
-     * @since 1.0.0
-     */
-    open fun onResume(): Unit? = null
-
-    /**
-     * Callback when the view is starting.
-     *
-     * @since 1.0.0
-     */
-    open fun onStart() {}
-
-    /**
-     * Callback when the view is stopping.
-     *
-     * @since 1.0.0
-     */
-    open fun onStop(): Unit? = null
+    private fun destroyViewBinding() {
+        this.viewBinding = null
+    }
 }

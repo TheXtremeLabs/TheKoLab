@@ -1,108 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.App.Card"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_marginTop="@dimen/extra_small"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="?android:attr/colorBackground"
-    app:cardCornerRadius="@dimen/small"
-    app:cardElevation="@dimen/small"
-    app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true"
-    tools:cardBackgroundColor="@color/oil">
-
-    <include layout="@layout/app_item_background" />
+    android:layout_height="128dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/TheKoLab.Layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/small">
+        android:padding="@dimen/small"
+        tools:background="@color/grey_800">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/TheKoLab.Guideline"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middle_vertical_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.6" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/middle_horizontal_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            style="@style/TheKoLab.Guideline"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
+            app:layout_constraintGuide_percent="0.9" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/app_item_icon"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/app_item_name"
+            style="@style/TheKoLab.App.Name"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            android:fitsSystemWindows="true"
-            android:padding="@dimen/small"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/left_guideline"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@id/left_guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/thekolab_logo_white" />
+            tools:text="App title"
+            tools:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/app_item_title"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="bottom"
-            android:paddingHorizontal="16dp"
-            android:textAppearance="@style/TheKoLab.AppItem.Title"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/middle_horizontal_guideline"
-            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
-            app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title app" />
-
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_item_description"
+            style="@style/TheKoLab.App.Description"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:paddingHorizontal="16dp"
-            android:textAppearance="@style/TheKoLab.AppItem.Subhead"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/middle_vertical_guideline"
-            app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@id/middle_horizontal_guideline"
-            tools:ignore="NewApi"
-            tools:text="App description" />
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toStartOf="@id/right_guideline"
+            app:layout_constraintStart_toEndOf="@id/left_guideline"
+            tools:text="A little description of the application"
+            tools:textColor="@color/white" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/back_arrow"
+            style="@style/TheKoLab.App.Arrow"
             android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:fitsSystemWindows="true"
-            android:src="@drawable/keyboard_arrow_right_24"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/right_guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/right_guideline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

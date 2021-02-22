@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TheKoLab.Layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/backdrop_height"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -9,67 +10,60 @@
 
     <ProgressBar
         android:id="@+id/weather_progress_bar"
+        style="@style/TheKoLab.Toolbar.Weather.Progress.Circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateDrawable="@drawable/circle_progress_bar"
-        android:indeterminateDuration="1500"
-        android:indeterminateOnly="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/weather_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/TheKoLab.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:visibility="visible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/weather_location"
-            android:layout_width="wrap_content"
+            style="@style/TheKoLab.Layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/weather_degree"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_city"
-                style="@style/TheKoLab.Toolbar.Weather.Location"
+                style="@style/TheKoLab.Text.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/weather_location_comma"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/paris" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_comma"
-                style="@style/TheKoLab.Toolbar.Weather.Location"
+                style="@style/TheKoLab.Text.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/comma"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/weather_location_country"
                 app:layout_constraintStart_toEndOf="@id/weather_location_city"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_location_country"
-                style="@style/TheKoLab.Toolbar.Weather.Location"
+                style="@style/TheKoLab.Toolbar.Weather.Country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/small"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/weather_location_comma"
@@ -80,19 +74,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/weather_degree"
-            android:layout_width="wrap_content"
+            style="@style/TheKoLab.Layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/weather_condition"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weather_location">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_number"
-                style="@style/TheKoLab.Toolbar.Weather.Degree"
+                style="@style/TheKoLab.Text.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/weather_degree_celsius"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -100,13 +92,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/x" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_degree_celsius"
-                style="@style/TheKoLab.Toolbar.Weather.Degree"
+                style="@style/TheKoLab.Text.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/degree_celsius"
-                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/weather_degree_number"
@@ -114,15 +105,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/weather_condition"
-            style="@style/TheKoLab.Toolbar.Weather.Description"
-            android:layout_width="wrap_content"
+            style="@style/TheKoLab.Text.Body"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/weather_degree"
             tools:text="@string/light_rain" />
 

@@ -41,8 +41,8 @@ internal class ToolbarListener private constructor(private val callback: IToolba
 
     override fun onOffsetChanged(appBar: AppBarLayout, verticalOffset: Int) {
         if (INITIAL_SCROLL_RANGE == this.scrollRange) this.initScrollRange(appBar)
-        if (TITLE_OFFSET_LIMIT >= this.scrollRange + verticalOffset) this.callback.showTitle()
-        else this.callback.hideTitle()
+        if (TITLE_OFFSET_LIMIT >= this.scrollRange + verticalOffset) this.callback.showToolbarContent()
+        else this.callback.hideToolbarContent()
         if (TAB_INDICATORS_OFFSET_LIMIT >= this.scrollRange + verticalOffset)
             this.callback.hideTabIndicators()
         else this.callback.showTabIndicators()

@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="dark_grey">#121212</color>
-    <color name="grey">#333333</color>
+    <color name="grey_800">#333333</color>
+    <color name="grey_700">#515151</color>
     <color name="orange_300">#ffb640</color>
     <color name="orange_700">#f67900</color>
     <color name="purple_300">#BB86FC</color>

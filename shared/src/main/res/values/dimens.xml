@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="alpha_smooth">0.75</dimen>
     <dimen name="backdrop_height">270dp</dimen>
+    <dimen name="empty">0dp</dimen>
     <dimen name="extra_large">64dp</dimen>
     <dimen name="extra_small">4dp</dimen>
     <dimen name="large">32dp</dimen>
+    <dimen name="letter_spacing">0.2</dimen>
+    <dimen name="letter_spacing_smooth">0.1</dimen>
     <dimen name="medium">16dp</dimen>
+    <dimen name="rotation_mirror">180</dimen>
     <dimen name="small">8dp</dimen>
 </resources>

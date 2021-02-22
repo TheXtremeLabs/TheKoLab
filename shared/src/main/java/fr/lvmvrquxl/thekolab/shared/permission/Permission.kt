@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.CompatibilityUtils
 import fr.lvmvrquxl.thekolab.shared.utils.DialogUtils
-import fr.lvmvrquxl.thekolab.shared.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 import fr.lvmvrquxl.thekolab.shared.utils.ToastUtils
 
 /**
@@ -58,8 +58,8 @@ abstract class Permission(
         val text: String = when (
             grantResults.isNotEmpty() && PackageManager.PERMISSION_GRANTED == grantResults[0]
         ) {
-            true -> StringUtils.permissionGranted(this.activity)
-            else -> StringUtils.permissionDenied(this.activity)
+            true -> SharedStringUtils.permissionGranted(this.activity)
+            else -> SharedStringUtils.permissionDenied(this.activity)
         }
         ToastUtils.short(this.activity, "$text: ${this.identity.name}")
     }
@@ -89,11 +89,12 @@ abstract class Permission(
 
     private fun showDialog() = DialogUtils.notCancelable(
         MaterialAlertDialogBuilder(this.activity).apply {
-            val title: String = StringUtils.permissionDialogTitle(this@Permission.activity)
+            val title: String = SharedStringUtils.permissionDialogTitle(this@Permission.activity)
             this.setTitle(title)
-            val message: String = StringUtils.permissionDialogMessage(this@Permission.activity)
+            val message: String =
+                SharedStringUtils.permissionDialogMessage(this@Permission.activity)
             this.setMessage("$message ${this@Permission.identity.name}.")
-            val buttonText: String = StringUtils.ok(this@Permission.activity)
+            val buttonText: String = SharedStringUtils.ok(this@Permission.activity)
             this.setPositiveButton(buttonText) { _: DialogInterface, _: Int ->
                 this@Permission.requestPermission()
             }
