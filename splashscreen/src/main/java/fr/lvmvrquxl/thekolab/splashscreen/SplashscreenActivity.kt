@@ -6,19 +6,19 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.animation.addListener
-import androidx.core.content.ContextCompat
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
+import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
@@ -39,26 +39,20 @@ class SplashscreenActivity : AppCompatActivity() {
     private var logoColorAnimator: ObjectAnimator? = null
     private var backgroundColorFadeAnimator: ObjectAnimator? = null
 
-    private var shortAnimationDuration: Int = 0
+    private var animationDuration: Int = 0
     private val lLogoFadeColorDelay: Long = 1500
-    private val lConstraintLayoutBackgroundColorDelay: Long = 1000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
 
-        // Retrieve and cache the system's default "short" animation time.
-        shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+        animationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime)
 
         initViews()
 
         initTextViewsFont()
         initTextViewsVisibility()
-    }
-
-    override fun onStart() {
-        super.onStart()
         this.startLogoRotationAnimation()
     }
 
@@ -67,10 +61,10 @@ class SplashscreenActivity : AppCompatActivity() {
      */
     private fun initViews() {
         constraintLayout = findViewById(R.id.constraint_layout)
-        tvThe = findViewById(R.id.tv_the)
-        tvOLab = findViewById(R.id.tv_olab)
-        llLogoBackgroundCover = findViewById(R.id.ll_logo_background)
-        ivLogo = findViewById(R.id.iv_logo)
+        tvThe = findViewById(R.id.app_name_start)
+        tvOLab = findViewById(R.id.app_name_end)
+        llLogoBackgroundCover = findViewById(R.id.logo_background)
+        ivLogo = findViewById(R.id.logo)
     }
 
     /**
@@ -126,38 +120,18 @@ class SplashscreenActivity : AppCompatActivity() {
                 Log.e(TAG, "End logo animation")
 
                 llLogoBackgroundCover!!.visibility = View.VISIBLE
-                llLogoBackgroundCover!!.setBackgroundColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.app_background
-                    )
-                )
 
                 // Display textviews
                 tvThe!!.visibility = View.VISIBLE
+                tvThe?.alpha = 0f
                 tvOLab!!.visibility = View.VISIBLE
+                tvOLab?.alpha = 0f
 
                 // Call slides animations
                 slideToLeftAnimation()
                 slideToRightAnimation()
             })
         logoColorAnimator!!.start()
-
-
-        // Delay ConstraintLayout's background color fade animation
-        Handler(Looper.getMainLooper())
-            .postDelayed(
-                {
-                    Log.e(TAG, "Run ConstraintLayout's background color fade animation")
-                    fadeBackgroundView(
-                        constraintLayout as View,
-                        ContextCompat.getColor(this, R.color.main_container_background),
-                        ContextCompat.getColor(this, R.color.app_background)
-                    )
-                },
-                lConstraintLayoutBackgroundColorDelay
-            )
-
 
         // Delay Logo color fade animation
         Handler(Looper.getMainLooper())
@@ -172,9 +146,9 @@ class SplashscreenActivity : AppCompatActivity() {
 
     private fun fadeBackgroundView(view: View, baseColor: Int, targetColor: Int) {
         if (view is ShapeableImageView) {
-            ivLogo!!.setImageResource(R.drawable.ic_kotlin_logo_black)
+            ivLogo!!.setImageResource(R.drawable.kotlin_logo_black)
             ivLogo!!.setColorFilter(
-                ContextCompat.getColor(this, R.color.white),
+                SharedColorUtils.white(this),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         }
@@ -210,16 +184,18 @@ class SplashscreenActivity : AppCompatActivity() {
     private fun slideToLeftAnimation() {
         Log.d(TAG, "slideToLeftAnimation()")
         tvThe!!.animate()
+            .alpha(1f)
             .translationX(-250.0f)
-            .setDuration(shortAnimationDuration.toLong())
+            .setDuration(animationDuration.toLong())
             .setListener(null)
     }
 
     private fun slideToRightAnimation() {
         Log.d(TAG, "slideToRightAnimation()")
         tvOLab!!.animate()
+            .alpha(1f)
             .translationX(220.0f)
-            .setDuration(shortAnimationDuration.toLong())
+            .setDuration(animationDuration.toLong())
             .setListener(null)
     }
 }

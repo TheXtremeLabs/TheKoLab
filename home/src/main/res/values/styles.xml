@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="TheKoLab.App.Arrow" parent="TheKoLab.Shape.Arrow">
+    <style name="TheKoLab.App.Arrow" parent="TheKoLab.Image.Arrow">
         <item name="android:alpha">@dimen/alpha_smooth</item>
     </style>
 
