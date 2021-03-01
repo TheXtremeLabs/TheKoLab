@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.utils.animation
+package fr.lvmvrquxl.thekolab.shared.utils.animation
 
 import android.animation.AnimatorListenerAdapter
 import android.view.View
@@ -19,7 +19,7 @@ import kotlinx.coroutines.Runnable
  * @see Runnable
  * @see View
  */
-internal class Animation private constructor(
+class Animation private constructor(
     private val activity: AppCompatActivity,
     private val target: View
 ) : Runnable {

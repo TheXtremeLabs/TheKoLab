@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.utils.animation
+package fr.lvmvrquxl.thekolab.shared.utils.animation
 
 /**
  * Properties enumeration that can be animated by [ArgbAnimation].
@@ -9,7 +9,7 @@ package fr.lvmvrquxl.thekolab.colors.utils.animation
  *
  * @see ArgbAnimation
  */
-internal enum class ArgbAnimationProperty(val value: String) {
+enum class ArgbAnimationProperty(val value: String) {
     /**
      * Background color's property (`backgroundColor`) of a view.
      *

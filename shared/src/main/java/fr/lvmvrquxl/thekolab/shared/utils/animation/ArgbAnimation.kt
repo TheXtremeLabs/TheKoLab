@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.colors.utils.animation
+package fr.lvmvrquxl.thekolab.shared.utils.animation
 
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
@@ -17,7 +17,7 @@ import kotlinx.coroutines.Runnable
  * @see Runnable
  * @see View
  */
-internal class ArgbAnimation private constructor(private val target: View) : Runnable {
+class ArgbAnimation private constructor(private val target: View) : Runnable {
     companion object {
         private const val END_COLOR_ERROR_MSG: String = "No end color was provided!"
         private const val PROPERTY_ERROR_MSG: String = "No property was provided!"

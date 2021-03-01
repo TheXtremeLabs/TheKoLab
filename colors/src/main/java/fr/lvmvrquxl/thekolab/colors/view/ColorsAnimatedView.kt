@@ -4,8 +4,8 @@ import android.view.View
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.Animation
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimation
+import fr.lvmvrquxl.thekolab.shared.utils.animation.Animation
+import fr.lvmvrquxl.thekolab.shared.utils.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView

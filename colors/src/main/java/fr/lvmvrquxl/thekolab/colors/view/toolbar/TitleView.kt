@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view.toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.shared.utils.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
