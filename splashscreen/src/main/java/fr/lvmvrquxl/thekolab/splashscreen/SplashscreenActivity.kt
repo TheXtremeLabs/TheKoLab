@@ -1,0 +1,225 @@
+package fr.lvmvrquxl.thekolab.splashscreen
+
+import android.animation.ArgbEvaluator
+import android.animation.Keyframe
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.content.Context
+import android.graphics.Typeface
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.animation.addListener
+import androidx.core.content.ContextCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.textview.MaterialTextView
+
+class SplashscreenActivity : AppCompatActivity() {
+    companion object {
+        private val TAG = SplashscreenActivity::class.java.simpleName
+    }
+
+    // Context
+    private var context: Context? = this
+
+    // Views
+    private var constraintLayout: ConstraintLayout? = null
+    private var tvThe: MaterialTextView? = null
+    private var tvOLab: MaterialTextView? = null
+    private var llLogoBackgroundCover: LinearLayout? = null
+    private var ivLogo: ShapeableImageView? = null
+
+    // Animators
+    private var logoColorAnimator: ObjectAnimator? = null
+    private var backgroundColorFadeAnimator: ObjectAnimator? = null
+
+    private var shortAnimationDuration: Int = 0
+    private val lLogoFadeColorDelay: Long = 1500
+    private val lConstraintLayoutBackgroundColorDelay: Long = 1000
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splashscreen)
+
+        // Retrieve and cache the system's default "short" animation time.
+        shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+
+        initViews()
+
+        initTextViewsFont()
+        initTextViewsVisibility()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        this.startLogoRotationAnimation()
+    }
+
+    /**
+     * Initialize views in the layout
+     */
+    private fun initViews() {
+        constraintLayout = findViewById(R.id.constraint_layout)
+        tvThe = findViewById(R.id.tv_the)
+        tvOLab = findViewById(R.id.tv_olab)
+        llLogoBackgroundCover = findViewById(R.id.ll_logo_background)
+        ivLogo = findViewById(R.id.iv_logo)
+    }
+
+    /**
+     * Set Textviews font type
+     */
+    private fun initTextViewsFont() {
+        val typeface = Typeface.createFromAsset(context!!.assets, "LABRAT_.ttf")
+        tvThe!!.typeface = typeface
+        tvOLab!!.typeface = typeface
+    }
+
+
+    /**
+     * Set text views visibility to gone, in order to hide them at the launch of the app
+     */
+    private fun initTextViewsVisibility() {
+        tvThe!!.visibility = View.GONE
+        tvOLab!!.visibility = View.GONE
+    }
+
+    /**
+     * Run logo animation. Animation is set on y axis by default
+     */
+    private fun startLogoRotationAnimation() {
+
+        // Set Key Frames values to set logo position at a specific time
+        val kf0: Keyframe = Keyframe.ofFloat(0f, 0f)
+        val kf1: Keyframe = Keyframe.ofFloat(.2f, 360f * 1.5f)
+        val kf2: Keyframe = Keyframe.ofFloat(.35f, 360f * 3.0f)
+        val kf3: Keyframe = Keyframe.ofFloat(.4f, 360f * 5.0f)
+        val kf4: Keyframe = Keyframe.ofFloat(.5f, 360f * 7.0f)
+        val kf5: Keyframe = Keyframe.ofFloat(.75f, 360f * 9.0f)
+        val kf6: Keyframe = Keyframe.ofFloat(1f, 360f * 10f)
+
+        val propertyName = "rotationY"
+
+        // Set property view holder
+        val propertyValuesHolder: PropertyValuesHolder =
+            PropertyValuesHolder
+                .ofKeyframe(
+                    propertyName,
+                    kf0, kf1, kf2, kf3, kf4, kf5, kf6
+                )
+
+        // apply property view holder object to the object animator
+        logoColorAnimator = ObjectAnimator.ofPropertyValuesHolder(ivLogo, propertyValuesHolder)
+
+        // set object animator properties
+        logoColorAnimator!!.duration = 3500
+        logoColorAnimator!!.interpolator = LinearOutSlowInInterpolator()
+        logoColorAnimator!!.addListener(
+            onEnd = {
+                Log.e(TAG, "End logo animation")
+
+                llLogoBackgroundCover!!.visibility = View.VISIBLE
+                llLogoBackgroundCover!!.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.app_background
+                    )
+                )
+
+                // Display textviews
+                tvThe!!.visibility = View.VISIBLE
+                tvOLab!!.visibility = View.VISIBLE
+
+                // Call slides animations
+                slideToLeftAnimation()
+                slideToRightAnimation()
+            })
+        logoColorAnimator!!.start()
+
+
+        // Delay ConstraintLayout's background color fade animation
+        Handler(Looper.getMainLooper())
+            .postDelayed(
+                {
+                    Log.e(TAG, "Run ConstraintLayout's background color fade animation")
+                    fadeBackgroundView(
+                        constraintLayout as View,
+                        ContextCompat.getColor(this, R.color.main_container_background),
+                        ContextCompat.getColor(this, R.color.app_background)
+                    )
+                },
+                lConstraintLayoutBackgroundColorDelay
+            )
+
+
+        // Delay Logo color fade animation
+        Handler(Looper.getMainLooper())
+            .postDelayed(
+                {
+                    Log.e(TAG, "Run Logo color fade animation")
+                    fadeBackgroundView(ivLogo as View, 0, 0)
+                },
+                lLogoFadeColorDelay
+            )
+    }
+
+    private fun fadeBackgroundView(view: View, baseColor: Int, targetColor: Int) {
+        if (view is ShapeableImageView) {
+            ivLogo!!.setImageResource(R.drawable.ic_kotlin_logo_black)
+            ivLogo!!.setColorFilter(
+                ContextCompat.getColor(this, R.color.white),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+        }
+
+        if (view is ConstraintLayout) {
+
+            backgroundColorFadeAnimator =
+                ObjectAnimator.ofObject(
+                    view,
+                    "backgroundColor",
+                    ArgbEvaluator(),
+                    baseColor,  // Beginning color
+                    targetColor// Target Color
+                )
+
+            backgroundColorFadeAnimator!!.duration = 1000
+            backgroundColorFadeAnimator!!.start()
+        }
+    }
+
+    /**
+     * /!\ Important to know /!\ : https://stackoverflow.com/questions/29175429/objectanimator-vs-translateanimation/29187285
+     *
+     *
+     * The difference is mainly that if you use a TranslateAnimation,
+     * the view which you are animating does not really leave its original position on the screen,
+     * it just makes it look like it is moving.
+     * So the view basically doesnt change its coordinates.
+     *
+     *
+     * If you use an ObjectAnimator the view really changes its actual position.
+     */
+    private fun slideToLeftAnimation() {
+        Log.d(TAG, "slideToLeftAnimation()")
+        tvThe!!.animate()
+            .translationX(-250.0f)
+            .setDuration(shortAnimationDuration.toLong())
+            .setListener(null)
+    }
+
+    private fun slideToRightAnimation() {
+        Log.d(TAG, "slideToRightAnimation()")
+        tvOLab!!.animate()
+            .translationX(220.0f)
+            .setDuration(shortAnimationDuration.toLong())
+            .setListener(null)
+    }
+}

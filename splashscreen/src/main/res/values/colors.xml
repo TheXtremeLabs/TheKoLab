@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Global -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- App -->
+    <color name="app_background">#121212</color>
+
+    <color name="main_container_background">#D2D2D2</color>
+</resources>
