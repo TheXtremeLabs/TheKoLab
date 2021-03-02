@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".SplashscreenActivity"
+            android:name=".view.SplashscreenActivity"
             android:theme="@style/TheKoLab.Theme.NoActionBar" />
     </application>
 

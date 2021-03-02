@@ -1,11 +1,9 @@
-package fr.lvmvrquxl.thekolab.splashscreen
+package fr.lvmvrquxl.thekolab.splashscreen.view
 
 import android.animation.ArgbEvaluator
 import android.animation.Keyframe
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
-import android.content.Context
-import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,15 +17,20 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
+import fr.lvmvrquxl.thekolab.splashscreen.R
+import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
 
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
         private const val TRANSLATION_X: Float = 128f
-        private val TAG = SplashscreenActivity::class.java.simpleName
+        private val layout: Int = R.layout.splashscreen_activity
+        private val tag: String = SplashscreenActivity::class.java.simpleName
     }
 
-    // Context
-    private var context: Context? = this
+    private val animationDuration: Long
+        get() = this.resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+
+    private var viewBinding: SplashscreenActivityBinding? = null
 
     // Views
     private var constraintLayout: ConstraintLayout? = null
@@ -40,21 +43,24 @@ class SplashscreenActivity : AppCompatActivity() {
     private var logoColorAnimator: ObjectAnimator? = null
     private var backgroundColorFadeAnimator: ObjectAnimator? = null
 
-    private var animationDuration: Int = 0
     private val lLogoFadeColorDelay: Long = 1500
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splashscreen)
+        this.bindView()
+        super.setContentView(layout)
+//        initViews()
+//        initTextViewsVisibility()
+    }
 
-        animationDuration = resources.getInteger(android.R.integer.config_longAnimTime)
+    override fun onStart() {
+        super.onStart()
+//        this.startLogoRotationAnimation()
+    }
 
-        initViews()
-
-        initTextViewsFont()
-        initTextViewsVisibility()
-        this.startLogoRotationAnimation()
+    private fun bindView() {
+        this.viewBinding = SplashscreenActivityBinding.inflate(this.layoutInflater)
     }
 
     /**
@@ -66,15 +72,6 @@ class SplashscreenActivity : AppCompatActivity() {
         tvOLab = findViewById(R.id.app_name_end)
         llLogoBackgroundCover = findViewById(R.id.logo_background)
         ivLogo = findViewById(R.id.logo)
-    }
-
-    /**
-     * Set Textviews font type
-     */
-    private fun initTextViewsFont() {
-        val typeface = Typeface.createFromAsset(context!!.assets, "LABRAT_.ttf")
-        tvThe!!.typeface = typeface
-        tvOLab!!.typeface = typeface
     }
 
 
@@ -118,7 +115,7 @@ class SplashscreenActivity : AppCompatActivity() {
         logoColorAnimator!!.interpolator = LinearOutSlowInInterpolator()
         logoColorAnimator!!.addListener(
             onEnd = {
-                Log.e(TAG, "End logo animation")
+                Log.e(tag, "End logo animation")
 
                 llLogoBackgroundCover!!.visibility = View.VISIBLE
 
@@ -138,7 +135,7 @@ class SplashscreenActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper())
             .postDelayed(
                 {
-                    Log.e(TAG, "Run Logo color fade animation")
+                    Log.e(tag, "Run Logo color fade animation")
                     fadeBackgroundView(ivLogo as View, 0, 0)
                 },
                 lLogoFadeColorDelay
@@ -183,22 +180,20 @@ class SplashscreenActivity : AppCompatActivity() {
      * If you use an ObjectAnimator the view really changes its actual position.
      */
     private fun slideToLeftAnimation() {
-        Log.d(TAG, "slideToLeftAnimation()")
+        Log.d(tag, "slideToLeftAnimation()")
         tvThe?.translationX = TRANSLATION_X
         tvThe!!.animate()
             .alpha(1f)
             .translationXBy(-TRANSLATION_X)
-            .setDuration(animationDuration.toLong())
-            .setListener(null)
+            .setDuration(this.animationDuration)
     }
 
     private fun slideToRightAnimation() {
-        Log.d(TAG, "slideToRightAnimation()")
+        Log.d(tag, "slideToRightAnimation()")
         tvOLab?.translationX = -TRANSLATION_X
         tvOLab!!.animate()
             .alpha(1f)
             .translationXBy(TRANSLATION_X)
-            .setDuration(animationDuration.toLong())
-            .setListener(null)
+            .setDuration(this.animationDuration)
     }
 }

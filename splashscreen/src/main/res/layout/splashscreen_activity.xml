@@ -46,11 +46,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name_start"
-        style="@style/TheKoLab.Splashscreen.AppName"
+        style="@style/TheKoLab.Splashscreen.AppName.Start"
         android:layout_width="@dimen/empty_dp"
         android:layout_height="@dimen/empty_dp"
-        android:gravity="end"
-        android:paddingHorizontal="@dimen/small"
         android:text="@string/app_name_start"
         app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@id/middle_end_guideline"
@@ -61,10 +59,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name_end"
-        style="@style/TheKoLab.Splashscreen.AppName"
+        style="@style/TheKoLab.Splashscreen.AppName.End"
         android:layout_width="@dimen/empty_dp"
         android:layout_height="@dimen/empty_dp"
-        android:gravity="start"
         android:text="@string/app_name_end"
         app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@id/end_guideline"
