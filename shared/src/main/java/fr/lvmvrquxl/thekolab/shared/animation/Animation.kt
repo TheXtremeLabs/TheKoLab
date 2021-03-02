@@ -41,14 +41,19 @@ class Animation private constructor(
             Animation(activity, target)
     }
 
+    private val longDuration: Long =
+        this.activity.resources.getInteger(android.R.integer.config_longAnimTime).toLong()
     private val mediumDuration: Long =
         this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
     private val shortDuration: Long =
         this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+
     private var alpha: Float = 1f
     private var delay: Long = 0
     private var duration: Long = this.shortDuration
     private var onEnd: () -> Unit = {}
+    private var onStart: () -> Unit = {}
+    private var translationXBy: Float = 0f
 
     override fun run() = this.target.animate()
         .alpha(this.alpha)
@@ -59,6 +64,8 @@ class Animation private constructor(
                 this@Animation.onEnd()
             }
         })
+        .translationXBy(this.translationXBy)
+        .withStartAction(this.onStart)
         .start()
 
     /**
@@ -87,6 +94,11 @@ class Animation private constructor(
         this.alpha = 0f
     }
 
+    // TODO: Add documentation
+    fun longDuration() {
+        this.duration = this.longDuration
+    }
+
     /**
      * Set the animation's duration to medium, corresponding to 400 milliseconds.
      *
@@ -95,7 +107,7 @@ class Animation private constructor(
      *
      * @since 1.0.0
      */
-    fun medium() {
+    fun mediumDuration() {
         this.duration = this.mediumDuration
     }
 
@@ -108,5 +120,15 @@ class Animation private constructor(
      */
     fun onEnd(callback: () -> Unit) {
         this.onEnd = callback
+    }
+
+    // TODO: Add documentation
+    fun onStart(callback: () -> Unit) {
+        this.onStart = callback
+    }
+
+    // TODO: Add documentation
+    fun translationXBy(translation: Float) {
+        this.translationXBy = translation
     }
 }

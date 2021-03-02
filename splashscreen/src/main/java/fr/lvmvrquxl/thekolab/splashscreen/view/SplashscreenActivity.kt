@@ -8,18 +8,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 import fr.lvmvrquxl.thekolab.splashscreen.R
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
 
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
+        private const val LOGO_IMAGE_ANIMATION_DELAY: Long = 1500
         private const val TRANSLATION_X: Float = 128f
-        private const val LOGO_FADE_ANIMATION_DELAY: Long = 1500
+        private val blackLogo: Int = R.drawable.kotlin_logo_black
     }
-
-    private val animationDuration: Long
-        get() = this.resources.getInteger(android.R.integer.config_longAnimTime).toLong()
 
     private var viewBinding: SplashscreenActivityBinding? = null
 
@@ -53,12 +52,11 @@ class SplashscreenActivity : AppCompatActivity() {
                 this.alpha = 0f
                 this.translationX = -TRANSLATION_X
                 this.visibility = View.VISIBLE
-                this.animate()
-                    .alpha(1f)
-                    .translationXBy(TRANSLATION_X)
-                    .setDuration(this@SplashscreenActivity.animationDuration)
-                    .start()
             }
+            Animation.animate(this, binding.appNameEnd).apply {
+                this.longDuration()
+                this.translationXBy(TRANSLATION_X)
+            }.run()
         }
 
     private fun runAppNameStartAnimation() =
@@ -67,33 +65,33 @@ class SplashscreenActivity : AppCompatActivity() {
                 this.alpha = 0f
                 this.translationX = TRANSLATION_X
                 this.visibility = View.VISIBLE
-                this.animate()
-                    .alpha(1f)
-                    .setDuration(this@SplashscreenActivity.animationDuration)
-                    .translationXBy(-TRANSLATION_X)
-                    .start()
             }
+            Animation.animate(this, binding.appNameStart).apply {
+                this.longDuration()
+                this.translationXBy(-TRANSLATION_X)
+            }.run()
         }
 
     private fun runLogoAnimations() {
         this.runLogoSpinningAnimation()
-        this.runLogoFadeAnimation()
+        this.runLogoImageAnimation()
     }
 
-    private fun runLogoFadeAnimation() =
+    private fun runLogoImageAnimation() {
         this.viewBinding?.let { binding: SplashscreenActivityBinding ->
-            binding.logo.animate()
-                .setStartDelay(LOGO_FADE_ANIMATION_DELAY)
-                .withStartAction {
-                    binding.logo.apply {
-                        this.setImageResource(R.drawable.kotlin_logo_black)
-                        this.setColorFilter(
-                            SharedColorUtils.white(this@SplashscreenActivity)
-                        )
-                    }
+            val onStart: () -> Unit = {
+                binding.logo.apply {
+                    this.setImageResource(blackLogo)
+                    val white: Int = SharedColorUtils.white(this@SplashscreenActivity)
+                    this.setColorFilter(white)
                 }
-                .start()
+            }
+            Animation.animate(this, binding.logo).apply {
+                this.delay(LOGO_IMAGE_ANIMATION_DELAY)
+                this.onStart(onStart)
+            }.run()
         }
+    }
 
     private fun runLogoSpinningAnimation() {
         val kf0: Keyframe = Keyframe.ofFloat(0f, 0f)

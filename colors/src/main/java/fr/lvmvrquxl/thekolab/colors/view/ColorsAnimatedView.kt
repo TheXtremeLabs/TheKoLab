@@ -65,7 +65,7 @@ internal abstract class ColorsAnimatedView(
      * @see Animation
      */
     protected val mediumAnimation: Animation
-        get() = this.animation.apply { this.medium() }
+        get() = this.animation.apply { this.mediumDuration() }
 
     /**
      * Animation executed when the activity starts.
