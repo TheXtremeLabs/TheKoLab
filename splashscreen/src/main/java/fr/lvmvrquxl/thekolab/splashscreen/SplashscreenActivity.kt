@@ -22,6 +22,7 @@ import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
+        private const val TRANSLATION_X: Float = 128f
         private val TAG = SplashscreenActivity::class.java.simpleName
     }
 
@@ -47,7 +48,7 @@ class SplashscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
 
-        animationDuration = resources.getInteger(android.R.integer.config_mediumAnimTime)
+        animationDuration = resources.getInteger(android.R.integer.config_longAnimTime)
 
         initViews()
 
@@ -183,18 +184,20 @@ class SplashscreenActivity : AppCompatActivity() {
      */
     private fun slideToLeftAnimation() {
         Log.d(TAG, "slideToLeftAnimation()")
+        tvThe?.translationX = TRANSLATION_X
         tvThe!!.animate()
             .alpha(1f)
-            .translationX(-250.0f)
+            .translationXBy(-TRANSLATION_X)
             .setDuration(animationDuration.toLong())
             .setListener(null)
     }
 
     private fun slideToRightAnimation() {
         Log.d(TAG, "slideToRightAnimation()")
+        tvOLab?.translationX = -TRANSLATION_X
         tvOLab!!.animate()
             .alpha(1f)
-            .translationX(220.0f)
+            .translationXBy(TRANSLATION_X)
             .setDuration(animationDuration.toLong())
             .setListener(null)
     }

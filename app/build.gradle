@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    // TODO: Only the splashscreen module should depend of home module
     implementation project(':home')
     implementation project(':splashscreen')
     implementation rootProject.ext.dependencies.appcompat
