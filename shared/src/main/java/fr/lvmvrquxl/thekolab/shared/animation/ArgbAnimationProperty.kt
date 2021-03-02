@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.shared.utils.animation
+package fr.lvmvrquxl.thekolab.shared.animation
 
 /**
  * Properties enumeration that can be animated by [ArgbAnimation].

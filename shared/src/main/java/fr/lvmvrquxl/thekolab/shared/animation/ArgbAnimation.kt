@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.shared.utils.animation
+package fr.lvmvrquxl.thekolab.shared.animation
 
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
