@@ -13,13 +13,19 @@ abstract class ContainerView : LifecycleView() {
     private val views: MutableList<LifecycleView> = mutableListOf()
 
     @CallSuper
-    override fun onCreate() = this.createViews()
+    override fun onCreate() {
+        this.registerViews()
+        this.createViews()
+    }
 
     @CallSuper
     override fun onDestroy() = this.destroyViews()
 
     @CallSuper
     override fun onStart() = this.startViews()
+
+    // TODO: Add documentation
+    protected open fun registerViews() {}
 
     /**
      * Add given view in this container.

@@ -1,6 +1,5 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
-import android.view.View
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -16,27 +15,10 @@ import androidx.viewbinding.ViewBinding
  *
  * @see [ViewBinding]
  */
-abstract class ActivityView<VB : ViewBinding> : ContainerView() {
-    /**
-     * Root of the view.
-     *
-     * @since 1.0.0
-     *
-     * @see [View]
-     */
-    val root: View?
-        get(): View? = this.viewBinding?.root
-
-    /**
-     * View binding.
-     *
-     * @since 1.0.0
-     */
-    protected var viewBinding: VB? = null
-
-    override fun onDestroy() {
-        this.destroyViewBinding()
-        super.onDestroy()
+abstract class ActivityView<VB : ViewBinding> : BindableView<VB>() {
+    override fun onCreate() {
+        this.bindView()
+        super.onCreate()
     }
 
     /**
@@ -45,8 +27,4 @@ abstract class ActivityView<VB : ViewBinding> : ContainerView() {
      * @since 1.0.0
      */
     open fun onRequestPermissionsResult(grantResults: IntArray) {}
-
-    private fun destroyViewBinding() {
-        this.viewBinding = null
-    }
 }

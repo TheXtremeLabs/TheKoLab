@@ -49,7 +49,11 @@ internal class ToolbarTimeView private constructor(
 
     private var presenter: Presenter? = null
 
-    override fun onCreateView() = this.bindViews()
+    override fun bindView() {
+        val attachToParent = false
+        super.viewBinding =
+            ToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+    }
 
     override fun onDestroyView() {
         this.presenter = null
@@ -63,12 +67,6 @@ internal class ToolbarTimeView private constructor(
     override fun onStart() {
         this.initPresenter()
         super.onStart()
-    }
-
-    private fun bindViews() {
-        val attachToParent = false
-        super.viewBinding =
-            ToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 
     private fun homeToolbarTimeCallback(): ToolbarTimeCallback =

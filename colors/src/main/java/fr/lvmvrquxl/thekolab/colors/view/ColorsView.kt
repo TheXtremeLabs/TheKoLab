@@ -38,15 +38,13 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
             ColorsView(activity)
     }
 
-    override fun onCreate() {
-        this.bindView()
-        this.registerContentView()
-        this.registerToolbarView()
-        super.onCreate()
+    override fun bindView() {
+        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater)
     }
 
-    private fun bindView() {
-        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater)
+    override fun registerViews() {
+        this.registerContentView()
+        this.registerToolbarView()
     }
 
     private fun registerContentView() =

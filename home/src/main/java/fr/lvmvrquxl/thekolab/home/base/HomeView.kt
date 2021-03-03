@@ -66,9 +66,11 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     private var permissions: List<Permission>? = null
     private var toolbar: ToolbarBinding? = null
 
-    override fun onCreate() {
-        this.bindViews()
-        super.onCreate()
+    override fun bindView() {
+        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
+        this.toolbar = super.viewBinding?.homeToolbar
+        this.collapsingToolbar = this.toolbar?.collapsingToolbar
+        this.appsRecyclerView = super.viewBinding?.appList?.appsRecyclerView
     }
 
     override fun onDestroy() {
@@ -104,13 +106,6 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
 
     private fun arePermissionsGranted(): Boolean =
         true == this.permissions?.all { p: Permission -> p.isGranted() }
-
-    private fun bindViews() {
-        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
-        this.toolbar = super.viewBinding?.homeToolbar
-        this.collapsingToolbar = this.toolbar?.collapsingToolbar
-        this.appsRecyclerView = super.viewBinding?.appList?.appsRecyclerView
-    }
 
     private fun checkPermissions() = this.permissions?.forEach { p: Permission -> p.check() }
 
