@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.addListener
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.google.android.material.imageview.ShapeableImageView
-import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.splashscreen.R
@@ -19,9 +18,10 @@ import kotlinx.coroutines.Runnable
 internal class LogoView private constructor(
     private val activity: AppCompatActivity,
     private val view: ShapeableImageView
-) : AnimatedView() {
+) : SplashscreenAnimatedView(activity, view) {
     companion object {
         private const val IMAGE_ANIMATION_DELAY: Long = 1500
+        private const val SPINNING_ANIMATION_DURATION: Long = 3600
         private val blackLogo: Int = R.drawable.kotlin_logo_black
 
         // TODO: Add documentation
@@ -29,31 +29,17 @@ internal class LogoView private constructor(
             LogoView(activity, view)
     }
 
-    private val animation: Animation
-        get() = Animation.animate(this.activity, this.view)
-    private val exitAnimation: Runnable
-        get() = this.animation
-    private val startAnimation: Runnable
+    override val startAnimation: Runnable
         get() = Runnable {
             this.showImageAnimation()
             this.showSpinningAnimation()
         }
-    private val updateAnimation: Runnable
-        get() = this.animation
 
     private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
-    override fun onCreate() = this.observeState()
-
-    override fun showExitAnimation() = this.exitAnimation.run()
-
-    override fun showStartAnimation() = this.startAnimation.run()
-
-    override fun showUpdateAnimation() = this.updateAnimation.run()
-
-    private fun observeState() =
+    override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
-            if (SplashscreenState.SHOW_LOGO == state) this.showStartAnimation()
+            if (SplashscreenState.SHOW_LOGO == state) super.showStartAnimation()
         }
 
     private fun showImageAnimation() {
@@ -62,7 +48,7 @@ internal class LogoView private constructor(
             val white: Int = SharedColorUtils.white(this@LogoView.activity)
             this.setColorFilter(white)
         }
-        this.animation.apply { this.delay(IMAGE_ANIMATION_DELAY) }.run()
+        super.animation.apply { this.delay(IMAGE_ANIMATION_DELAY) }.run()
     }
 
     private fun showSpinningAnimation() {
@@ -77,7 +63,7 @@ internal class LogoView private constructor(
         val propertyValuesHolder: PropertyValuesHolder =
             PropertyValuesHolder.ofKeyframe(propertyName, kf0, kf1, kf2, kf3, kf4, kf5, kf6)
         ObjectAnimator.ofPropertyValuesHolder(this.view, propertyValuesHolder).apply {
-            this.duration = 3600
+            this.duration = SPINNING_ANIMATION_DURATION
             this.interpolator = LinearOutSlowInInterpolator()
             this.addListener(onEnd = { this@LogoView.viewModel.showAppName() })
         }.start()
