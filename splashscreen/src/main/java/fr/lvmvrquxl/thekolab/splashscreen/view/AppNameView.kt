@@ -2,6 +2,7 @@ package fr.lvmvrquxl.thekolab.splashscreen.view
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
+import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 
@@ -9,7 +10,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 internal abstract class AppNameView(
     private val activity: AppCompatActivity,
     view: MaterialTextView
-) : SplashscreenAnimatedView(activity, view) {
+) : AnimatedView(activity, view) {
     companion object {
         // TODO: Add documentation
         const val TRANSLATION_X: Float = 128f

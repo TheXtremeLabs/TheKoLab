@@ -1,6 +1,5 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.coroutines.Runnable
@@ -8,7 +7,7 @@ import kotlinx.coroutines.Runnable
 // TODO: Add documentation
 internal class AppNameStartView private constructor(
     activity: AppCompatActivity,
-    private val view: MaterialTextView
+    view: MaterialTextView
 ) : AppNameView(activity, view) {
     companion object {
         // TODO: Add documentation
@@ -18,11 +17,9 @@ internal class AppNameStartView private constructor(
 
     override val startAnimation: Runnable
         get() = Runnable {
-            this.view.apply {
-                this.alpha = 0f
-                this.translationX = TRANSLATION_X
-                this.visibility = View.VISIBLE
-            }
+            super.hide()
+            super.translationX(TRANSLATION_X)
+            super.setVisible()
             super.animation.apply {
                 this.longDuration()
                 this.translationXBy(-TRANSLATION_X)

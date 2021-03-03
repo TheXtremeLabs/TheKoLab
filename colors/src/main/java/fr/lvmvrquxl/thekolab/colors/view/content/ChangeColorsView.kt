@@ -46,12 +46,22 @@ internal class ChangeColorsView private constructor(
     }
 
     override val exitAnimation: Runnable
-        get() = super.mediumAnimation.apply { this.emptyAlpha() }
-    override val startAnimation: Runnable
-        get() = super.mediumAnimation.apply {
-            this.delay(START_ANIMATION_DELAY)
-            this.onEnd { super.enableClick() }
+        get() = Runnable {
+            super.disableClick()
+            super.mediumAnimation.apply { this.emptyAlpha() }
         }
+
+    override val startAnimation: Runnable
+        get() = Runnable {
+            super.disableClick()
+            super.hide()
+            this.setBackgroundColor()
+            super.mediumAnimation.apply {
+                this.delay(START_ANIMATION_DELAY)
+                this.onEnd { super.enableClick() }
+            }
+        }
+
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
@@ -60,18 +70,6 @@ internal class ChangeColorsView private constructor(
         }
 
     override fun onStart() = this.setClickListener()
-
-    override fun showExitAnimation() {
-        super.disableClick()
-        super.showExitAnimation()
-    }
-
-    override fun showStartAnimation() {
-        super.disableClick()
-        super.hide()
-        this.setBackgroundColor()
-        super.showStartAnimation()
-    }
 
     private fun setBackgroundColor() =
         super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }

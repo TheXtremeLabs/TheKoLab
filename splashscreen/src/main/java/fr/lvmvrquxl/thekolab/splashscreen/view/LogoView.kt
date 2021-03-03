@@ -18,7 +18,7 @@ import kotlinx.coroutines.Runnable
 internal class LogoView private constructor(
     private val activity: AppCompatActivity,
     private val view: ShapeableImageView
-) : SplashscreenAnimatedView(activity, view) {
+) : AnimatedView(activity, view) {
     companion object {
         private const val IMAGE_ANIMATION_DELAY: Long = 1500
         private const val SPINNING_ANIMATION_DURATION: Long = 3600
@@ -29,13 +29,13 @@ internal class LogoView private constructor(
             LogoView(activity, view)
     }
 
+    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
+
     override val startAnimation: Runnable
         get() = Runnable {
             this.showImageAnimation()
             this.showSpinningAnimation()
         }
-
-    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
     override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
