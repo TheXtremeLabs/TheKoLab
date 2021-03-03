@@ -7,7 +7,7 @@ import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import kotlinx.coroutines.Runnable
 
@@ -92,9 +92,9 @@ internal abstract class ColorsAnimatedView(
      *
      * @since 1.0.0
      *
-     * @see IColorsViewModel
+     * @see ColorsViewModel
      */
-    protected val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
+    protected val viewModel: ColorsViewModel = ColorsViewModel.instance(this.activity)
 
     /**
      * Current color to display.

@@ -72,7 +72,6 @@
         tools:visibility="visible" />
 
     <LinearLayout
-        android:id="@+id/logo_background"
         style="@style/TheKoLab.Splashscreen.Logo.Background"
         android:layout_width="@dimen/large"
         android:layout_height="@dimen/empty_dp"

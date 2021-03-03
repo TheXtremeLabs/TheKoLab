@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
@@ -16,7 +16,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  */
 class ColorsActivity : AppCompatActivity() {
     private var view: ActivityView<ColorsActivityBinding>? = null
-    private var viewModel: IColorsViewModel? = null
+    private var viewModel: ColorsViewModel? = null
 
     override fun onBackPressed() {
         this.viewModel?.onBackPressed()
@@ -58,7 +58,7 @@ class ColorsActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        this.viewModel = IColorsViewModel.instance(this)
+        this.viewModel = ColorsViewModel.instance(this)
     }
 
     private fun observeState() = this.viewModel?.state?.observe(this) { state: ColorsState ->
