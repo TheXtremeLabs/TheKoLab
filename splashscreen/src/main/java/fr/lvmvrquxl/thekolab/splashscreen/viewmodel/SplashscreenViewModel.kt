@@ -15,4 +15,7 @@ internal abstract class SplashscreenViewModel : ViewModel() {
 
     // TODO: Add documentation
     abstract fun showAppName()
+
+    // TODO: Add documentation
+    abstract fun showVersionName()
 }

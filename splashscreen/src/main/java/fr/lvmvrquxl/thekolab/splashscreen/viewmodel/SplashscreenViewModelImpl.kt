@@ -39,6 +39,11 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         this.syncState()
     }
 
+    override fun showVersionName() {
+        this.setCurrentStateToShowVersionName()
+        this.syncState()
+    }
+
     private fun destroyCurrentState() = runBlocking(Dispatchers.Default) {
         this@SplashscreenViewModelImpl.currentState = null
     }
@@ -57,6 +62,10 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
 
     private fun setCurrentStateToShowLogo() = runBlocking(Dispatchers.Default) {
         this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_LOGO
+    }
+
+    private fun setCurrentStateToShowVersionName() = runBlocking(Dispatchers.Default) {
+        this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_VERSION_NAME
     }
 
     private fun setCurrentStateToStart() = runBlocking(Dispatchers.Default) {

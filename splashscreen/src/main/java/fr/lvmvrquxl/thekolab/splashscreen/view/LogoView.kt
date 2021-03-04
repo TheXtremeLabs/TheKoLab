@@ -26,8 +26,6 @@ internal class LogoView private constructor(
             LogoView(activity, view)
     }
 
-    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
-
     override val startAnimation: Runnable
         get() = super.animation.apply {
             this.mediumDuration()
@@ -53,6 +51,12 @@ internal class LogoView private constructor(
                 this.addListener(onEnd = { this@LogoView.viewModel.showAppName() })
             }.start()
         }
+
+    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
+
+    init {
+        super.hide()
+    }
 
     override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->

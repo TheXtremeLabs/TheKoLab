@@ -53,12 +53,14 @@ class Animation private constructor(
     private var onEnd: () -> Unit = {}
     private var onStart: () -> Unit = {}
     private var translationXBy: Float = 0f
+    private var translationYBy: Float = 0f
 
     override fun run() = this.target.animate()
         .alpha(this.alpha)
         .setDuration(this.duration)
         .setStartDelay(this.delay)
         .translationXBy(this.translationXBy)
+        .translationYBy(this.translationYBy)
         .withEndAction(this.onEnd)
         .withStartAction(this.onStart)
         .start()
@@ -125,5 +127,10 @@ class Animation private constructor(
     // TODO: Add documentation
     fun translationXBy(translation: Float) {
         this.translationXBy = translation
+    }
+
+    // TODO: Add documentation
+    fun translationYBy(translation: Float) {
+        this.translationYBy = translation
     }
 }

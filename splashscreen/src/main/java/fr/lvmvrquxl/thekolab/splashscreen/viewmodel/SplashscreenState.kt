@@ -22,6 +22,9 @@ internal enum class SplashscreenState {
     // TODO: Add documentation
     SHOW_LOGO,
 
+    // TODO: Add documentation
+    SHOW_VERSION_NAME,
+
     /**
      * The activity starts.
      *

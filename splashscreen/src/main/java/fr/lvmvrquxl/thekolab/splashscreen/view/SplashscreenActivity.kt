@@ -1,7 +1,9 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import fr.lvmvrquxl.thekolab.home.base.HomeActivity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
@@ -56,9 +58,13 @@ class SplashscreenActivity : AppCompatActivity() {
         this.viewModel = null
     }
 
+    private fun goToHome() = this.startActivity(
+        Intent(this, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    )
+
     private fun observeState() =
         this.viewModel?.state?.observe(this) { state: SplashscreenState ->
-            if (SplashscreenState.CLOSABLE == state) super.onBackPressed()
+            if (SplashscreenState.CLOSABLE == state) this.goToHome()
         }
 
     private fun startView() = this.view?.onStart()

@@ -16,7 +16,7 @@ internal abstract class AppNameView(
         const val TRANSLATION_X: Float = 128f
     }
 
-    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
+    protected val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
     override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->

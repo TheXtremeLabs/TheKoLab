@@ -100,4 +100,10 @@ abstract class AnimatedView(
     protected fun translationX(translation: Float) {
         this.view.translationX = translation
     }
+
+    // TODO: Add documentation
+    @Suppress("SameParameterValue")
+    protected fun translationY(translation: Float) {
+        this.view.translationY = translation
+    }
 }

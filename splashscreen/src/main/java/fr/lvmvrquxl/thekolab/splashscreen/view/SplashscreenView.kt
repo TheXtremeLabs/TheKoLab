@@ -1,8 +1,10 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
+import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
@@ -20,10 +22,16 @@ internal class SplashscreenView private constructor(private val activity: AppCom
         super.viewBinding = SplashscreenActivityBinding.inflate(this.activity.layoutInflater)
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        this.setVersionName()
+    }
+
     override fun registerViews() {
         this.registerLogoView()
         this.registerAppNameEndView()
         this.registerAppNameStartView()
+        this.registerVersionLayoutView()
     }
 
     private fun registerAppNameEndView() =
@@ -41,5 +49,15 @@ internal class SplashscreenView private constructor(private val activity: AppCom
     private fun registerLogoView() = super.viewBinding?.logo?.let { logo: ShapeableImageView ->
         val view: LifecycleView = LogoView.create(this.activity, logo)
         super.addView(view)
+    }
+
+    private fun registerVersionLayoutView() =
+        super.viewBinding?.versionLayout?.let { versionLayout: ConstraintLayout ->
+            val view: LifecycleView = VersionLayoutView.create(this.activity, versionLayout)
+            super.addView(view)
+        }
+
+    private fun setVersionName() {
+        super.viewBinding?.versionName?.text = SharedStringUtils.versionName(this.activity)
     }
 }

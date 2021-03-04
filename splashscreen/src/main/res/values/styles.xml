@@ -27,4 +27,9 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="TheKoLab.Splashscreen.Version" parent="TheKoLab.Text.Body">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:letterSpacing">@dimen/letter_spacing_smooth</item>
+    </style>
+
 </resources>

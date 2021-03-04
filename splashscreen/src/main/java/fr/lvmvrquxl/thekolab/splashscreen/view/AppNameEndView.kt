@@ -23,6 +23,7 @@ internal class AppNameEndView private constructor(
             super.animation.apply {
                 this.longDuration()
                 this.translationXBy(TRANSLATION_X)
+                this.onEnd { super.viewModel.showVersionName() }
             }.run()
         }
 }
