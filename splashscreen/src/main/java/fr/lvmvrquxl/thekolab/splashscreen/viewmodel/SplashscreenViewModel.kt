@@ -18,4 +18,6 @@ internal abstract class SplashscreenViewModel : ViewModel() {
 
     // TODO: Add documentation
     abstract fun showVersionName()
+
+    override fun onBackPressed() {}
 }

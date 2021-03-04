@@ -46,17 +46,17 @@ internal class ChangeColorsView private constructor(
     }
 
     override val exitAnimation: Runnable
-        get() = Runnable {
+        get() {
             super.disableClick()
-            super.mediumAnimation.apply { this.emptyAlpha() }
+            return super.mediumAnimation.apply { this.emptyAlpha() }
         }
 
     override val startAnimation: Runnable
-        get() = Runnable {
+        get() {
             super.disableClick()
             super.hide()
             this.setBackgroundColor()
-            super.mediumAnimation.apply {
+            return super.mediumAnimation.apply {
                 this.delay(START_ANIMATION_DELAY)
                 this.onEnd { super.enableClick() }
             }

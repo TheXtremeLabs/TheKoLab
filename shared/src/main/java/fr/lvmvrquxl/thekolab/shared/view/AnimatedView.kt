@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import kotlinx.coroutines.Runnable
@@ -16,11 +17,6 @@ abstract class AnimatedView(
     private val activity: AppCompatActivity,
     private val view: View
 ) : LifecycleView() {
-    override fun onCreate() = this.observeState()
-
-    // TODO: Add documentation
-    protected abstract fun observeState()
-
     /**
      * Animation executed when the user closes the activity.
      *
@@ -60,6 +56,25 @@ abstract class AnimatedView(
      */
     protected val animation: Animation
         get() = Animation.animate(this.activity, this.view)
+            .apply { this@AnimatedView.currentAnimation = this }
+
+    private var currentAnimation: Animation? = null
+
+    @CallSuper
+    override fun onCreate() = this.observeState()
+
+    @CallSuper
+    override fun onDestroy() {
+        this.currentAnimation = null
+    }
+
+    @CallSuper
+    override fun onStop() {
+        this.currentAnimation?.cancel()
+    }
+
+    // TODO: Add documentation
+    protected abstract fun observeState()
 
     /**
      * Hide the current view.

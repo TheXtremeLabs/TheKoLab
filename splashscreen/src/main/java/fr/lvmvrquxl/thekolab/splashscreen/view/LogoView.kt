@@ -54,12 +54,15 @@ internal class LogoView private constructor(
 
     private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
-    init {
-        super.hide()
-    }
-
     override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
-            if (SplashscreenState.SHOW_LOGO == state) super.showStartAnimation()
+            when (state) {
+                SplashscreenState.SHOW_LOGO -> super.showStartAnimation()
+                SplashscreenState.STOP -> this.onStop()
+                else -> {
+                }
+            }
         }
+
+    override fun onStart() = super.hide()
 }

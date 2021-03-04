@@ -18,19 +18,17 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         this.syncState()
     }
 
-    override fun onBackPressed() {
-        if (SplashscreenState.EXIT != this.currentState) {
-            this.setCurrentStateToExit()
-            this.syncState()
-        }
-    }
-
     override fun onDestroy() = this.destroyCurrentState()
 
     override fun onStart() {
         this.setCurrentStateToStart()
         this.syncState()
         this.setCurrentStateToShowLogo()
+        this.syncState()
+    }
+
+    override fun onStop() {
+        this.setCurrentStateToStop()
         this.syncState()
     }
 
@@ -52,10 +50,6 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         this@SplashscreenViewModelImpl.currentState = SplashscreenState.CLOSABLE
     }
 
-    private fun setCurrentStateToExit() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.EXIT
-    }
-
     private fun setCurrentStateToShowAppName() = runBlocking(Dispatchers.Default) {
         this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_APP_NAME
     }
@@ -70,6 +64,10 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
 
     private fun setCurrentStateToStart() = runBlocking(Dispatchers.Default) {
         this@SplashscreenViewModelImpl.currentState = SplashscreenState.START
+    }
+
+    private fun setCurrentStateToStop() = runBlocking(Dispatchers.Default) {
+        this@SplashscreenViewModelImpl.currentState = SplashscreenState.STOP
     }
 
     private fun syncState() {

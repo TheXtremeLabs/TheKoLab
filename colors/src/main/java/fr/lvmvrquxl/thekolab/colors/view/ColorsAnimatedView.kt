@@ -26,44 +26,6 @@ internal abstract class ColorsAnimatedView(
     private val view: View
 ) : AnimatedView(activity, view) {
     /**
-     * Current color to display.
-     *
-     * @since 1.0.0
-     *
-     * @see Color
-     */
-    protected var color: Color? = null
-
-    /**
-     * View model's instance of the activity.
-     *
-     * @since 1.0.0
-     *
-     * @see ColorsViewModel
-     */
-    protected val viewModel: ColorsViewModel = ColorsViewModel.instance(this.activity)
-
-    override fun observeState() =
-        this.viewModel.state.observe(this.activity) { state: ColorsState ->
-            when (state) {
-                ColorsState.START -> this.showStartAnimation()
-                ColorsState.UPDATE -> this.showUpdateAnimation()
-                ColorsState.EXIT -> this.showExitAnimation()
-                else -> {
-                }
-            }
-        }
-
-    override fun onCreate() {
-        this.observeColor()
-        this.observeState()
-    }
-
-    override fun onDestroy() {
-        this.color = null
-    }
-
-    /**
      * ARGB animation instance for the view.
      *
      * @since 1.0.0
@@ -82,6 +44,45 @@ internal abstract class ColorsAnimatedView(
      */
     protected val mediumAnimation: Animation
         get() = super.animation.apply { this.mediumDuration() }
+
+    /**
+     * View model's instance of the activity.
+     *
+     * @since 1.0.0
+     *
+     * @see ColorsViewModel
+     */
+    protected val viewModel: ColorsViewModel = ColorsViewModel.instance(this.activity)
+
+    /**
+     * Current color to display.
+     *
+     * @since 1.0.0
+     *
+     * @see Color
+     */
+    protected var color: Color? = null
+
+    override fun observeState() =
+        this.viewModel.state.observe(this.activity) { state: ColorsState ->
+            when (state) {
+                ColorsState.START -> super.showStartAnimation()
+                ColorsState.UPDATE -> super.showUpdateAnimation()
+                ColorsState.EXIT -> super.showExitAnimation()
+                else -> {
+                }
+            }
+        }
+
+    override fun onCreate() {
+        this.observeColor()
+        super.onCreate()
+    }
+
+    override fun onDestroy() {
+        this.color = null
+        super.onDestroy()
+    }
 
     /**
      * Disable click on the current view.

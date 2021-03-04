@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.shared.animation
 
 import android.view.View
+import android.view.ViewPropertyAnimator
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Runnable
 
@@ -48,6 +49,7 @@ class Animation private constructor(
         this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
     private var alpha: Float = 1f
+    private var currentAnimator: ViewPropertyAnimator? = null
     private var delay: Long = 0
     private var duration: Long = this.shortDuration
     private var onEnd: () -> Unit = {}
@@ -55,15 +57,19 @@ class Animation private constructor(
     private var translationXBy: Float = 0f
     private var translationYBy: Float = 0f
 
-    override fun run() = this.target.animate()
-        .alpha(this.alpha)
-        .setDuration(this.duration)
-        .setStartDelay(this.delay)
-        .translationXBy(this.translationXBy)
-        .translationYBy(this.translationYBy)
-        .withEndAction(this.onEnd)
-        .withStartAction(this.onStart)
-        .start()
+    override fun run() = this.target.animate().apply {
+        this.alpha(this@Animation.alpha)
+        this.duration = this@Animation.duration
+        this.startDelay = this@Animation.delay
+        this.translationXBy(this@Animation.translationXBy)
+        this.translationYBy(this@Animation.translationYBy)
+        this.withEndAction(this@Animation.onEnd)
+        this.withStartAction(this@Animation.onStart)
+        this@Animation.backupAnimator(this)
+    }.start()
+
+    // TODO: Add documentation
+    fun cancel() = this.currentAnimator?.cancel()
 
     /**
      * Set the start delay of the animation.
@@ -132,5 +138,9 @@ class Animation private constructor(
     // TODO: Add documentation
     fun translationYBy(translation: Float) {
         this.translationYBy = translation
+    }
+
+    private fun backupAnimator(animator: ViewPropertyAnimator) {
+        this.currentAnimator = animator
     }
 }

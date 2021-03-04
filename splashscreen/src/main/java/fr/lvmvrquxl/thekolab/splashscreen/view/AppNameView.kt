@@ -1,5 +1,6 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
@@ -20,6 +21,17 @@ internal abstract class AppNameView(
 
     override fun observeState() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
-            if (SplashscreenState.SHOW_APP_NAME == state) super.showStartAnimation()
+            when (state) {
+                SplashscreenState.SHOW_APP_NAME -> super.showStartAnimation()
+                SplashscreenState.STOP -> this.onStop()
+                else -> {
+                }
+            }
         }
+
+    @CallSuper
+    override fun onStart() {
+        super.hide()
+        super.setVisible()
+    }
 }

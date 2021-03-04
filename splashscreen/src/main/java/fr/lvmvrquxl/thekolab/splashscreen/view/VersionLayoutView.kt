@@ -34,13 +34,18 @@ internal class VersionLayoutView private constructor(
 
     private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
-    init {
+    override fun observeState() =
+        this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
+            when (state) {
+                SplashscreenState.SHOW_VERSION_NAME -> super.showStartAnimation()
+                SplashscreenState.STOP -> this.onStop()
+                else -> {
+                }
+            }
+        }
+
+    override fun onStart() {
         super.hide()
         super.translationY(-TRANSLATION_Y)
     }
-
-    override fun observeState() =
-        this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
-            if (SplashscreenState.SHOW_VERSION_NAME == state) super.showStartAnimation()
-        }
 }

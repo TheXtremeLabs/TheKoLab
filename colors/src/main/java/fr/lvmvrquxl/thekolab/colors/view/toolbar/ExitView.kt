@@ -47,9 +47,9 @@ internal class ExitView private constructor(
     }
 
     override val exitAnimation: Runnable
-        get() = Runnable {
+        get() {
             super.disableClick()
-            super.mediumAnimation.apply {
+            return super.mediumAnimation.apply {
                 this.emptyAlpha()
                 this.delay(EXIT_ANIMATION_DELAY)
                 this.onEnd { super.viewModel.destroyActivity() }
@@ -57,11 +57,11 @@ internal class ExitView private constructor(
         }
 
     override val startAnimation: Runnable
-        get() = Runnable {
+        get() {
             super.hide()
             super.disableClick()
             this.setColorFilter()
-            super.mediumAnimation.apply {
+            return super.mediumAnimation.apply {
                 this.delay(START_ANIMATION_DELAY)
                 this.onEnd { super.enableClick() }
             }

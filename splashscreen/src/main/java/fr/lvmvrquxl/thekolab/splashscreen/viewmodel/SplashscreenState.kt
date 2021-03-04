@@ -9,13 +9,6 @@ internal enum class SplashscreenState {
      */
     CLOSABLE,
 
-    /**
-     * The user tries to exit the activity.
-     *
-     * @since 1.0.0
-     */
-    EXIT,
-
     // TODO: Add documentation
     SHOW_APP_NAME,
 
@@ -30,5 +23,8 @@ internal enum class SplashscreenState {
      *
      * @since 1.0.0
      */
-    START
+    START,
+
+    // TODO: Add documentation
+    STOP
 }

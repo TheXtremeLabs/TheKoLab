@@ -53,10 +53,10 @@ internal class TitleView private constructor(
         }
 
     override val startAnimation: Runnable
-        get() = Runnable {
+        get() {
             super.hide()
             this.setTextColor()
-            super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
+            return super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
         }
 
     override val updateAnimation: Runnable

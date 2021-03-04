@@ -16,13 +16,13 @@ internal class AppNameStartView private constructor(
     }
 
     override val startAnimation: Runnable
-        get() = Runnable {
-            super.hide()
-            super.translationX(TRANSLATION_X)
-            super.setVisible()
-            super.animation.apply {
-                this.longDuration()
-                this.translationXBy(-TRANSLATION_X)
-            }.run()
+        get() = super.animation.apply {
+            this.longDuration()
+            this.translationXBy(-TRANSLATION_X)
         }
+
+    override fun onStart() {
+        super.onStart()
+        super.translationX(TRANSLATION_X)
+    }
 }

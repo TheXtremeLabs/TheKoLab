@@ -24,10 +24,9 @@ class ColorsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.initView()
-        this.initViewModel()
+        this.createView()
+        this.createViewModel()
         this.observeState()
-        this.setContentView()
     }
 
     override fun onDestroy() {
@@ -38,8 +37,19 @@ class ColorsActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        this.view?.onStart()
-        this.viewModel?.onStart()
+        this.startView()
+        this.startViewModel()
+    }
+
+    private fun createView() {
+        this.view = ColorsView.create(this).apply {
+            this.onCreate()
+            super.setContentView(this.root)
+        }
+    }
+
+    private fun createViewModel() {
+        this.viewModel = ColorsViewModel.instance(this)
     }
 
     private fun destroyView() {
@@ -52,20 +62,11 @@ class ColorsActivity : AppCompatActivity() {
         this.viewModel = null
     }
 
-    private fun initView() {
-        this.view = ColorsView.create(this)
-        this.view?.onCreate()
-    }
-
-    private fun initViewModel() {
-        this.viewModel = ColorsViewModel.instance(this)
-    }
-
     private fun observeState() = this.viewModel?.state?.observe(this) { state: ColorsState ->
         if (ColorsState.CLOSABLE == state) super.onBackPressed()
     }
 
-    private fun setContentView() = this.view?.let { view: ActivityView<ColorsActivityBinding> ->
-        super.setContentView(view.root)
-    }
+    private fun startView() = this.view?.onStart()
+
+    private fun startViewModel() = this.viewModel?.onStart()
 }
