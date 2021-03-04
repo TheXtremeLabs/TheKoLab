@@ -1,36 +1,21 @@
 package fr.lvmvrquxl.thekolab.shared.viewmodel
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
-import fr.lvmvrquxl.thekolab.shared.view.ILifecycle
+import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
 // TODO: Add documentation
-abstract class ViewModel : ViewModel(), ILifecycle, LifecycleObserver {
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    override fun onCreate() {
-    }
+abstract class ViewModel : ViewModel(), LifecycleObserver {
+    override fun onCreate() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    override fun onDestroy() {
-    }
+    override fun onDestroy() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    override fun onPause() {
-    }
+    override fun onPause() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    override fun onResume() {
-    }
+    override fun onResume() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    override fun onStart() {
-    }
+    override fun onStart() {}
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    override fun onStop() {
-    }
+    override fun onStop() {}
 
     /**
      * Destroy the activity.

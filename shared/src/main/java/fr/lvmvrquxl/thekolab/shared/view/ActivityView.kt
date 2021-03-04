@@ -1,5 +1,7 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -15,10 +17,12 @@ import androidx.viewbinding.ViewBinding
  *
  * @see [ViewBinding]
  */
-abstract class ActivityView<VB : ViewBinding> : BindableView<VB>() {
+abstract class ActivityView<VB : ViewBinding>(private val activity: AppCompatActivity) :
+    BindableView<VB>() {
     override fun onCreate() {
         this.bindView()
         super.onCreate()
+        this.setContentView()
     }
 
     /**
@@ -27,4 +31,7 @@ abstract class ActivityView<VB : ViewBinding> : BindableView<VB>() {
      * @since 1.0.0
      */
     open fun onRequestPermissionsResult(grantResults: IntArray) {}
+
+    private fun setContentView() =
+        super.root?.let { view: View -> this.activity.setContentView(view) }
 }

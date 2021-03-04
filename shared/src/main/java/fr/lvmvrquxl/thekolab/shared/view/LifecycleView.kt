@@ -5,7 +5,7 @@ package fr.lvmvrquxl.thekolab.shared.view
  *
  * @since 1.0.0
  */
-abstract class LifecycleView : ILifecycle {
+abstract class LifecycleView : LifecycleObserver {
     override fun onCreate() {}
 
     override fun onDestroy() {}

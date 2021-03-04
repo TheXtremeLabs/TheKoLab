@@ -20,7 +20,7 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
  * @see AppCompatActivity
  */
 internal class ColorsView private constructor(private val activity: AppCompatActivity) :
-    ActivityView<ColorsActivityBinding>() {
+    ActivityView<ColorsActivityBinding>(activity) {
     companion object {
         /**
          * Create an instance of the view.

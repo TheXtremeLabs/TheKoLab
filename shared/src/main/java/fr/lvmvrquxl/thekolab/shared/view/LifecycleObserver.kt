@@ -1,12 +1,17 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+
 // TODO: Add documentation
-interface ILifecycle {
+interface LifecycleObserver : LifecycleObserver {
     /**
      * Callback when the view is creating.
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate()
 
     /**
@@ -14,6 +19,7 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy()
 
     /**
@@ -21,6 +27,7 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause()
 
     /**
@@ -28,6 +35,7 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume()
 
     /**
@@ -35,6 +43,7 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart()
 
     /**
@@ -42,5 +51,6 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop()
 }

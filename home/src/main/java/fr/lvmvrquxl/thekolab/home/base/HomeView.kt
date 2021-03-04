@@ -39,7 +39,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  * @see [HomeActivity]
  */
 internal class HomeView private constructor(private val activity: AppCompatActivity) :
-    ActivityView<HomeActivityBinding>() {
+    ActivityView<HomeActivityBinding>(activity) {
     companion object {
         /**
          * Create the home page view.
