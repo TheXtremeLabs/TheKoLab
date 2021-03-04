@@ -19,6 +19,7 @@
 
     <style name="TheKoLab.Splashscreen.Logo" parent="TheKoLab.Image">
         <item name="android:src">@drawable/kotlin_logo</item>
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="TheKoLab.Splashscreen.Logo.Background" parent="TheKoLab.Layout">

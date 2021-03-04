@@ -1,6 +1,5 @@
 package fr.lvmvrquxl.thekolab.shared.animation
 
-import android.animation.AnimatorListenerAdapter
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Runnable
@@ -59,12 +58,8 @@ class Animation private constructor(
         .alpha(this.alpha)
         .setDuration(this.duration)
         .setStartDelay(this.delay)
-        .setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: android.animation.Animator?) {
-                this@Animation.onEnd()
-            }
-        })
         .translationXBy(this.translationXBy)
+        .withEndAction(this.onEnd)
         .withStartAction(this.onStart)
         .start()
 
