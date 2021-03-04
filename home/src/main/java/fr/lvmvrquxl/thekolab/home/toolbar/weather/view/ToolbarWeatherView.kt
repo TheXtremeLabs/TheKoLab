@@ -72,9 +72,15 @@ internal class ToolbarWeatherView private constructor(
         super.onDestroyView()
     }
 
-    override fun onPause() = this.presenter?.cancelCoroutines()
+    override fun onPause() {
+        this.presenter?.cancelCoroutines()
+        super.onPause()
+    }
 
-    override fun onResume() = this.presenter?.startBackgroundCoroutines()
+    override fun onResume() {
+        this.presenter?.startBackgroundCoroutines()
+        super.onResume()
+    }
 
     override fun onStart() {
         this.initPresenter()

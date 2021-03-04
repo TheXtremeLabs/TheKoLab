@@ -2,8 +2,8 @@ package fr.lvmvrquxl.thekolab.splashscreen.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.home.base.HomeActivity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
@@ -15,9 +15,14 @@ import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
         private const val NEW_TASK: Int = Intent.FLAG_ACTIVITY_NEW_TASK
+
         private val homeActivity: Class<HomeActivity> = HomeActivity::class.java
-        private val tag: String = SplashscreenActivity::class.java.simpleName
     }
+
+    private val stateObserver: Observer<SplashscreenState>
+        get() = Observer { state: SplashscreenState ->
+            if (SplashscreenState.CLOSABLE == state) this.goToHome()
+        }
 
     private var view: ActivityView<SplashscreenActivityBinding>? = null
     private var viewModel: SplashscreenViewModel? = null
@@ -30,31 +35,31 @@ class SplashscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.createView()
         this.createViewModel()
-        this.observeState()
     }
 
     override fun onDestroy() {
-        this.log("onDestroy")
         this.destroyViewModel()
         this.destroyView()
         super.onDestroy()
     }
 
     override fun onPause() {
-        this.log("onPause")
         this.pauseViewModel()
         super.onPause()
     }
 
+    override fun onResume() {
+        super.onResume()
+        this.resumeViewModel()
+    }
+
     override fun onStart() {
-        this.log("onStart")
         super.onStart()
-        this.startView()
         this.startViewModel()
     }
 
     override fun onStop() {
-        this.log("onStop")
+        this.stopViewModel()
         super.onStop()
     }
 
@@ -66,11 +71,13 @@ class SplashscreenActivity : AppCompatActivity() {
     }
 
     private fun createViewModel() {
-        this.viewModel = SplashscreenViewModel.instance()
+        this.viewModel = SplashscreenViewModel.instance().apply {
+            this.onCreate()
+            this.state.observe(this@SplashscreenActivity, this@SplashscreenActivity.stateObserver)
+        }
     }
 
     private fun destroyView() {
-        this.view?.onDestroy()
         this.view = null
     }
 
@@ -84,17 +91,11 @@ class SplashscreenActivity : AppCompatActivity() {
         super.startActivity(intent)
     }
 
-    // TODO: Remove after testings
-    private fun log(text: String) = Log.d(tag, text)
+    private fun pauseViewModel() = this.viewModel?.onPause()
 
-    private fun observeState() =
-        this.viewModel?.state?.observe(this) { state: SplashscreenState ->
-            if (SplashscreenState.CLOSABLE == state) this.goToHome()
-        }
-
-    private fun pauseViewModel() = this.viewModel?.onStop()
-
-    private fun startView() = this.view?.onStart()
+    private fun resumeViewModel() = this.viewModel?.onResume()
 
     private fun startViewModel() = this.viewModel?.onStart()
+
+    private fun stopViewModel() = this.viewModel?.onStop()
 }

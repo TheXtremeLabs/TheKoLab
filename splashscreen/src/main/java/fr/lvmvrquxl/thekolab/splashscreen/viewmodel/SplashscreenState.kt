@@ -10,6 +10,18 @@ internal enum class SplashscreenState {
     CLOSABLE,
 
     // TODO: Add documentation
+    CREATE,
+
+    // TODO: Add documentation
+    DESTROY,
+
+    // TODO: Add documentation
+    PAUSE,
+
+    // TODO: Add documentation
+    RESUME,
+
+    // TODO: Add documentation
     SHOW_APP_NAME,
 
     // TODO: Add documentation

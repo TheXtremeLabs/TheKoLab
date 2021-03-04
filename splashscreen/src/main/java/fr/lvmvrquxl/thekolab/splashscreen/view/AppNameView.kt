@@ -19,18 +19,13 @@ internal abstract class AppNameView(
 
     protected val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
 
-    override fun observeState() =
+    override fun observeViewModel() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
-            when (state) {
-                SplashscreenState.SHOW_APP_NAME -> super.showStartAnimation()
-                SplashscreenState.STOP -> this.onStop()
-                else -> {
-                }
-            }
+            if (SplashscreenState.SHOW_APP_NAME == state) super.showStartAnimation()
         }
 
     @CallSuper
-    override fun onStart() {
+    override fun onResume() {
         super.hide()
         super.setVisible()
     }

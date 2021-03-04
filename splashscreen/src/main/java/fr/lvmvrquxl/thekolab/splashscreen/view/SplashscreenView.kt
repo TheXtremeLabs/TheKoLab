@@ -2,12 +2,15 @@ package fr.lvmvrquxl.thekolab.splashscreen.view
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
+import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
+import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 
 // TODO: Add documentation
 internal class SplashscreenView private constructor(private val activity: AppCompatActivity) :
@@ -16,6 +19,25 @@ internal class SplashscreenView private constructor(private val activity: AppCom
         // TODO: Add documentation
         fun create(activity: AppCompatActivity): ActivityView<SplashscreenActivityBinding> =
             SplashscreenView(activity)
+    }
+
+    private val stateObserver: Observer<SplashscreenState>
+        get() = Observer { state: SplashscreenState ->
+            when (state) {
+                SplashscreenState.DESTROY -> this.onDestroy()
+                SplashscreenState.PAUSE -> super.onPause()
+                SplashscreenState.RESUME -> super.onResume()
+                SplashscreenState.START -> super.onStart()
+                SplashscreenState.STOP -> super.onStop()
+                else -> {
+                }
+            }
+        }
+
+    private var viewModel: SplashscreenViewModel? = null
+
+    init {
+        this.observeViewModel()
     }
 
     override fun bindView() {
@@ -27,11 +49,26 @@ internal class SplashscreenView private constructor(private val activity: AppCom
         this.setVersionName()
     }
 
+    override fun onDestroy() {
+        this.destroyViewModel()
+        super.onDestroy()
+    }
+
     override fun registerViews() {
         this.registerLogoView()
         this.registerAppNameEndView()
         this.registerAppNameStartView()
         this.registerVersionLayoutView()
+    }
+
+    private fun destroyViewModel() {
+        this.viewModel = null
+    }
+
+    private fun observeViewModel() {
+        this.viewModel = SplashscreenViewModel.instance().apply {
+            this.state.observe(this@SplashscreenView.activity, this@SplashscreenView.stateObserver)
+        }
     }
 
     private fun registerAppNameEndView() =

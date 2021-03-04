@@ -21,8 +21,8 @@ internal class AppNameStartView private constructor(
             this.translationXBy(-TRANSLATION_X)
         }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         super.translationX(TRANSLATION_X)
     }
 }

@@ -10,9 +10,9 @@ abstract class LifecycleView : ILifecycle {
 
     override fun onDestroy() {}
 
-    override fun onPause(): Unit? = null
+    override fun onPause() {}
 
-    override fun onResume(): Unit? = null
+    override fun onResume() {}
 
     override fun onStart() {}
 

@@ -2,8 +2,6 @@ package fr.lvmvrquxl.thekolab.splashscreen.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 // TODO: Add documentation
 internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
@@ -11,66 +9,78 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         get() = this.stateData
 
     private val stateData: MutableLiveData<SplashscreenState> = MutableLiveData()
-    private var currentState: SplashscreenState? = null
+
+    private var stateManager: SplashscreenStateManager? = null
 
     override fun destroyActivity() {
-        this.setCurrentStateToClosable()
+        this.stateManager?.closable()
         this.syncState()
     }
 
-    override fun onDestroy() = this.destroyCurrentState()
+    override fun onCreate() {
+        this.createStateManager()
+        this.syncState()
+    }
+
+    override fun onDestroy() = this.destroyStateManager()
+
+    override fun onPause() {
+        this.pauseStateManager()
+        this.syncState()
+    }
+
+    override fun onResume() {
+        this.resumeStateManager()
+        this.syncState()
+        this.showLogo()
+    }
 
     override fun onStart() {
-        this.setCurrentStateToStart()
-        this.syncState()
-        this.setCurrentStateToShowLogo()
+        this.startStateManager()
         this.syncState()
     }
 
     override fun onStop() {
-        this.setCurrentStateToStop()
+        this.stopStateManager()
         this.syncState()
     }
 
     override fun showAppName() {
-        this.setCurrentStateToShowAppName()
+        this.stateManager?.showAppName()
         this.syncState()
     }
 
     override fun showVersionName() {
-        this.setCurrentStateToShowVersionName()
+        this.stateManager?.showVersionName()
         this.syncState()
     }
 
-    private fun destroyCurrentState() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = null
+    private fun createStateManager() {
+        this.stateManager = SplashscreenStateManager.create().apply { this.onCreate() }
     }
 
-    private fun setCurrentStateToClosable() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.CLOSABLE
+    private fun destroyStateManager() {
+        this.stateManager?.apply {
+            this.onDestroy()
+            this@SplashscreenViewModelImpl.syncState()
+            this.destroy()
+        }
+        this.stateManager = null
     }
 
-    private fun setCurrentStateToShowAppName() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_APP_NAME
+    private fun pauseStateManager() = this.stateManager?.onPause()
+
+    private fun resumeStateManager() = this.stateManager?.onResume()
+
+    private fun showLogo() {
+        this.stateManager?.showLogo()
+        this.syncState()
     }
 
-    private fun setCurrentStateToShowLogo() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_LOGO
-    }
+    private fun startStateManager() = this.stateManager?.onStart()
 
-    private fun setCurrentStateToShowVersionName() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.SHOW_VERSION_NAME
-    }
+    private fun stopStateManager() = this.stateManager?.onStop()
 
-    private fun setCurrentStateToStart() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.START
-    }
-
-    private fun setCurrentStateToStop() = runBlocking(Dispatchers.Default) {
-        this@SplashscreenViewModelImpl.currentState = SplashscreenState.STOP
-    }
-
-    private fun syncState() {
-        this.stateData.value = this.currentState
-    }
+    private fun syncState() =
+        this.stateManager?.state?.let { state: SplashscreenState -> this.stateData.value = state }
 }

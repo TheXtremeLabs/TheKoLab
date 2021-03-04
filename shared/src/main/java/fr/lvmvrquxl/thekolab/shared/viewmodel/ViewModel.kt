@@ -9,9 +9,9 @@ abstract class ViewModel : ILifecycle, ViewModel() {
 
     override fun onDestroy() {}
 
-    override fun onPause(): Unit? = null
+    override fun onPause() {}
 
-    override fun onResume(): Unit? = null
+    override fun onResume() {}
 
     override fun onStart() {}
 
@@ -29,5 +29,5 @@ abstract class ViewModel : ILifecycle, ViewModel() {
      *
      * @since 1.0.0
      */
-    abstract fun onBackPressed()
+    open fun onBackPressed() {}
 }

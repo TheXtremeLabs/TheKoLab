@@ -61,7 +61,7 @@ abstract class AnimatedView(
     private var currentAnimation: Animation? = null
 
     @CallSuper
-    override fun onCreate() = this.observeState()
+    override fun onCreate() = this.observeViewModel()
 
     @CallSuper
     override fun onDestroy() {
@@ -69,12 +69,12 @@ abstract class AnimatedView(
     }
 
     @CallSuper
-    override fun onStop() {
+    override fun onPause() {
         this.currentAnimation?.cancel()
     }
 
     // TODO: Add documentation
-    protected abstract fun observeState()
+    protected abstract fun observeViewModel()
 
     /**
      * Hide the current view.

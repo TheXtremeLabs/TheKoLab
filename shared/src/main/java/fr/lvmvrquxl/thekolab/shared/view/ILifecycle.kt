@@ -21,14 +21,14 @@ interface ILifecycle {
      *
      * @since 1.0.0
      */
-    fun onPause(): Unit?
+    fun onPause()
 
     /**
      * Callback when the view is resuming.
      *
      * @since 1.0.0
      */
-    fun onResume(): Unit?
+    fun onResume()
 
     /**
      * Callback when the view is starting.

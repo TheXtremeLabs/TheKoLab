@@ -22,8 +22,8 @@ internal class AppNameEndView private constructor(
             this.onEnd { super.viewModel.showVersionName() }
         }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         super.translationX(-TRANSLATION_X)
     }
 }

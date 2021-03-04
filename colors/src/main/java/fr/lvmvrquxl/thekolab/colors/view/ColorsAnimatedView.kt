@@ -63,7 +63,7 @@ internal abstract class ColorsAnimatedView(
      */
     protected var color: Color? = null
 
-    override fun observeState() =
+    override fun observeViewModel() =
         this.viewModel.state.observe(this.activity) { state: ColorsState ->
             when (state) {
                 ColorsState.START -> super.showStartAnimation()
