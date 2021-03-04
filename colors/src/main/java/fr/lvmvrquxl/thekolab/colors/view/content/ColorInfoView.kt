@@ -52,12 +52,7 @@ internal class ColorInfoView private constructor(
         }
 
     override val startAnimation: Runnable
-        get() {
-            super.hide()
-            this.setText()
-            this.setTextColor()
-            return super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
-        }
+        get() = super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
 
     override val updateAnimation: Runnable
         get() = super.animation.apply {
@@ -68,6 +63,12 @@ internal class ColorInfoView private constructor(
                 super.mediumAnimation.run()
             }
         }
+
+    override fun onResume() {
+        super.onResume()
+        this.setText()
+        this.setTextColor()
+    }
 
     private fun setText() = super.color?.let { color: Color -> this.view.text = color.name }
 

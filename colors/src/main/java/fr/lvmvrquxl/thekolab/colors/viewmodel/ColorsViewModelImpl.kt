@@ -20,13 +20,16 @@ import kotlinx.coroutines.runBlocking
 internal object ColorsViewModelImpl : ColorsViewModel() {
     override val color: LiveData<Color>
         get() = this.colorData
+
     override val previousColor: Color?
         get() = this.previousColorData
+
     override val state: LiveData<ColorsState>
         get() = this.stateData
 
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private val stateData: MutableLiveData<ColorsState> = MutableLiveData()
+
     private var context: Context? = null
     private var currentState: ColorsState? = null
     private var currentColor: Color? = null
@@ -45,19 +48,44 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
         }
     }
 
+    override fun onCreate() {
+        this.currentState = ColorsState.CREATE
+        this.context?.let { context: Context ->
+            this.repository = IColorsRepository.instance(context)
+        }
+        this.syncState()
+    }
+
     override fun onDestroy() {
-        this.backupColor()
+        this.currentState = ColorsState.DESTROY
         this.context = null
         this.currentState = null
         this.currentColor = null
         this.previousColorData = null
         this.repository = null
+        this.syncState()
+    }
+
+    override fun onPause() {
+        this.currentState = ColorsState.PAUSE
+        this.syncState()
+    }
+
+    override fun onResume() {
+        this.currentState = ColorsState.RESUME
+        this.syncState()
     }
 
     override fun onStart() {
-        this.initCurrentColor()
         this.setCurrentStateToStart()
+        this.currentColor = this.repository?.firstColor
         this.syncColor()
+        this.syncState()
+    }
+
+    override fun onStop() {
+        this.currentState = ColorsState.STOP
+        this.backupColor()
         this.syncState()
     }
 
@@ -83,7 +111,6 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
      */
     fun withContext(context: Context): ColorsViewModel = runBlocking(Dispatchers.Default) {
         this@ColorsViewModelImpl.initContext(context)
-        this@ColorsViewModelImpl.initRepository()
         this@ColorsViewModelImpl
     }
 
@@ -95,18 +122,6 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
 
     private fun initContext(context: Context) = runBlocking(Dispatchers.Default) {
         if (null == this@ColorsViewModelImpl.context) this@ColorsViewModelImpl.context = context
-    }
-
-    private fun initCurrentColor() = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModelImpl.currentColor = this@ColorsViewModelImpl.repository?.firstColor
-    }
-
-    private fun initRepository() = runBlocking(Dispatchers.Default) {
-        if (null == this@ColorsViewModelImpl.repository)
-            this@ColorsViewModelImpl.repository =
-                this@ColorsViewModelImpl.context?.let { context: Context ->
-                    IColorsRepository.instance(context)
-                }
     }
 
     private fun pickRandomColor(): Color? = runBlocking(Dispatchers.Default) {
@@ -132,13 +147,11 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
         this@ColorsViewModelImpl.currentState = ColorsState.UPDATE
     }
 
-    private fun syncColor() {
-        this.colorData.value = this.currentColor
-    }
+    private fun syncColor() =
+        this.currentColor?.let { color: Color -> this.colorData.value = color }
 
-    private fun syncState() {
-        this.stateData.value = this.currentState
-    }
+    private fun syncState() =
+        this.currentState?.let { state: ColorsState -> this.stateData.value = state }
 
     private fun updateCurrentColor() = runBlocking(Dispatchers.Default) {
         this@ColorsViewModelImpl.currentColor = this@ColorsViewModelImpl.pickRandomColor()

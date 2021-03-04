@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.home.app.model
 
 import android.content.Context
 import android.content.Intent
-import fr.lvmvrquxl.thekolab.colors.view.ColorsActivity
+import fr.lvmvrquxl.thekolab.colors.activity.ColorsActivity
 
 /**
  * Model representation of an application.

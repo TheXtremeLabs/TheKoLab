@@ -10,7 +10,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import fr.lvmvrquxl.thekolab.colors.view.ColorsActivity
+import fr.lvmvrquxl.thekolab.colors.activity.ColorsActivity
 import fr.lvmvrquxl.thekolab.home.app.AppAdapter
 import fr.lvmvrquxl.thekolab.home.app.model.App
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding

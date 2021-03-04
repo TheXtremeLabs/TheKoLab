@@ -13,6 +13,12 @@ internal enum class ColorsState {
      */
     CLOSABLE,
 
+    // TODO: Add documentation
+    CREATE,
+
+    // TODO: Add documentation
+    DESTROY,
+
     /**
      * The user tries to exit the activity.
      *
@@ -20,12 +26,21 @@ internal enum class ColorsState {
      */
     EXIT,
 
+    // TODO: Add documentation
+    PAUSE,
+
+    // TODO: Add documentation
+    RESUME,
+
     /**
      * The activity starts.
      *
      * @since 1.0.0
      */
     START,
+
+    // TODO: Add documentation
+    STOP,
 
     /**
      * The user tries to update the colors.

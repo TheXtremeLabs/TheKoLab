@@ -1,12 +1,16 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
-import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
-import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
-import fr.lvmvrquxl.thekolab.colors.view.content.ContentView
-import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarView
+import fr.lvmvrquxl.thekolab.colors.view.content.ChangeColorsView
+import fr.lvmvrquxl.thekolab.colors.view.content.ColorInfoView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.ExitView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.TitleView
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
+import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 /**
@@ -34,8 +38,7 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
          * @see ActivityView
          * @see AppCompatActivity
          */
-        fun create(activity: AppCompatActivity): ActivityView<ColorsActivityBinding> =
-            ColorsView(activity)
+        fun create(activity: AppCompatActivity): LifecycleObserver = ColorsView(activity)
     }
 
     override fun bindView() {
@@ -43,19 +46,24 @@ internal class ColorsView private constructor(private val activity: AppCompatAct
     }
 
     override fun registerViews() {
-        this.registerContentView()
-        this.registerToolbarView()
+        super.viewBinding?.colorsContent?.changeColors?.let { changeColors: MaterialButton ->
+            val view: LifecycleView = ChangeColorsView.create(this.activity, changeColors)
+            super.addView(view)
+        }
+
+        super.viewBinding?.colorsContent?.colorInfo?.let { colorInfo: MaterialTextView ->
+            val view: LifecycleView = ColorInfoView.create(this.activity, colorInfo)
+            super.addView(view)
+        }
+
+        super.viewBinding?.colorsToolbar?.exit?.let { exit: ShapeableImageView ->
+            val view: LifecycleView = ExitView.create(this.activity, exit)
+            super.addView(view)
+        }
+
+        super.viewBinding?.colorsToolbar?.title?.let { title: MaterialTextView ->
+            val view: LifecycleView = TitleView.create(this.activity, title)
+            super.addView(view)
+        }
     }
-
-    private fun registerContentView() =
-        super.viewBinding?.colorsContent?.let { content: ColorsContentBinding ->
-            val view: LifecycleView = ContentView.create(this.activity, content)
-            super.addView(view)
-        }
-
-    private fun registerToolbarView() =
-        super.viewBinding?.colorsToolbar?.let { toolbar: ColorsToolbarBinding ->
-            val view: LifecycleView = ToolbarView.create(this.activity, toolbar)
-            super.addView(view)
-        }
 }

@@ -57,14 +57,9 @@ internal class ExitView private constructor(
         }
 
     override val startAnimation: Runnable
-        get() {
-            super.hide()
-            super.disableClick()
-            this.setColorFilter()
-            return super.mediumAnimation.apply {
-                this.delay(START_ANIMATION_DELAY)
-                this.onEnd { super.enableClick() }
-            }
+        get() = super.mediumAnimation.apply {
+            this.delay(START_ANIMATION_DELAY)
+            this.onEnd { super.enableClick() }
         }
 
     override val updateAnimation: Runnable
@@ -74,7 +69,12 @@ internal class ExitView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
-    override fun onStart() = this.setListener()
+    override fun onResume() {
+        super.onResume()
+        super.disableClick()
+        this.setColorFilter()
+        this.setListener()
+    }
 
     private fun setColorFilter() =
         super.color?.let { color: Color -> this.view.setColorFilter(color.value) }

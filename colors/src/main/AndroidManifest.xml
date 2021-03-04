@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".view.ColorsActivity"
+            android:name=".activity.ColorsActivity"
             android:theme="@style/TheKoLab.Theme.NoActionBar" />
     </application>
 

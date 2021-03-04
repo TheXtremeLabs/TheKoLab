@@ -53,11 +53,7 @@ internal class TitleView private constructor(
         }
 
     override val startAnimation: Runnable
-        get() {
-            super.hide()
-            this.setTextColor()
-            return super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
-        }
+        get() = super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
 
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
@@ -65,6 +61,11 @@ internal class TitleView private constructor(
             super.viewModel.previousColor?.let { color: Color -> this.startColor(color.value) }
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
+
+    override fun onResume() {
+        super.onResume()
+        this.setTextColor()
+    }
 
     private fun setTextColor() =
         super.color?.let { color: Color -> this.view.setTextColor(color.value) }

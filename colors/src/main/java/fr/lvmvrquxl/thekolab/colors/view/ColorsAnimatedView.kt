@@ -1,7 +1,9 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
@@ -45,6 +47,20 @@ internal abstract class ColorsAnimatedView(
     protected val mediumAnimation: Animation
         get() = super.animation.apply { this.mediumDuration() }
 
+    private val colorObserver: Observer<Color>
+        get() = Observer { color: Color -> this.color = color }
+
+    private val stateObserver: Observer<ColorsState>
+        get() = Observer { state: ColorsState ->
+            when (state) {
+                ColorsState.EXIT -> super.showExitAnimation()
+                ColorsState.RESUME -> super.showStartAnimation()
+                ColorsState.UPDATE -> super.showUpdateAnimation()
+                else -> {
+                }
+            }
+        }
+
     /**
      * View model's instance of the activity.
      *
@@ -52,7 +68,8 @@ internal abstract class ColorsAnimatedView(
      *
      * @see ColorsViewModel
      */
-    protected val viewModel: ColorsViewModel = ColorsViewModel.instance(this.activity)
+    protected val viewModel: ColorsViewModel
+        get() = ColorsViewModel.instance(this.activity)
 
     /**
      * Current color to display.
@@ -63,25 +80,19 @@ internal abstract class ColorsAnimatedView(
      */
     protected var color: Color? = null
 
-    override fun observeViewModel() =
-        this.viewModel.state.observe(this.activity) { state: ColorsState ->
-            when (state) {
-                ColorsState.START -> super.showStartAnimation()
-                ColorsState.UPDATE -> super.showUpdateAnimation()
-                ColorsState.EXIT -> super.showExitAnimation()
-                else -> {
-                }
-            }
-        }
-
-    override fun onCreate() {
-        this.observeColor()
-        super.onCreate()
+    override fun observeViewModel() {
+        this.viewModel.color.observe(this.activity, this.colorObserver)
+        this.viewModel.state.observe(this.activity, this.stateObserver)
     }
 
     override fun onDestroy() {
         this.color = null
         super.onDestroy()
+    }
+
+    @CallSuper
+    override fun onStart() {
+        super.hide()
     }
 
     /**
@@ -100,9 +111,5 @@ internal abstract class ColorsAnimatedView(
      */
     protected fun enableClick() {
         this.view.isClickable = true
-    }
-
-    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
-        this.color = color
     }
 }

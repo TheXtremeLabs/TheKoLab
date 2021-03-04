@@ -43,11 +43,7 @@ internal object ColorsRepository : IColorsRepository {
      * @see [IColorsRepository]
      */
     fun withContext(context: Context): IColorsRepository = runBlocking(Dispatchers.Default) {
-        this@ColorsRepository.initColors(context)
-        this@ColorsRepository
-    }
-
-    private fun initColors(context: Context) = this.coroutineScope.launch {
         this@ColorsRepository.colors = IColors.create(context)
+        this@ColorsRepository
     }
 }
