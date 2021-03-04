@@ -24,8 +24,6 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    override fun onBackPressed() = this.finishAffinity()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.createView()

@@ -15,7 +15,6 @@ import fr.lvmvrquxl.thekolab.splashscreen.activity.SplashscreenActivity
  */
 internal class MainActivity : AppCompatActivity() {
     companion object {
-        private const val NEW_TASK: Int = Intent.FLAG_ACTIVITY_NEW_TASK
         private val splashscreen: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }
 
@@ -25,7 +24,8 @@ internal class MainActivity : AppCompatActivity() {
     }
 
     private fun goToSplashscreen() {
-        val intent: Intent = Intent(this, splashscreen).addFlags(NEW_TASK)
+        val intent = Intent(this, splashscreen)
         super.startActivity(intent)
+        super.finishAffinity()
     }
 }
