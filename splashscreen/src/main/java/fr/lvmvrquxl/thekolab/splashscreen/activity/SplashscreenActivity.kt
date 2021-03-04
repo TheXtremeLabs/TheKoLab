@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.splashscreen.view
+package fr.lvmvrquxl.thekolab.splashscreen.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.base.HomeActivity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
+import fr.lvmvrquxl.thekolab.splashscreen.view.SplashscreenView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 
