@@ -48,6 +48,14 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
         }
     }
 
+    override fun onCleared() {
+        this.context = null
+        this.currentState = null
+        this.currentColor = null
+        this.previousColorData = null
+        this.repository = null
+    }
+
     override fun onCreate() {
         this.currentState = ColorsState.CREATE
         this.context?.let { context: Context ->
@@ -58,12 +66,8 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
 
     override fun onDestroy() {
         this.currentState = ColorsState.DESTROY
-        this.context = null
-        this.currentState = null
-        this.currentColor = null
-        this.previousColorData = null
-        this.repository = null
         this.syncState()
+        super.onDestroy()
     }
 
     override fun onPause() {

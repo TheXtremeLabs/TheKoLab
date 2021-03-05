@@ -26,11 +26,11 @@ internal class SplashscreenStateManager private constructor() : LifecycleView() 
 
     override fun onStop() = this.setCurrentState(SplashscreenState.STOP)
 
-    fun closable() = this.setCurrentState(SplashscreenState.CLOSABLE)
-
-    fun destroy() {
+    fun clear() {
         this.currentState = null
     }
+
+    fun closable() = this.setCurrentState(SplashscreenState.CLOSABLE)
 
     fun showAppName() = this.setCurrentState(SplashscreenState.SHOW_APP_NAME)
 

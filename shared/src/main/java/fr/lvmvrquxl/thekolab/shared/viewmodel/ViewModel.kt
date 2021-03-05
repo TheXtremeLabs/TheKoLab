@@ -1,5 +1,6 @@
 package fr.lvmvrquxl.thekolab.shared.viewmodel
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
@@ -7,7 +8,8 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 abstract class ViewModel : ViewModel(), LifecycleObserver {
     override fun onCreate() {}
 
-    override fun onDestroy() {}
+    @CallSuper
+    override fun onDestroy() = this.onCleared()
 
     override fun onPause() {}
 

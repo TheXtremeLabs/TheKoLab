@@ -17,12 +17,21 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         this.syncState()
     }
 
+    override fun onCleared() {
+        this.stateManager?.clear()
+        this.stateManager = null
+    }
+
     override fun onCreate() {
         this.createStateManager()
         this.syncState()
     }
 
-    override fun onDestroy() = this.destroyStateManager()
+    override fun onDestroy() {
+        this.destroyStateManager()
+        this.syncState()
+        super.onDestroy()
+    }
 
     override fun onPause() {
         this.pauseStateManager()
@@ -59,14 +68,7 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
         this.stateManager = SplashscreenStateManager.create().apply { this.onCreate() }
     }
 
-    private fun destroyStateManager() {
-        this.stateManager?.apply {
-            this.onDestroy()
-            this@SplashscreenViewModelImpl.syncState()
-            this.destroy()
-        }
-        this.stateManager = null
-    }
+    private fun destroyStateManager() = this.stateManager?.onDestroy()
 
     private fun pauseStateManager() = this.stateManager?.onPause()
 
