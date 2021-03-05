@@ -12,19 +12,17 @@ import fr.lvmvrquxl.thekolab.splashscreen.activity.SplashscreenActivity
  * It is responsible for loading the first view, which is currently [SplashscreenActivity].
  *
  * @since 1.0.0
+ *
+ * @see SplashscreenActivity
  */
 internal class MainActivity : AppCompatActivity() {
-    companion object {
-        private val splashscreen: Class<SplashscreenActivity> = SplashscreenActivity::class.java
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.goToSplashscreen()
     }
 
     private fun goToSplashscreen() {
-        val intent = Intent(this, splashscreen)
+        val intent = Intent(this, SplashscreenActivity.javaClass)
         super.startActivity(intent)
         super.finishAffinity()
     }

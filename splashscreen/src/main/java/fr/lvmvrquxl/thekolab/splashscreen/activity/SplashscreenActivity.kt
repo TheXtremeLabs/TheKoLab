@@ -8,10 +8,19 @@ import fr.lvmvrquxl.thekolab.splashscreen.view.SplashscreenView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 
-// TODO: Add documentation
+/**
+ * Splashscreen's activity.
+ *
+ * @since 1.1.0
+ */
 class SplashscreenActivity : AppCompatActivity() {
     companion object {
-        private val homeActivity: Class<HomeActivity> = HomeActivity::class.java
+        /**
+         * Class of the splashscreen's activity.
+         *
+         * @since 1.1.0
+         */
+        val javaClass: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }
 
     private var view: LifecycleObserver? = null
@@ -43,7 +52,7 @@ class SplashscreenActivity : AppCompatActivity() {
     }
 
     private fun goToHome() {
-        val intent = Intent(this, homeActivity)
+        val intent = Intent(this, HomeActivity.javaClass)
         super.startActivity(intent)
         super.finishAffinity()
     }

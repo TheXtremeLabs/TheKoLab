@@ -15,6 +15,10 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  * @since 1.0.0
  */
 class HomeActivity : AppCompatActivity() {
+    companion object {
+        val javaClass: Class<HomeActivity> = HomeActivity::class.java
+    }
+
     private var view: ActivityView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
