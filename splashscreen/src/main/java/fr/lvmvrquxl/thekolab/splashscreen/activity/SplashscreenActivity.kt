@@ -23,9 +23,10 @@ class SplashscreenActivity : Activity() {
         val javaClass: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }
 
-    private val stateObserver: Observer<SplashscreenState> = Observer { state: SplashscreenState ->
-        if (SplashscreenState.CLOSABLE == state) this.goToHome()
-    }
+    private val stateObserver: Observer<SplashscreenState>
+        get() = Observer { state: SplashscreenState ->
+            if (SplashscreenState.CLOSABLE == state) this.goToHome()
+        }
 
     init {
         SplashscreenView.observe(this)

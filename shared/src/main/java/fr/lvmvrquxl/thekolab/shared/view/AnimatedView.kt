@@ -74,7 +74,7 @@ abstract class AnimatedView(
     }
 
     // TODO: Add documentation
-    protected abstract fun observeViewModel()
+    protected open fun observeViewModel() {}
 
     /**
      * Hide the current view.

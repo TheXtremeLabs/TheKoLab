@@ -1,10 +1,8 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
@@ -13,12 +11,10 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenVersionBinding
 import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameEndView
 import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameStartView
 import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.LogoView
-import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionLayoutView
+import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionView
 
 /**
  * Splashscreen's main view.
- *
- * @param activity Splashscreen's activity
  *
  * @since 1.1.0
  */
@@ -27,7 +23,6 @@ internal class SplashscreenView private constructor(private val activity: Activi
     companion object {
         /**
          * Observe the given activity's lifecycle.
-         * To achieve this, a new instance of the view is created and registered as an observer.
          *
          * @param activity Splashscreen's activity
          *
@@ -55,16 +50,11 @@ internal class SplashscreenView private constructor(private val activity: Activi
         super.onDestroy()
     }
 
-    override fun onStart() {
-        super.onStart()
-        this.setVersionName()
-    }
-
     override fun registerViews() {
         this.registerLogoView()
         this.registerAppNameEndView()
         this.registerAppNameStartView()
-        this.registerVersionLayoutView()
+        this.registerVersionView()
     }
 
     private fun registerAppNameEndView() =
@@ -84,13 +74,8 @@ internal class SplashscreenView private constructor(private val activity: Activi
         this.activity.addObserver(view)
     }
 
-    private fun registerVersionLayoutView() =
-        this.versionBinding?.root?.let { versionLayout: ConstraintLayout ->
-            val view: LifecycleView = VersionLayoutView.create(this.activity, versionLayout)
-            this.activity.addObserver(view)
+    private fun registerVersionView() =
+        super.viewBinding?.versionLayout?.let { binding: SplashscreenVersionBinding ->
+            VersionView.observe(this.activity, binding)
         }
-
-    private fun setVersionName() {
-        this.versionBinding?.versionName?.text = SharedStringUtils.versionName(this.activity)
-    }
 }
