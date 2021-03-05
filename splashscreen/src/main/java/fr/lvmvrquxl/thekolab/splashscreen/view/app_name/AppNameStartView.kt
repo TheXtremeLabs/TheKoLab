@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.splashscreen.view
+package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView

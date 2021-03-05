@@ -9,6 +9,10 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
+import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameEndView
+import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameStartView
+import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.LogoView
+import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionLayoutView
 
 // TODO: Add documentation
 internal class SplashscreenView private constructor(private val activity: AppCompatActivity) :

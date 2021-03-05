@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.splashscreen.view
+package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity

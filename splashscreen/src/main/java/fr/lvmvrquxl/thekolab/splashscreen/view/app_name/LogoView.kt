@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.splashscreen.view
+package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
 import android.animation.Keyframe
 import android.animation.ObjectAnimator

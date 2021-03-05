@@ -1,4 +1,4 @@
-package fr.lvmvrquxl.thekolab.splashscreen.view
+package fr.lvmvrquxl.thekolab.splashscreen.view.version
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
