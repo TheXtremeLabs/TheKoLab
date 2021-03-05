@@ -9,11 +9,11 @@
     </style>
 
     <style name="TheKoLab.Splashscreen.AppName.End" parent="TheKoLab.Splashscreen.AppName">
-        <item name="android:gravity">start</item>
+        <item name="android:gravity">center_vertical|start</item>
     </style>
 
     <style name="TheKoLab.Splashscreen.AppName.Start" parent="TheKoLab.Splashscreen.AppName">
-        <item name="android:gravity">end</item>
+        <item name="android:gravity">center_vertical|end</item>
         <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/small</item>
     </style>
 

@@ -26,101 +26,29 @@
         app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middle_start_guideline"
-        style="@style/TheKoLab.Guideline"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.45" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/middle_end_guideline"
-        style="@style/TheKoLab.Guideline"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/end_guideline"
         style="@style/TheKoLab.Guideline"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/app_name_start"
-        style="@style/TheKoLab.Splashscreen.AppName.Start"
+    <include
+        android:id="@+id/app_name_layout"
+        layout="@layout/splashscreen_app_name"
         android:layout_width="@dimen/empty_dp"
         android:layout_height="@dimen/empty_dp"
-        android:text="@string/app_name_start"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
-        app:layout_constraintEnd_toStartOf="@id/middle_end_guideline"
-        app:layout_constraintStart_toEndOf="@id/start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/top_guideline"
-        tools:textColor="@color/white"
-        tools:visibility="visible" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/app_name_end"
-        style="@style/TheKoLab.Splashscreen.AppName.End"
-        android:layout_width="@dimen/empty_dp"
-        android:layout_height="@dimen/empty_dp"
-        android:text="@string/app_name_end"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@id/end_guideline"
-        app:layout_constraintStart_toEndOf="@id/middle_start_guideline"
-        app:layout_constraintTop_toBottomOf="@id/top_guideline"
-        tools:textColor="@color/white"
-        tools:visibility="visible" />
+        app:layout_constraintStart_toEndOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/top_guideline" />
 
-    <LinearLayout
-        style="@style/TheKoLab.Splashscreen.Logo.Background"
-        android:layout_width="@dimen/large"
-        android:layout_height="@dimen/empty_dp"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
-        app:layout_constraintLeft_toLeftOf="@id/middle_start_guideline"
-        app:layout_constraintRight_toRightOf="@id/middle_end_guideline"
-        app:layout_constraintTop_toTopOf="@id/top_guideline"
-        tools:visibility="visible" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/logo"
-        style="@style/TheKoLab.Splashscreen.Logo"
-        android:layout_width="@dimen/extra_large"
-        android:layout_height="@dimen/extra_large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
         android:id="@+id/version_layout"
-        style="@style/TheKoLab.Layout"
-        android:layout_width="match_parent"
+        layout="@layout/splashscreen_version"
+        android:layout_width="@dimen/empty_dp"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/medium"
-        app:layout_constraintTop_toBottomOf="@id/bottom_guideline">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/v"
-            style="@style/TheKoLab.Splashscreen.Version"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/v"
-            app:layout_constraintEnd_toStartOf="@id/version_name"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:textColor="@color/white" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/version_name"
-            style="@style/TheKoLab.Splashscreen.Version"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/extra_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/v"
-            tools:text="10.10.150"
-            tools:textColor="@color/white" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/app_name_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

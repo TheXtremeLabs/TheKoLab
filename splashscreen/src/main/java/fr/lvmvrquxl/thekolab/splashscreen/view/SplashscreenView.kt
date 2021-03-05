@@ -35,29 +35,31 @@ internal class SplashscreenView private constructor(private val activity: AppCom
     }
 
     private fun registerAppNameEndView() =
-        super.viewBinding?.appNameEnd?.let { appNameEnd: MaterialTextView ->
+        super.viewBinding?.appNameLayout?.appNameEnd?.let { appNameEnd: MaterialTextView ->
             val view: LifecycleView = AppNameEndView.create(this.activity, appNameEnd)
             super.addView(view)
         }
 
     private fun registerAppNameStartView() =
-        super.viewBinding?.appNameStart?.let { appNameStart: MaterialTextView ->
+        super.viewBinding?.appNameLayout?.appNameStart?.let { appNameStart: MaterialTextView ->
             val view: LifecycleView = AppNameStartView.create(this.activity, appNameStart)
             super.addView(view)
         }
 
-    private fun registerLogoView() = super.viewBinding?.logo?.let { logo: ShapeableImageView ->
-        val view: LifecycleView = LogoView.create(this.activity, logo)
-        super.addView(view)
-    }
+    private fun registerLogoView() =
+        super.viewBinding?.appNameLayout?.logo?.let { logo: ShapeableImageView ->
+            val view: LifecycleView = LogoView.create(this.activity, logo)
+            super.addView(view)
+        }
 
     private fun registerVersionLayoutView() =
-        super.viewBinding?.versionLayout?.let { versionLayout: ConstraintLayout ->
+        super.viewBinding?.versionLayout?.root?.let { versionLayout: ConstraintLayout ->
             val view: LifecycleView = VersionLayoutView.create(this.activity, versionLayout)
             super.addView(view)
         }
 
     private fun setVersionName() {
-        super.viewBinding?.versionName?.text = SharedStringUtils.versionName(this.activity)
+        super.viewBinding?.versionLayout?.versionName?.text =
+            SharedStringUtils.versionName(this.activity)
     }
 }
