@@ -1,9 +1,9 @@
 package fr.lvmvrquxl.thekolab.splashscreen.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.home.base.HomeActivity
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.splashscreen.view.SplashscreenView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
@@ -13,7 +13,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
  *
  * @since 1.1.0
  */
-class SplashscreenActivity : AppCompatActivity() {
+class SplashscreenActivity : Activity() {
     companion object {
         /**
          * Class of the splashscreen's activity.
@@ -23,56 +23,23 @@ class SplashscreenActivity : AppCompatActivity() {
         val javaClass: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }
 
-    private var view: LifecycleObserver? = null
-    private var viewModel: SplashscreenViewModel? = null
+    private val stateObserver: Observer<SplashscreenState> = Observer { state: SplashscreenState ->
+        if (SplashscreenState.CLOSABLE == state) this.goToHome()
+    }
 
     init {
-        this.initView()
-        this.initViewModel()
+        SplashscreenView.observe(this)
+        SplashscreenViewModel.instance.let { viewModel: SplashscreenViewModel ->
+            viewModel.observe(this)
+            viewModel.state.observe(this, this.stateObserver)
+        }
     }
 
     override fun onBackPressed() {}
-
-    override fun onDestroy() {
-        this.destroyViewModel()
-        this.destroyView()
-        super.onDestroy()
-    }
-
-    private fun addObserver(observer: LifecycleObserver) = this.lifecycle.addObserver(observer)
-
-    private fun destroyView() {
-        this.view?.let { view: LifecycleObserver -> this.removeObserver(view) }
-        this.view = null
-    }
-
-    private fun destroyViewModel() {
-        this.viewModel?.let { viewModel: SplashscreenViewModel -> this.removeObserver(viewModel) }
-        this.viewModel = null
-    }
 
     private fun goToHome() {
         val intent = Intent(this, HomeActivity.javaClass)
         super.startActivity(intent)
         super.finishAffinity()
     }
-
-    private fun initView() {
-        this.view = SplashscreenView.create(this)
-        this.view?.let { view: LifecycleObserver -> this.addObserver(view) }
-    }
-
-    private fun initViewModel() {
-        this.viewModel = SplashscreenViewModel.instance()
-        this.observeViewModel()
-        this.viewModel?.let { viewModel: SplashscreenViewModel -> this.addObserver(viewModel) }
-    }
-
-    private fun observeViewModel() =
-        this.viewModel?.state?.observe(this) { state: SplashscreenState ->
-            if (SplashscreenState.CLOSABLE == state) this.goToHome()
-        }
-
-    private fun removeObserver(observer: LifecycleObserver) =
-        this.lifecycle.removeObserver(observer)
 }

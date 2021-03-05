@@ -32,7 +32,7 @@ internal class VersionLayoutView private constructor(
             this.onStart { this@VersionLayoutView.viewModel.destroyActivity() }
         }
 
-    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance()
+    private val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance
 
     override fun observeViewModel() =
         this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
