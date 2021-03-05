@@ -1,28 +1,56 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.android.material.textview.MaterialTextView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 
-// TODO: Add documentation
-internal abstract class AppNameView(
-    private val activity: AppCompatActivity,
-    view: MaterialTextView
-) : AnimatedView(activity, view) {
+/**
+ * View of the application's name in the splashscreen's activity.
+ *
+ * @since 1.1.0
+ */
+internal abstract class AppNameView(private val activity: Activity, view: MaterialTextView) :
+    AnimatedView(activity, view) {
     companion object {
-        // TODO: Add documentation
-        const val TRANSLATION_X: Float = 128f
+        private const val TRANSLATION_X: Float = 128f
     }
 
-    protected val viewModel: SplashscreenViewModel = SplashscreenViewModel.instance
+    /**
+     * Value of the translation X to apply to the application's name views.
+     *
+     * @since 1.1.0
+     */
+    protected val translationX: Float
+        get() = TRANSLATION_X
 
-    override fun observeViewModel() =
-        this.viewModel.state.observe(this.activity) { state: SplashscreenState ->
+    private val stateObserver: Observer<SplashscreenState>
+        get() = Observer { state: SplashscreenState ->
             if (SplashscreenState.SHOW_APP_NAME == state) super.showStartAnimation()
         }
+
+    /**
+     * View model of the splashscreen's activity.
+     *
+     * @since 1.1.0
+     */
+    protected var viewModel: SplashscreenViewModel? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        this.viewModel = SplashscreenViewModel.instance.apply {
+            this.state.observe(this@AppNameView.activity, this@AppNameView.stateObserver)
+        }
+    }
+
+    override fun onDestroy() {
+        this.viewModel = null
+        this.activity.removeObserver(this)
+        super.onDestroy()
+    }
 
     @CallSuper
     override fun onResume() {

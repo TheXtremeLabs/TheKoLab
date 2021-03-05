@@ -9,7 +9,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenVersionBinding
  *
  * @since 1.1.0
  */
-internal class VersionView private constructor(
+internal class VersionContainerView private constructor(
     private val activity: Activity,
     private val binding: SplashscreenVersionBinding
 ) : ContainerView() {
@@ -23,7 +23,9 @@ internal class VersionView private constructor(
          * @since 1.1.0
          */
         fun observe(activity: Activity, binding: SplashscreenVersionBinding) =
-            VersionView(activity, binding).let { view: VersionView -> activity.addObserver(view) }
+            VersionContainerView(activity, binding).let { view: VersionContainerView ->
+                activity.addObserver(view)
+            }
     }
 
     override fun onDestroy() {

@@ -1,28 +1,37 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import kotlinx.coroutines.Runnable
 
-// TODO: Add documentation
-internal class AppNameStartView private constructor(
-    activity: AppCompatActivity,
-    view: MaterialTextView
-) : AppNameView(activity, view) {
+/**
+ * View of the start of the application's name in the splashscreen's activity.
+ *
+ * @since 1.1.0
+ */
+internal class AppNameStartView private constructor(activity: Activity, view: MaterialTextView) :
+    AppNameView(activity, view) {
     companion object {
-        // TODO: Add documentation
-        fun create(activity: AppCompatActivity, view: MaterialTextView): AppNameView =
-            AppNameStartView(activity, view)
+        /**
+         * Observe the given activity's lifecycle.
+         *
+         * @param activity Splashscreen's activity
+         * @param view View corresponding to the start of the application's name
+         *
+         * @since 1.1.0
+         */
+        fun observe(activity: Activity, view: MaterialTextView) =
+            AppNameStartView(activity, view).let { v: AppNameStartView -> activity.addObserver(v) }
     }
 
     override val startAnimation: Runnable
         get() = super.animation.apply {
             this.longDuration()
-            this.translationXBy(-TRANSLATION_X)
+            this.translationXBy(-super.translationX)
         }
 
     override fun onResume() {
         super.onResume()
-        super.translationX(TRANSLATION_X)
+        super.translationX(super.translationX)
     }
 }

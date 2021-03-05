@@ -1,17 +1,12 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view
 
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenActivityBinding
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenVersionBinding
-import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameEndView
-import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameStartView
-import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.LogoView
-import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionView
+import fr.lvmvrquxl.thekolab.splashscreen.view.app_name.AppNameContainerView
+import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionContainerView
 
 /**
  * Splashscreen's main view.
@@ -51,31 +46,17 @@ internal class SplashscreenView private constructor(private val activity: Activi
     }
 
     override fun registerViews() {
-        this.registerLogoView()
-        this.registerAppNameEndView()
-        this.registerAppNameStartView()
-        this.registerVersionView()
+        this.registerAppNameContainerView()
+        this.registerVersionContainerView()
     }
 
-    private fun registerAppNameEndView() =
-        this.appNameBinding?.appNameEnd?.let { appNameEnd: MaterialTextView ->
-            val view: LifecycleView = AppNameEndView.create(this.activity, appNameEnd)
-            this.activity.addObserver(view)
+    private fun registerAppNameContainerView() =
+        super.viewBinding?.appNameLayout?.let { binding: SplashscreenAppNameBinding ->
+            AppNameContainerView.observe(this.activity, binding)
         }
 
-    private fun registerAppNameStartView() =
-        this.appNameBinding?.appNameStart?.let { appNameStart: MaterialTextView ->
-            val view: LifecycleView = AppNameStartView.create(this.activity, appNameStart)
-            this.activity.addObserver(view)
-        }
-
-    private fun registerLogoView() = this.appNameBinding?.logo?.let { logo: ShapeableImageView ->
-        val view: LifecycleView = LogoView.create(this.activity, logo)
-        this.activity.addObserver(view)
-    }
-
-    private fun registerVersionView() =
+    private fun registerVersionContainerView() =
         super.viewBinding?.versionLayout?.let { binding: SplashscreenVersionBinding ->
-            VersionView.observe(this.activity, binding)
+            VersionContainerView.observe(this.activity, binding)
         }
 }
