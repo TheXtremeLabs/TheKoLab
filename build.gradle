@@ -1,6 +1,6 @@
 // Android
-def majorVersion = 1
-def minorVersion = 1
+def majorVersion = 2
+def minorVersion = 0
 def patchVersion = 0
 
 // Dependencies - Implementations
@@ -26,7 +26,7 @@ ext {
     compileSdkVersion = 29
     minSdkVersion = 21
     targetSdkVersion = 29
-    versionCode = 4
+    versionCode = 5
     versionName = "$majorVersion.$minorVersion.$patchVersion"
 
     androidTestDependencies = [
