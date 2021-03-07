@@ -7,7 +7,7 @@ import kotlinx.coroutines.Runnable
 /**
  * View of the end of the application's name in the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class AppNameEndView private constructor(activity: Activity, view: MaterialTextView) :
     AppNameView(activity, view) {
@@ -18,7 +18,7 @@ internal class AppNameEndView private constructor(activity: Activity, view: Mate
          * @param activity Splashscreen's activity
          * @param view View corresponding to the end of the application's name
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, view: MaterialTextView) =
             AppNameEndView(activity, view).let { v: AppNameEndView -> activity.addObserver(v) }

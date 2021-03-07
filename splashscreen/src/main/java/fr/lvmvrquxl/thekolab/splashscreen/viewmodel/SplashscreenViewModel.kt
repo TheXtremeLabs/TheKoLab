@@ -7,14 +7,14 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 /**
  * View model of the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal abstract class SplashscreenViewModel : ViewModel() {
     companion object {
         /**
          * Instance of the view model.
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         val instance: SplashscreenViewModel = SplashscreenViewModelImpl
     }
@@ -40,7 +40,7 @@ internal abstract class SplashscreenViewModel : ViewModel() {
      *
      * @param activity Splashscreen's activity
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     fun observe(activity: Activity) =
         activity.apply { this@SplashscreenViewModel.activity = this }.addObserver(this)

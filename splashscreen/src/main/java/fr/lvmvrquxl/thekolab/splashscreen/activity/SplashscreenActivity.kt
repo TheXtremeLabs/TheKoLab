@@ -11,14 +11,14 @@ import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 /**
  * Splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 class SplashscreenActivity : Activity() {
     companion object {
         /**
          * Class of the splashscreen's activity.
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         val javaClass: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }

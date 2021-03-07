@@ -8,7 +8,7 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 /**
  * View of the version name in the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class VersionNameView private constructor(
     private val activity: Activity,
@@ -21,7 +21,7 @@ internal class VersionNameView private constructor(
          * @param activity Splashscreen's activity
          * @param view View corresponding to the version name
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, view: MaterialTextView) =
             VersionNameView(activity, view).let { v: VersionNameView -> activity.addObserver(v) }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.Runnable
 /**
  * View of the logo in the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class LogoView private constructor(
     private val activity: Activity,
@@ -32,7 +32,7 @@ internal class LogoView private constructor(
          * @param activity Splashscreen's activity
          * @param view View corresponding to the logo
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, view: ShapeableImageView) =
             LogoView(activity, view).let { v: LogoView -> activity.addObserver(v) }

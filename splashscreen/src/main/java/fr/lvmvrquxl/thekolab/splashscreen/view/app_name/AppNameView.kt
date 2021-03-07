@@ -11,7 +11,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
 /**
  * View of the application's name in the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal abstract class AppNameView(private val activity: Activity, view: MaterialTextView) :
     AnimatedView(activity, view) {
@@ -22,7 +22,7 @@ internal abstract class AppNameView(private val activity: Activity, view: Materi
     /**
      * Value of the translation X to apply to the application's name views.
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     protected val translationX: Float
         get() = TRANSLATION_X
@@ -35,7 +35,7 @@ internal abstract class AppNameView(private val activity: Activity, view: Materi
     /**
      * View model of the splashscreen's activity.
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     protected var viewModel: SplashscreenViewModel? = null
 

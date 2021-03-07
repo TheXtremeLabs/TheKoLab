@@ -6,7 +6,7 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 /**
  * Base class of all activities of the application.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 abstract class Activity : AppCompatActivity() {
     /**
@@ -15,7 +15,7 @@ abstract class Activity : AppCompatActivity() {
      *
      * @param observer New observer
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     fun addObserver(observer: LifecycleObserver) = this.lifecycle.addObserver(observer)
 
@@ -25,7 +25,7 @@ abstract class Activity : AppCompatActivity() {
      *
      * @param observer Observer to remove
      *
-     * @since 1.1.0
+     * @since 2.0.0
      */
     fun removeObserver(observer: LifecycleObserver) = this.lifecycle.removeObserver(observer)
 }

@@ -11,7 +11,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.view.version.VersionContainerView
 /**
  * Splashscreen's main view.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class SplashscreenView private constructor(private val activity: Activity) :
     ActivityView<SplashscreenActivityBinding>(activity) {
@@ -21,7 +21,7 @@ internal class SplashscreenView private constructor(private val activity: Activi
          *
          * @param activity Splashscreen's activity
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity) =
             SplashscreenView(activity).let { view: SplashscreenView -> activity.addObserver(view) }

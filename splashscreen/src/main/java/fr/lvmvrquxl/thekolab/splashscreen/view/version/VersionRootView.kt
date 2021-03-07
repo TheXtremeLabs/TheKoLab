@@ -12,7 +12,7 @@ import kotlinx.coroutines.Runnable
  * View of the layout's root responsible for displaying the application's version in
  * the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class VersionRootView private constructor(
     private val activity: Activity,
@@ -28,7 +28,7 @@ internal class VersionRootView private constructor(
          * @param activity Splashscreen's activity
          * @param view View corresponding to the layout's root
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, view: ConstraintLayout) =
             VersionRootView(activity, view).let { v: VersionRootView ->

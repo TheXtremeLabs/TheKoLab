@@ -7,7 +7,7 @@ import kotlinx.coroutines.Runnable
 /**
  * View of the start of the application's name in the splashscreen's activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class AppNameStartView private constructor(activity: Activity, view: MaterialTextView) :
     AppNameView(activity, view) {
@@ -18,7 +18,7 @@ internal class AppNameStartView private constructor(activity: Activity, view: Ma
          * @param activity Splashscreen's activity
          * @param view View corresponding to the start of the application's name
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, view: MaterialTextView) =
             AppNameStartView(activity, view).let { v: AppNameStartView -> activity.addObserver(v) }

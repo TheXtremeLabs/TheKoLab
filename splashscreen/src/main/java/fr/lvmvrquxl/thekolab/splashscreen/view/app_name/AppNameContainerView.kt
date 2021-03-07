@@ -8,7 +8,7 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
  * View of the layout responsible for displaying the application's name in the splashscreen's
  * activity.
  *
- * @since 1.1.0
+ * @since 2.0.0
  */
 internal class AppNameContainerView private constructor(
     private val activity: Activity,
@@ -21,7 +21,7 @@ internal class AppNameContainerView private constructor(
          * @param activity Splashscreen's activity
          * @param binding Binding of the view
          *
-         * @since 1.1.0
+         * @since 2.0.0
          */
         fun observe(activity: Activity, binding: SplashscreenAppNameBinding) =
             AppNameContainerView(activity, binding).let { view: AppNameContainerView ->
