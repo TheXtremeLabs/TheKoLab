@@ -52,7 +52,7 @@ internal class ExitView private constructor(
             return super.mediumAnimation.apply {
                 this.emptyAlpha()
                 this.delay(EXIT_ANIMATION_DELAY)
-                this.onEnd { super.viewModel.destroyActivity() }
+                this.onEnd { super.viewModel.closeActivity() }
             }
         }
 

@@ -19,7 +19,7 @@ internal class VersionRootView private constructor(
     view: ConstraintLayout
 ) : AnimatedView(activity, view) {
     companion object {
-        private const val DESTROY_ACTIVITY_DELAY: Long = 750
+        private const val CLOSE_ACTIVITY_DELAY: Long = 750
         private const val TRANSLATION_Y: Float = 64f
 
         /**
@@ -40,7 +40,7 @@ internal class VersionRootView private constructor(
         get() = super.animation.apply {
             this.longDuration()
             this.translationYBy(TRANSLATION_Y)
-            this.onEnd { this@VersionRootView.destroyActivity() }
+            this.onEnd { this@VersionRootView.closeActivity() }
         }
 
     private val stateObserver: Observer<SplashscreenState>
@@ -68,8 +68,8 @@ internal class VersionRootView private constructor(
         super.translationY(-TRANSLATION_Y)
     }
 
-    private fun destroyActivity() = super.animation.apply {
-        this.delay(DESTROY_ACTIVITY_DELAY)
-        this.onStart { this@VersionRootView.viewModel?.destroyActivity() }
+    private fun closeActivity() = super.animation.apply {
+        this.delay(CLOSE_ACTIVITY_DELAY)
+        this.onStart { this@VersionRootView.viewModel?.closeActivity() }
     }.run()
 }

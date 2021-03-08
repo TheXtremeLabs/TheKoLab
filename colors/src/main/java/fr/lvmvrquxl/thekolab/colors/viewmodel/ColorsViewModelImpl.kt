@@ -36,7 +36,7 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
     private var previousColorData: Color? = null
     private var repository: IColorsRepository? = null
 
-    override fun destroyActivity() {
+    override fun closeActivity() {
         this.setCurrentStateToClosable()
         this.syncState()
     }

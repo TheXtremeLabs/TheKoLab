@@ -16,7 +16,7 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
 
     private var stateManager: SplashscreenStateManager? = null
 
-    override fun destroyActivity() {
+    override fun closeActivity() {
         this.closeStateManager()
         this.syncState()
     }

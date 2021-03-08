@@ -24,11 +24,11 @@ abstract class ViewModel : ViewModel(), LifecycleObserver {
     override fun onStop() {}
 
     /**
-     * Destroy the activity.
+     * Close the activity.
      *
      * @since 2.0.0
      */
-    abstract fun destroyActivity()
+    abstract fun closeActivity()
 
     /**
      * Callback when the user click on the back button of the navigation bar.
