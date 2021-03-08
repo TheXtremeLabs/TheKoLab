@@ -51,12 +51,12 @@ internal class SplashscreenView private constructor(private val activity: Activi
     }
 
     private fun registerAppNameContainerView() =
-        super.viewBinding?.appNameLayout?.let { binding: SplashscreenAppNameBinding ->
+        this.appNameBinding?.let { binding: SplashscreenAppNameBinding ->
             AppNameContainerView.observe(this.activity, binding)
         }
 
     private fun registerVersionContainerView() =
-        super.viewBinding?.versionLayout?.let { binding: SplashscreenVersionBinding ->
+        this.versionBinding?.let { binding: SplashscreenVersionBinding ->
             VersionContainerView.observe(this.activity, binding)
         }
 }
