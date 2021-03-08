@@ -2,17 +2,17 @@ package fr.lvmvrquxl.thekolab.colors.view.toolbar
 
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.view.ContainerView
+import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 
 /**
  * View of the layout responsible for displaying the colors activity's toolbar.
  *
  * @since 2.0.0
  */
-internal class ToolbarContainerView private constructor(
+internal class ToolbarLayoutView private constructor(
     private val activity: Activity,
     private val binding: ColorsToolbarBinding
-) : ContainerView() {
+) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
@@ -23,7 +23,7 @@ internal class ToolbarContainerView private constructor(
          * @since 2.0.0
          */
         fun observe(activity: Activity, binding: ColorsToolbarBinding) =
-            ToolbarContainerView(activity, binding).let { view: ToolbarContainerView ->
+            ToolbarLayoutView(activity, binding).let { view: ToolbarLayoutView ->
                 activity.addObserver(view)
             }
     }

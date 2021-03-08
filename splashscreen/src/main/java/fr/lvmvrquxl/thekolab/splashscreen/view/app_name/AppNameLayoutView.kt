@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.view.ContainerView
+import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
 
 /**
@@ -10,10 +10,10 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
  *
  * @since 2.0.0
  */
-internal class AppNameContainerView private constructor(
+internal class AppNameLayoutView private constructor(
     private val activity: Activity,
     private val binding: SplashscreenAppNameBinding
-) : ContainerView() {
+) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
@@ -24,7 +24,7 @@ internal class AppNameContainerView private constructor(
          * @since 2.0.0
          */
         fun observe(activity: Activity, binding: SplashscreenAppNameBinding) =
-            AppNameContainerView(activity, binding).let { view: AppNameContainerView ->
+            AppNameLayoutView(activity, binding).let { view: AppNameLayoutView ->
                 activity.addObserver(view)
             }
     }

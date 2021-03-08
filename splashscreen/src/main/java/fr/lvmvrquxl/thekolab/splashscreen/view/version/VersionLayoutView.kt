@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view.version
 
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.view.ContainerView
+import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenVersionBinding
 
 /**
@@ -9,10 +9,10 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenVersionBinding
  *
  * @since 2.0.0
  */
-internal class VersionContainerView private constructor(
+internal class VersionLayoutView private constructor(
     private val activity: Activity,
     private val binding: SplashscreenVersionBinding
-) : ContainerView() {
+) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
@@ -23,7 +23,7 @@ internal class VersionContainerView private constructor(
          * @since 2.0.0
          */
         fun observe(activity: Activity, binding: SplashscreenVersionBinding) =
-            VersionContainerView(activity, binding).let { view: VersionContainerView ->
+            VersionLayoutView(activity, binding).let { view: VersionLayoutView ->
                 activity.addObserver(view)
             }
     }

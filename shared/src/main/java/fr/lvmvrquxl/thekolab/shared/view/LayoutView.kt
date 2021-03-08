@@ -3,11 +3,11 @@ package fr.lvmvrquxl.thekolab.shared.view
 import androidx.annotation.CallSuper
 
 /**
- * Parent of all views that contains other views.
+ * Parent of all views corresponding to an application's layout.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
-abstract class ContainerView : LifecycleView() {
+abstract class LayoutView : LifecycleView() {
     @CallSuper
     override fun onCreate() = this.registerViews()
 

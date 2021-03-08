@@ -3,8 +3,8 @@ package fr.lvmvrquxl.thekolab.colors.view
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
-import fr.lvmvrquxl.thekolab.colors.view.content.ContentContainerView
-import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarContainerView
+import fr.lvmvrquxl.thekolab.colors.view.content.ContentLayoutView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarLayoutView
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
@@ -59,11 +59,11 @@ internal class ColorsView private constructor(private val activity: Activity) :
 
     private fun registerContainerView() =
         this.contentBinding?.let { binding: ColorsContentBinding ->
-            ContentContainerView.observe(this.activity, binding)
+            ContentLayoutView.observe(this.activity, binding)
         }
 
     private fun registerToolbarView() = this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
-        ToolbarContainerView.observe(this.activity, binding)
+        ToolbarLayoutView.observe(this.activity, binding)
     }
 
     private fun stopActivityObservation() = this.activity.removeObserver(this)

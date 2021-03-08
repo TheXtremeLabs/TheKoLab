@@ -13,7 +13,7 @@ import androidx.viewbinding.ViewBinding
  *
  * @since 2.0.0
  */
-abstract class BindableView<VB : ViewBinding> : ContainerView() {
+abstract class BindableView<VB : ViewBinding> : LayoutView() {
     /**
      * Root of the view.
      *

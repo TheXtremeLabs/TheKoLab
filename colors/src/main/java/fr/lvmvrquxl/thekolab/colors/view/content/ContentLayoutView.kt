@@ -2,17 +2,17 @@ package fr.lvmvrquxl.thekolab.colors.view.content
 
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.view.ContainerView
+import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 
 /**
  * View of the layout responsible for displaying the colors activity's content.
  *
  * @since 2.0.0
  */
-internal class ContentContainerView private constructor(
+internal class ContentLayoutView private constructor(
     private val activity: Activity,
     private val binding: ColorsContentBinding
-) : ContainerView() {
+) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
@@ -23,7 +23,7 @@ internal class ContentContainerView private constructor(
          * @since 2.0.0
          */
         fun observe(activity: Activity, binding: ColorsContentBinding) =
-            ContentContainerView(activity, binding).let { view: ContentContainerView ->
+            ContentLayoutView(activity, binding).let { view: ContentLayoutView ->
                 activity.addObserver(view)
             }
     }
