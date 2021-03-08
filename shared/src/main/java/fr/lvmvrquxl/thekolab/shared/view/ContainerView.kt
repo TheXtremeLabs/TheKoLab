@@ -7,7 +7,6 @@ import androidx.annotation.CallSuper
  *
  * @since 1.0.0
  */
-@Deprecated("Will be removed in version 2.0.0")
 abstract class ContainerView : LifecycleView() {
     @Deprecated("Will be removed in version 2.0.0")
     private var views: MutableList<LifecycleView>? = null
@@ -38,7 +37,6 @@ abstract class ContainerView : LifecycleView() {
         this.stopViews()
     }
 
-    @Deprecated("Will be removed in version 2.0.0")
     protected open fun registerViews() {
     }
 

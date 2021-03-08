@@ -1,48 +1,34 @@
 package fr.lvmvrquxl.thekolab.colors.view.content
 
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the change colors button.
  *
- * @param activity Instance of the colors activity
- * @param view Binding of the button
- *
  * @since 1.0.0
- *
- * @see AppCompatActivity
- * @see ColorsAnimatedView
- * @see MaterialButton
  */
 internal class ChangeColorsView private constructor(
-    activity: AppCompatActivity,
+    private val activity: Activity,
     private val view: MaterialButton
 ) : ColorsAnimatedView(activity, view) {
     companion object {
         private const val START_ANIMATION_DELAY: Long = 750
 
         /**
-         * Create an instance of the change colors button.
+         * Observe the given activity's lifecycle.
          *
-         * @param activity Instance of the colors activity
-         * @param view Binding of the button
+         * @param activity Colors activity
+         * @param view View corresponding to the change colors button
          *
-         * @return New instance of the button
-         *
-         * @since 1.0.0
-         *
-         * @see AppCompatActivity
-         * @see LifecycleView
-         * @see MaterialButton
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity, view: MaterialButton): LifecycleView =
-            ChangeColorsView(activity, view)
+        fun observe(activity: Activity, view: MaterialButton) =
+            ChangeColorsView(activity, view).let { v: ChangeColorsView -> activity.addObserver(v) }
     }
 
     override val exitAnimation: Runnable
@@ -64,6 +50,11 @@ internal class ChangeColorsView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
+    override fun onDestroy() {
+        this.stopActivityObservation()
+        super.onDestroy()
+    }
+
     override fun onResume() {
         super.onResume()
         super.disableClick()
@@ -75,4 +66,6 @@ internal class ChangeColorsView private constructor(
         super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }
 
     private fun setClickListener() = this.view.setOnClickListener { super.viewModel.updateColor() }
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

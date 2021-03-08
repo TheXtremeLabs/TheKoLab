@@ -1,27 +1,21 @@
 package fr.lvmvrquxl.thekolab.colors.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.view.ColorsView
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 
 /**
  * Activity of the colors feature.
  *
  * @since 1.0.0
- *
- * @see AppCompatActivity
  */
-class ColorsActivity : AppCompatActivity() {
+class ColorsActivity : Activity() {
     private val stateObserver: Observer<ColorsState>
         get() = Observer { state: ColorsState ->
             if (ColorsState.CLOSABLE == state) super.onBackPressed()
         }
-
-    private val view: LifecycleObserver
-        get() = ColorsView.create(this)
 
     private val viewModel: ColorsViewModel
         get() = ColorsViewModel.instance(this).apply {
@@ -29,7 +23,7 @@ class ColorsActivity : AppCompatActivity() {
         }
 
     init {
-        this.lifecycle.addObserver(this.view)
+        ColorsView.observe(this)
         this.lifecycle.addObserver(this.viewModel)
     }
 

@@ -1,26 +1,18 @@
 package fr.lvmvrquxl.thekolab.colors.view.content
 
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the color information.
  *
- * @param activity Instance of the colors activity
- * @param view Binding of the view
- *
  * @since 1.0.0
- *
- * @see AppCompatActivity
- * @see ColorsAnimatedView
- * @see MaterialTextView
  */
 internal class ColorInfoView private constructor(
-    activity: AppCompatActivity,
+    private val activity: Activity,
     private val view: MaterialTextView
 ) : ColorsAnimatedView(activity, view) {
     companion object {
@@ -28,21 +20,15 @@ internal class ColorInfoView private constructor(
         private const val START_ANIMATION_DELAY: Long = 250
 
         /**
-         * Create an instance of the color information's view.
+         * Observe the given activity's lifecycle.
          *
-         * @param activity Instance of the colors activity
-         * @param view Binding of the view
+         * @param activity Colors activity
+         * @param view View corresponding to the color information
          *
-         * @return New instance of the view
-         *
-         * @since 1.0.0
-         *
-         * @see AppCompatActivity
-         * @see LifecycleView
-         * @see MaterialTextView
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity, view: MaterialTextView): LifecycleView =
-            ColorInfoView(activity, view)
+        fun observe(activity: Activity, view: MaterialTextView) =
+            ColorInfoView(activity, view).let { v: ColorInfoView -> activity.addObserver(v) }
     }
 
     override val exitAnimation: Runnable
@@ -64,6 +50,11 @@ internal class ColorInfoView private constructor(
             }
         }
 
+    override fun onDestroy() {
+        this.stopActivityObservation()
+        super.onDestroy()
+    }
+
     override fun onResume() {
         super.onResume()
         this.setText()
@@ -74,4 +65,6 @@ internal class ColorInfoView private constructor(
 
     private fun setTextColor() =
         super.color?.let { color: Color -> this.view.setTextColor(color.value) }
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

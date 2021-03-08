@@ -1,69 +1,70 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
-import fr.lvmvrquxl.thekolab.colors.view.content.ChangeColorsView
-import fr.lvmvrquxl.thekolab.colors.view.content.ColorInfoView
-import fr.lvmvrquxl.thekolab.colors.view.toolbar.ExitView
-import fr.lvmvrquxl.thekolab.colors.view.toolbar.TitleView
+import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
+import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
+import fr.lvmvrquxl.thekolab.colors.view.content.ContentContainerView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarContainerView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 /**
  * Main view of the colors activity.
  *
- * @param activity Instance of the colors activity
- *
  * @since 1.0.0
- *
- * @see ActivityView
- * @see AppCompatActivity
  */
-internal class ColorsView private constructor(private val activity: AppCompatActivity) :
+internal class ColorsView private constructor(private val activity: Activity) :
     ActivityView<ColorsActivityBinding>(activity) {
     companion object {
         /**
-         * Create an instance of the view.
+         * Observe the given activity lifecycle.
          *
-         * @param activity Instance of the colors activity
+         * @param activity Colors activity
          *
-         * @return New instance of the view
-         *
-         * @since 1.0.0
-         *
-         * @see ActivityView
-         * @see AppCompatActivity
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity): LifecycleObserver = ColorsView(activity)
+        fun observe(activity: Activity) =
+            ColorsView(activity).let { view: ColorsView -> activity.addObserver(view) }
     }
 
+    private var contentBinding: ColorsContentBinding? = null
+    private var toolbarBinding: ColorsToolbarBinding? = null
+
     override fun bindView() {
-        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater)
+        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater).apply {
+            this@ColorsView.contentBinding = this.colorsContent
+            this@ColorsView.toolbarBinding = this.colorsToolbar
+        }
+    }
+
+    override fun onDestroy() {
+        this.destroyContentBinding()
+        this.destroyToolbarBinding()
+        this.stopActivityObservation()
+        super.onDestroy()
     }
 
     override fun registerViews() {
-        super.viewBinding?.colorsContent?.changeColors?.let { changeColors: MaterialButton ->
-            val view: LifecycleView = ChangeColorsView.create(this.activity, changeColors)
-            super.addView(view)
-        }
-
-        super.viewBinding?.colorsContent?.colorInfo?.let { colorInfo: MaterialTextView ->
-            val view: LifecycleView = ColorInfoView.create(this.activity, colorInfo)
-            super.addView(view)
-        }
-
-        super.viewBinding?.colorsToolbar?.exit?.let { exit: ShapeableImageView ->
-            val view: LifecycleView = ExitView.create(this.activity, exit)
-            super.addView(view)
-        }
-
-        super.viewBinding?.colorsToolbar?.title?.let { title: MaterialTextView ->
-            val view: LifecycleView = TitleView.create(this.activity, title)
-            super.addView(view)
-        }
+        this.registerContainerView()
+        this.registerToolbarView()
     }
+
+    private fun destroyContentBinding() {
+        this.contentBinding = null
+    }
+
+    private fun destroyToolbarBinding() {
+        this.toolbarBinding = null
+    }
+
+    private fun registerContainerView() =
+        this.contentBinding?.let { binding: ColorsContentBinding ->
+            ContentContainerView.observe(this.activity, binding)
+        }
+
+    private fun registerToolbarView() = this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
+        ToolbarContainerView.observe(this.activity, binding)
+    }
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }
