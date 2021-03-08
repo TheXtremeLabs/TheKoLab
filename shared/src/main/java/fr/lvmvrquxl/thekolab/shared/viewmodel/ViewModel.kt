@@ -4,7 +4,11 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
-// TODO: Add documentation
+/**
+ * Parent of the application's view models.
+ *
+ * @since 2.0.0
+ */
 abstract class ViewModel : ViewModel(), LifecycleObserver {
     override fun onCreate() {}
 
@@ -22,14 +26,14 @@ abstract class ViewModel : ViewModel(), LifecycleObserver {
     /**
      * Destroy the activity.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     abstract fun destroyActivity()
 
     /**
      * Callback when the user click on the back button of the navigation bar.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     open fun onBackPressed() {}
 }

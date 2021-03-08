@@ -68,7 +68,11 @@ class Animation private constructor(
         this@Animation.backupAnimator(this)
     }.start()
 
-    // TODO: Add documentation
+    /**
+     * Cancel current animation.
+     *
+     * @since 2.0.0
+     */
     fun cancel() = this.currentAnimator?.cancel()
 
     /**
@@ -97,7 +101,14 @@ class Animation private constructor(
         this.alpha = 0f
     }
 
-    // TODO: Add documentation
+    /**
+     * Set the animation's duration to long, corresponding to 500 milliseconds.
+     *
+     * When this method is not used before running the animation, the default animation's duration
+     * is short, corresponding to 200 milliseconds.
+     *
+     * @since 2.0.0
+     */
     fun longDuration() {
         this.duration = this.longDuration
     }
@@ -115,7 +126,10 @@ class Animation private constructor(
     }
 
     /**
-     * Set the callback that should be executed after the animation.
+     * Set the callback that should be executed when the animation ends.
+     *
+     * When this method is not used before running the animation, no action is executed when the
+     * animation ends.
      *
      * @param callback Callback to execute
      *
@@ -125,17 +139,42 @@ class Animation private constructor(
         this.onEnd = callback
     }
 
-    // TODO: Add documentation
+    /**
+     * Set the callback that should be executed when the animation starts.
+     *
+     * When this method is not used before running the animation, no action is executed when
+     * the animation starts.
+     *
+     * @param callback Callback to execute
+     *
+     * @since 2.0.0
+     */
     fun onStart(callback: () -> Unit) {
         this.onStart = callback
     }
 
-    // TODO: Add documentation
+    /**
+     * Set the translation X to apply during the animation.
+     *
+     * When this method is not used before running the animation, no translation is applied.
+     *
+     * @param translation X value to translate by
+     *
+     * @since 2.0.0
+     */
     fun translationXBy(translation: Float) {
         this.translationXBy = translation
     }
 
-    // TODO: Add documentation
+    /**
+     * Set the translation Y to apply during the animation.
+     *
+     * When this method is not used before running the animation, no translation is applied.
+     *
+     * @param translation Y value to translate by
+     *
+     * @since 2.0.0
+     */
     fun translationYBy(translation: Float) {
         this.translationYBy = translation
     }
