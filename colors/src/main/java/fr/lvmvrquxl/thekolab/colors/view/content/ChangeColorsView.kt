@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view.content
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
@@ -46,12 +46,17 @@ internal class ChangeColorsView private constructor(
     }
 
     override val exitAnimation: Runnable
-        get() = super.mediumAnimation.apply { this.emptyAlpha() }
+        get() {
+            super.disableClick()
+            return super.mediumAnimation.apply { this.emptyAlpha() }
+        }
+
     override val startAnimation: Runnable
         get() = super.mediumAnimation.apply {
             this.delay(START_ANIMATION_DELAY)
             this.onEnd { super.enableClick() }
         }
+
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
@@ -59,18 +64,11 @@ internal class ChangeColorsView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
-    override fun onStart() = this.setClickListener()
-
-    override fun showExitAnimation() {
+    override fun onResume() {
+        super.onResume()
         super.disableClick()
-        super.showExitAnimation()
-    }
-
-    override fun showStartAnimation() {
-        super.disableClick()
-        super.hide()
         this.setBackgroundColor()
-        super.showStartAnimation()
+        this.setClickListener()
     }
 
     private fun setBackgroundColor() =

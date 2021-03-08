@@ -6,11 +6,11 @@ import androidx.annotation.CallSuper
  * Parent of all views that contains other views.
  *
  * @since 1.0.0
- *
- * @see LifecycleView
  */
+@Deprecated("Will be removed in version 2.0.0")
 abstract class ContainerView : LifecycleView() {
-    private val views: MutableList<LifecycleView> = mutableListOf()
+    @Deprecated("Will be removed in version 2.0.0")
+    private var views: MutableList<LifecycleView>? = null
 
     @CallSuper
     override fun onCreate() = this.createViews()
@@ -19,7 +19,28 @@ abstract class ContainerView : LifecycleView() {
     override fun onDestroy() = this.destroyViews()
 
     @CallSuper
-    override fun onStart() = this.startViews()
+    override fun onPause() {
+        this.pauseViews()
+    }
+
+    @CallSuper
+    override fun onResume() {
+        this.resumeViews()
+    }
+
+    @CallSuper
+    override fun onStart() {
+        this.startViews()
+    }
+
+    @CallSuper
+    override fun onStop() {
+        this.stopViews()
+    }
+
+    @Deprecated("Will be removed in version 2.0.0")
+    protected open fun registerViews() {
+    }
 
     /**
      * Add given view in this container.
@@ -27,19 +48,38 @@ abstract class ContainerView : LifecycleView() {
      * @param view View to add
      *
      * @since 1.0.0
-     *
-     * @see LifecycleView
      */
-    protected fun addView(view: LifecycleView) {
-        if (!this.views.contains(view)) this.views.add(view)
+    @Deprecated("Will be removed in version 2.0.0")
+    protected fun addView(view: LifecycleView) =
+        this.views?.let { views: MutableList<LifecycleView> ->
+            if (!views.contains(view)) views.add(view)
+        }
+
+    @Deprecated("Will be removed in version 2.0.0")
+    private fun createViews() {
+        this.views = mutableListOf()
+        this.registerViews()
+        this.views?.forEach { view: LifecycleView -> view.onCreate() }
     }
 
-    private fun createViews() = this.views.forEach { view: LifecycleView -> view.onCreate() }
-
+    @Deprecated("Will be removed in version 2.0.0")
     private fun destroyViews() {
-        this.views.forEach { view: LifecycleView -> view.onDestroy() }
-        this.views.clear()
+        this.views?.apply {
+            this.forEach { view: LifecycleView -> view.onDestroy() }
+            this.clear()
+        }
+        this.views = null
     }
 
-    private fun startViews() = this.views.forEach { view: LifecycleView -> view.onStart() }
+    @Deprecated("Will be removed in version 2.0.0")
+    private fun pauseViews() = this.views?.forEach { view: LifecycleView -> view.onPause() }
+
+    @Deprecated("Will be removed in version 2.0.0")
+    private fun resumeViews() = this.views?.forEach { view: LifecycleView -> view.onResume() }
+
+    @Deprecated("Will be removed in version 2.0.0")
+    private fun startViews() = this.views?.forEach { view: LifecycleView -> view.onStart() }
+
+    @Deprecated("Will be removed in version 2.0.0")
+    private fun stopViews() = this.views?.forEach { view: LifecycleView -> view.onStop() }
 }

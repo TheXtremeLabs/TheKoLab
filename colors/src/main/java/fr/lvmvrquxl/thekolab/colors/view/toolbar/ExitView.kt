@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view.toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.imageview.ShapeableImageView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
@@ -47,16 +47,21 @@ internal class ExitView private constructor(
     }
 
     override val exitAnimation: Runnable
-        get() = super.mediumAnimation.apply {
-            this.emptyAlpha()
-            this.delay(EXIT_ANIMATION_DELAY)
-            this.onEnd { super.viewModel.destroyActivity() }
+        get() {
+            super.disableClick()
+            return super.mediumAnimation.apply {
+                this.emptyAlpha()
+                this.delay(EXIT_ANIMATION_DELAY)
+                this.onEnd { super.viewModel.closeActivity() }
+            }
         }
+
     override val startAnimation: Runnable
         get() = super.mediumAnimation.apply {
             this.delay(START_ANIMATION_DELAY)
             this.onEnd { super.enableClick() }
         }
+
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.COLOR_FILTER)
@@ -64,18 +69,11 @@ internal class ExitView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
-    override fun onStart() = this.setListener()
-
-    override fun showExitAnimation() {
-        super.disableClick()
-        super.showExitAnimation()
-    }
-
-    override fun showStartAnimation() {
-        super.hide()
+    override fun onResume() {
+        super.onResume()
         super.disableClick()
         this.setColorFilter()
-        super.showStartAnimation()
+        this.setListener()
     }
 
     private fun setColorFilter() =

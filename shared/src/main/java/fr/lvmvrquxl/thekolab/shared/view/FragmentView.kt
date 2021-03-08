@@ -12,21 +12,16 @@ import androidx.viewbinding.ViewBinding
  * @see [FragmentView]
  * @see [ViewBinding]
  */
-abstract class FragmentView<VB : ViewBinding> : ActivityView<VB>() {
-    /**
-     * Callback when the view is creating.
-     *
-     * @since 1.0.0
-     */
-    open fun onCreateView() {}
-
+abstract class FragmentView<VB : ViewBinding> : BindableView<VB>() {
     /**
      * Callback when the view is destroying.
      *
      * @since 1.0.0
      */
     @CallSuper
-    open fun onDestroyView() = this.onDestroy()
+    open fun onDestroyView() {
+        super.onDestroy()
+    }
 
     /**
      * Callback when the view is saving instance state.
@@ -48,4 +43,14 @@ abstract class FragmentView<VB : ViewBinding> : ActivityView<VB>() {
      * @since 1.0.0
      */
     open fun onViewStateRestored() {}
+
+    /**
+     * Callback when the view is creating.
+     *
+     * @since 1.0.0
+     */
+    fun onCreateView() {
+        this.bindView()
+        super.onCreate()
+    }
 }

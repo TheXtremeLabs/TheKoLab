@@ -3,4 +3,5 @@ include ':colors'
 include ':core'
 include ':home'
 include ':shared'
+include ':splashscreen'
 rootProject.name = "TheKoLab"

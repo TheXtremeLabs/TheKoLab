@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.view.toolbar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimationProperty
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Runnable
@@ -51,8 +51,10 @@ internal class TitleView private constructor(
             this.emptyAlpha()
             this.delay(EXIT_ANIMATION_DELAY)
         }
+
     override val startAnimation: Runnable
         get() = super.mediumAnimation.apply { this.delay(START_ANIMATION_DELAY) }
+
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.TEXT_COLOR)
@@ -60,10 +62,9 @@ internal class TitleView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
-    override fun showStartAnimation() {
-        super.hide()
+    override fun onResume() {
+        super.onResume()
         this.setTextColor()
-        super.showStartAnimation()
     }
 
     private fun setTextColor() =

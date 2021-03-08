@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    implementation project(':home')
+    implementation project(':splashscreen')
     implementation rootProject.ext.dependencies.appcompat
     implementation rootProject.ext.dependencies.core_ktx
     implementation rootProject.ext.dependencies.kotlin_stdlib

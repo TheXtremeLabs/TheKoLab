@@ -5,11 +5,11 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="TheKoLab.Colors.Arrow.Back" parent="TheKoLab.Shape.Arrow">
+    <style name="TheKoLab.Colors.Arrow.Back" parent="TheKoLab.Image.Arrow">
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/medium</item>
         <item name="android:rotation">@dimen/rotation_mirror</item>
-        <item name="shapeAppearance">@style/TheKoLab.Shape.Circle.Image</item>
+        <item name="shapeAppearance">@style/TheKoLab.Image.Circle</item>
     </style>
 
     <style name="TheKoLab.Colors.Title" parent="TheKoLab.Text.Headline5">

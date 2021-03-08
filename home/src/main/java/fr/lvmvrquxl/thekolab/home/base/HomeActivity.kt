@@ -15,6 +15,10 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  * @since 1.0.0
  */
 class HomeActivity : AppCompatActivity() {
+    companion object {
+        val javaClass: Class<HomeActivity> = HomeActivity::class.java
+    }
+
     private var view: ActivityView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -24,18 +28,13 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    override fun onBackPressed() = this.finishAffinity()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.view = HomeView.create(this)
-        this.view?.onCreate()
-        super.setContentView(this.view?.root)
+        this.createView()
     }
 
     override fun onDestroy() {
-        this.view?.onDestroy()
-        this.view = null
+        this.destroyView()
         super.onDestroy()
     }
 
@@ -49,6 +48,20 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        this.view?.onStart()
+        this.startView()
     }
+
+    private fun createView() {
+        this.view = HomeView.create(this).apply {
+            this.onCreate()
+            super.setContentView(this.root)
+        }
+    }
+
+    private fun destroyView() {
+        this.view?.onDestroy()
+        this.view = null
+    }
+
+    private fun startView() = this.view?.onStart()
 }

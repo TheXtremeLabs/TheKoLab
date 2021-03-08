@@ -2,8 +2,22 @@
 <resources>
 
     <style name="TheKoLab.Guideline" parent="">
-        <item name="android:layout_height">@dimen/empty</item>
-        <item name="android:layout_width">@dimen/empty</item>
+        <item name="android:layout_height">@dimen/empty_dp</item>
+        <item name="android:layout_width">@dimen/empty_dp</item>
+    </style>
+
+    <style name="TheKoLab.Image" parent="">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="TheKoLab.Image.Arrow" parent="TheKoLab.Image">
+        <item name="srcCompat">@drawable/keyboard_arrow</item>
+    </style>
+
+    <style name="TheKoLab.Image.Circle" parent="TheKoLab.Image">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
     <style name="TheKoLab.Layout" parent="">
@@ -12,15 +26,6 @@
 
     <style name="TheKoLab.Layout.Smooth" parent="TheKoLab.Layout">
         <item name="android:alpha">@dimen/alpha_smooth</item>
-    </style>
-
-    <style name="TheKoLab.Shape.Arrow" parent="">
-        <item name="srcCompat">@drawable/keyboard_arrow</item>
-    </style>
-
-    <style name="TheKoLab.Shape.Circle.Image" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
     </style>
 
     <style name="TheKoLab.Text.Body" parent="TextAppearance.MaterialComponents.Body2">

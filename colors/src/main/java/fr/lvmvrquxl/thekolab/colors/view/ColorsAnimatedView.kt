@@ -3,13 +3,13 @@ package fr.lvmvrquxl.thekolab.colors.view
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.utils.animation.Animation
-import fr.lvmvrquxl.thekolab.colors.utils.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
-import fr.lvmvrquxl.thekolab.colors.viewmodel.IColorsViewModel
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
+import fr.lvmvrquxl.thekolab.shared.animation.Animation
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
-import kotlinx.coroutines.Runnable
 
 /**
  * Parent of all animated views in the colors activity.
@@ -26,17 +26,7 @@ import kotlinx.coroutines.Runnable
 internal abstract class ColorsAnimatedView(
     private val activity: AppCompatActivity,
     private val view: View
-) : AnimatedView() {
-    /**
-     * Animation instance for the view.
-     *
-     * @since 1.0.0
-     *
-     * @see Animation
-     */
-    protected val animation: Animation
-        get() = Animation.animate(this.activity, this.view)
-
+) : AnimatedView(activity, view) {
     /**
      * ARGB animation instance for the view.
      *
@@ -48,16 +38,6 @@ internal abstract class ColorsAnimatedView(
         get() = ArgbAnimation.animate(this.view)
 
     /**
-     * Animation executed when the user closes the activity.
-     *
-     * @since 1.0.0
-     *
-     * @see Runnable
-     */
-    protected open val exitAnimation: Runnable
-        get() = this.animation
-
-    /**
      * Animation instance with a medium duration, corresponding to 400 milliseconds.
      *
      * @since 1.0.0
@@ -65,36 +45,31 @@ internal abstract class ColorsAnimatedView(
      * @see Animation
      */
     protected val mediumAnimation: Animation
-        get() = this.animation.apply { this.medium() }
+        get() = super.animation.apply { this.mediumDuration() }
 
-    /**
-     * Animation executed when the activity starts.
-     *
-     * @since 1.0.0
-     *
-     * @see Runnable
-     */
-    protected open val startAnimation: Runnable
-        get() = this.animation
+    private val colorObserver: Observer<Color>
+        get() = Observer { color: Color -> this.color = color }
 
-    /**
-     * Animation executed when displayed data is updated.
-     *
-     * @since 1.0.0
-     *
-     * @see Runnable
-     */
-    protected open val updateAnimation: Runnable
-        get() = this.animation
+    private val stateObserver: Observer<ColorsState>
+        get() = Observer { state: ColorsState ->
+            when (state) {
+                ColorsState.EXIT -> super.showExitAnimation()
+                ColorsState.RESUME -> super.showStartAnimation()
+                ColorsState.UPDATE -> super.showUpdateAnimation()
+                else -> {
+                }
+            }
+        }
 
     /**
      * View model's instance of the activity.
      *
      * @since 1.0.0
      *
-     * @see IColorsViewModel
+     * @see ColorsViewModel
      */
-    protected val viewModel: IColorsViewModel = IColorsViewModel.instance(this.activity)
+    protected val viewModel: ColorsViewModel
+        get() = ColorsViewModel.instance(this.activity)
 
     /**
      * Current color to display.
@@ -105,23 +80,20 @@ internal abstract class ColorsAnimatedView(
      */
     protected var color: Color? = null
 
-    override fun onCreate() {
-        this.observeColor()
-        this.observeState()
+    override fun observeViewModel() {
+        this.viewModel.color.observe(this.activity, this.colorObserver)
+        this.viewModel.state.observe(this.activity, this.stateObserver)
     }
 
     override fun onDestroy() {
         this.color = null
+        super.onDestroy()
     }
 
     @CallSuper
-    override fun showExitAnimation() = this.exitAnimation.run()
-
-    @CallSuper
-    override fun showStartAnimation() = this.startAnimation.run()
-
-    @CallSuper
-    override fun showUpdateAnimation() = this.updateAnimation.run()
+    override fun onStart() {
+        super.hide()
+    }
 
     /**
      * Disable click on the current view.
@@ -139,28 +111,5 @@ internal abstract class ColorsAnimatedView(
      */
     protected fun enableClick() {
         this.view.isClickable = true
-    }
-
-    /**
-     * Hide the current view.
-     *
-     * @since 1.0.0
-     */
-    protected fun hide() {
-        this.view.alpha = 0f
-    }
-
-    private fun observeState() = this.viewModel.state.observe(this.activity) { state: ColorsState ->
-        when (state) {
-            ColorsState.START -> this.showStartAnimation()
-            ColorsState.UPDATE -> this.showUpdateAnimation()
-            ColorsState.EXIT -> this.showExitAnimation()
-            else -> {
-            }
-        }
-    }
-
-    private fun observeColor() = this.viewModel.color.observe(this.activity) { color: Color ->
-        this.color = color
     }
 }

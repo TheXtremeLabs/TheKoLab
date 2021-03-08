@@ -61,26 +61,30 @@ internal class ToolbarWeatherView private constructor(
 
     private var presenter: Presenter? = null
 
-    override fun onCreateView() = this.bindViews()
+    override fun bindView() {
+        val attachToParent = false
+        super.viewBinding =
+            ToolbarWeatherFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+    }
 
     override fun onDestroyView() {
         this.presenter = null
         super.onDestroyView()
     }
 
-    override fun onPause() = this.presenter?.cancelCoroutines()
+    override fun onPause() {
+        this.presenter?.cancelCoroutines()
+        super.onPause()
+    }
 
-    override fun onResume() = this.presenter?.startBackgroundCoroutines()
+    override fun onResume() {
+        this.presenter?.startBackgroundCoroutines()
+        super.onResume()
+    }
 
     override fun onStart() {
         this.initPresenter()
         super.onStart()
-    }
-
-    private fun bindViews() {
-        val attachToParent = false
-        super.viewBinding =
-            ToolbarWeatherFragmentBinding.inflate(this.inflater, this.container, attachToParent)
     }
 
     private fun initPresenter() {
