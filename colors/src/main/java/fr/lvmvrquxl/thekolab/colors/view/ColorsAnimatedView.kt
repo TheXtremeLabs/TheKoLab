@@ -62,18 +62,11 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
      */
     protected var viewModel: ColorsViewModel? = null
 
+    @CallSuper
     override fun onCreate() {
-        super.onCreate()
-        this.viewModel = ColorsViewModel.instance(this.activity).apply {
-            this.color.observe(
-                this@ColorsAnimatedView.activity,
-                this@ColorsAnimatedView.colorObserver
-            )
-            this.state.observe(
-                this@ColorsAnimatedView.activity,
-                this@ColorsAnimatedView.stateObserver
-            )
-        }
+        this.initViewModel()
+        this.observeViewModelColor()
+        this.observeViewModelState()
     }
 
     override fun onDestroy() {
@@ -110,4 +103,14 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
     private fun destroyViewModel() {
         this.viewModel = null
     }
+
+    private fun initViewModel() {
+        this.viewModel = ColorsViewModel.instance(this.activity)
+    }
+
+    private fun observeViewModelColor() =
+        this.viewModel?.color?.observe(this.activity, this.colorObserver)
+
+    private fun observeViewModelState() =
+        this.viewModel?.state?.observe(this.activity, this.stateObserver)
 }

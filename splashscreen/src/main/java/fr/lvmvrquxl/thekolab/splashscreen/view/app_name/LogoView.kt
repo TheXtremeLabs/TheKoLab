@@ -53,7 +53,6 @@ internal class LogoView private constructor(
     private var viewModel: SplashscreenViewModel? = null
 
     override fun onCreate() {
-        super.onCreate()
         this.viewModel = SplashscreenViewModel.instance.apply {
             this.state.observe(this@LogoView.activity, this@LogoView.stateObserver)
         }

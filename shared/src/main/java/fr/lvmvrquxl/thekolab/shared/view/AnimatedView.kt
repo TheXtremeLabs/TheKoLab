@@ -51,9 +51,6 @@ abstract class AnimatedView(
     private var currentAnimation: Animation? = null
 
     @CallSuper
-    override fun onCreate() = this.observeViewModel()
-
-    @CallSuper
     override fun onDestroy() {
         this.currentAnimation = null
     }
@@ -61,10 +58,6 @@ abstract class AnimatedView(
     @CallSuper
     override fun onPause() {
         this.currentAnimation?.cancel()
-    }
-
-    @Deprecated("Will be removed in version 2.0.0")
-    protected open fun observeViewModel() {
     }
 
     /**

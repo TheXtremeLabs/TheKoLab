@@ -39,8 +39,8 @@ internal abstract class AppNameView(private val activity: Activity, view: Materi
      */
     protected var viewModel: SplashscreenViewModel? = null
 
+    @CallSuper
     override fun onCreate() {
-        super.onCreate()
         this.viewModel = SplashscreenViewModel.instance.apply {
             this.state.observe(this@AppNameView.activity, this@AppNameView.stateObserver)
         }
