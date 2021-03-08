@@ -1,27 +1,19 @@
 package fr.lvmvrquxl.thekolab.colors.view.toolbar
 
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.imageview.ShapeableImageView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the exit button.
  *
- * @param activity Instance of the colors activity
- * @param view Binding of the button
- *
  * @since 1.0.0
- *
- * @see AppCompatActivity
- * @see ColorsAnimatedView
- * @see ShapeableImageView
  */
 internal class ExitView private constructor(
-    activity: AppCompatActivity,
+    private val activity: Activity,
     private val view: ShapeableImageView
 ) : ColorsAnimatedView(activity, view) {
     companion object {
@@ -29,21 +21,15 @@ internal class ExitView private constructor(
         private const val START_ANIMATION_DELAY: Long = 1000
 
         /**
-         * Create an instance of the exit button's view.
+         * Observe the given activity's lifecycle.
          *
-         * @param activity Instance of the colors activity
-         * @param view Binding of the button
+         * @param activity Colors activity
+         * @param view View corresponding to the exit button
          *
-         * @return New instance of the view
-         *
-         * @since 1.0.0
-         *
-         * @see AppCompatActivity
-         * @see LifecycleView
-         * @see ShapeableImageView
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity, view: ShapeableImageView): LifecycleView =
-            ExitView(activity, view)
+        fun observe(activity: Activity, view: ShapeableImageView) =
+            ExitView(activity, view).let { v: ExitView -> activity.addObserver(v) }
     }
 
     override val exitAnimation: Runnable
@@ -69,6 +55,11 @@ internal class ExitView private constructor(
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
+    override fun onDestroy() {
+        this.stopActivityObservation()
+        super.onDestroy()
+    }
+
     override fun onResume() {
         super.onResume()
         super.disableClick()
@@ -80,4 +71,6 @@ internal class ExitView private constructor(
         super.color?.let { color: Color -> this.view.setColorFilter(color.value) }
 
     private fun setListener() = this.view.setOnClickListener { super.viewModel.onBackPressed() }
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

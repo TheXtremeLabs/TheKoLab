@@ -29,16 +29,18 @@ internal class ToolbarContainerView private constructor(
     }
 
     override fun onDestroy() {
-        this.activity.removeObserver(this)
+        this.stopActivityObservation()
         super.onDestroy()
     }
 
-    // TODO: Refactor method
     override fun registerViews() {
-        val exit = ExitView.create(this.activity, this.binding.exit)
-        this.activity.addObserver(exit)
-
-        val title = TitleView.create(this.activity, this.binding.title)
-        this.activity.addObserver(title)
+        this.registerExitView()
+        this.registerTitleView()
     }
+
+    private fun registerExitView() = ExitView.observe(this.activity, this.binding.exit)
+
+    private fun registerTitleView() = TitleView.observe(this.activity, this.binding.title)
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }
