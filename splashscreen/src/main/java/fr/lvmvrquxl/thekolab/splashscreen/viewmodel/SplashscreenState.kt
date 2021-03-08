@@ -1,42 +1,78 @@
 package fr.lvmvrquxl.thekolab.splashscreen.viewmodel
 
-// TODO: Add documentation
+/**
+ * Enumeration of the splashscreen activity's states.
+ *
+ * @since 2.0.0
+ */
 internal enum class SplashscreenState {
     /**
-     * The activity can be closed.
+     * The activity is closing.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    CLOSABLE,
+    CLOSE,
 
-    // TODO: Add documentation
+    /**
+     * The activity is creating.
+     *
+     * @since 2.0.0
+     */
     CREATE,
 
-    // TODO: Add documentation
+    /**
+     * The activity is destroying.
+     *
+     * @since 2.0.0
+     */
     DESTROY,
 
-    // TODO: Add documentation
+    /**
+     * The activity is pausing.
+     *
+     * @since 2.0.0
+     */
     PAUSE,
 
-    // TODO: Add documentation
+    /**
+     * The activity is resuming.
+     *
+     * @since 2.0.0
+     */
     RESUME,
 
-    // TODO: Add documentation
+    /**
+     * The activity is showing the application's name.
+     *
+     * @since 2.0.0
+     */
     SHOW_APP_NAME,
 
-    // TODO: Add documentation
+    /**
+     * The activity is showing the application's logo.
+     *
+     * @since 2.0.0
+     */
     SHOW_LOGO,
 
-    // TODO: Add documentation
+    /**
+     * The activity is showing the application's version name.
+     *
+     * @since 2.0.0
+     */
     SHOW_VERSION_NAME,
 
     /**
-     * The activity starts.
+     * The activity is starting.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     START,
 
-    // TODO: Add documentation
+    /**
+     * The activity is stopping.
+     *
+     * @since 2.0.0
+     */
     STOP
 }

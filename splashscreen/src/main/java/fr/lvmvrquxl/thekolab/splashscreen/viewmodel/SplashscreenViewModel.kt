@@ -19,20 +19,32 @@ internal abstract class SplashscreenViewModel : ViewModel() {
         val instance: SplashscreenViewModel = SplashscreenViewModelImpl
     }
 
-    // TODO: Add documentation
+    /**
+     * State of the activity.
+     *
+     * @since 2.0.0
+     */
     abstract val state: LiveData<SplashscreenState>
 
     private var activity: Activity? = null
 
     override fun onDestroy() {
-        this.activity?.removeObserver(this)
+        this.stopActivityObservation()
         super.onDestroy()
     }
 
-    // TODO: Add documentation
+    /**
+     * Show the application's name in the activity.
+     *
+     * @since 2.0.0
+     */
     abstract fun showAppName()
 
-    // TODO: Add documentation
+    /**
+     * Show the application's version name in the activity.
+     *
+     * @since 2.0.0
+     */
     abstract fun showVersionName()
 
     /**
@@ -44,4 +56,6 @@ internal abstract class SplashscreenViewModel : ViewModel() {
      */
     fun observe(activity: Activity) =
         activity.apply { this@SplashscreenViewModel.activity = this }.addObserver(this)
+
+    private fun stopActivityObservation() = this.activity?.removeObserver(this)
 }

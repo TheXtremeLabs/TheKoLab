@@ -3,7 +3,11 @@ package fr.lvmvrquxl.thekolab.splashscreen.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-// TODO: Add documentation
+/**
+ * Implementation of the splashscreen activity's view model.
+ *
+ * @since 2.0.0
+ */
 internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
     override val state: LiveData<SplashscreenState>
         get() = this.stateData
@@ -13,14 +17,11 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
     private var stateManager: SplashscreenStateManager? = null
 
     override fun destroyActivity() {
-        this.stateManager?.closable()
+        this.closeStateManager()
         this.syncState()
     }
 
-    override fun onCleared() {
-        this.stateManager?.clear()
-        this.stateManager = null
-    }
+    override fun onCleared() = this.clearStateManager()
 
     override fun onCreate() {
         this.createStateManager()
@@ -55,14 +56,21 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
     }
 
     override fun showAppName() {
-        this.stateManager?.showAppName()
+        this.showAppNameWithStateManager()
         this.syncState()
     }
 
     override fun showVersionName() {
-        this.stateManager?.showVersionName()
+        this.showVersionNameWithStateManager()
         this.syncState()
     }
+
+    private fun clearStateManager() {
+        this.stateManager?.clear()
+        this.stateManager = null
+    }
+
+    private fun closeStateManager() = this.stateManager?.close()
 
     private fun createStateManager() {
         this.stateManager = SplashscreenStateManager.create().apply { this.onCreate() }
@@ -74,10 +82,16 @@ internal object SplashscreenViewModelImpl : SplashscreenViewModel() {
 
     private fun resumeStateManager() = this.stateManager?.onResume()
 
+    private fun showAppNameWithStateManager() = this.stateManager?.showAppName()
+
     private fun showLogo() {
-        this.stateManager?.showLogo()
+        this.showLogoWithStateManager()
         this.syncState()
     }
+
+    private fun showLogoWithStateManager() = this.stateManager?.showLogo()
+
+    private fun showVersionNameWithStateManager() = this.stateManager?.showVersionName()
 
     private fun startStateManager() = this.stateManager?.onStart()
 

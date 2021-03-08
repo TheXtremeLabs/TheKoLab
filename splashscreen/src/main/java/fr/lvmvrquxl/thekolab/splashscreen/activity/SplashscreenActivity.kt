@@ -25,7 +25,7 @@ class SplashscreenActivity : Activity() {
 
     private val stateObserver: Observer<SplashscreenState>
         get() = Observer { state: SplashscreenState ->
-            if (SplashscreenState.CLOSABLE == state) this.goToHome()
+            if (SplashscreenState.CLOSE == state) this.goToHome()
         }
 
     init {
