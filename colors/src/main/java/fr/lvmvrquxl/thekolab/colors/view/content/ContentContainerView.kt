@@ -28,10 +28,7 @@ internal class ContentContainerView private constructor(
             }
     }
 
-    override fun onDestroy() {
-        this.stopActivityObservation()
-        super.onDestroy()
-    }
+    override fun onDestroy() = this.activity.removeObserver(this)
 
     override fun registerViews() {
         this.registerChangeColorsView()
@@ -43,6 +40,4 @@ internal class ContentContainerView private constructor(
 
     private fun registerColorInfoView() =
         ColorInfoView.observe(this.activity, this.binding.colorInfo)
-
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

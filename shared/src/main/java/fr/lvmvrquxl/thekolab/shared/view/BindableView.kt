@@ -1,6 +1,7 @@
 package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -28,10 +29,8 @@ abstract class BindableView<VB : ViewBinding> : ContainerView() {
      */
     protected var viewBinding: VB? = null
 
-    override fun onDestroy() {
-        this.destroyViewBinding()
-        super.onDestroy()
-    }
+    @CallSuper
+    override fun onDestroy() = this.destroyViewBinding()
 
     /**
      * Bind the typed view.

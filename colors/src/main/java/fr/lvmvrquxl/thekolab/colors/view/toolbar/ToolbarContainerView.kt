@@ -28,10 +28,7 @@ internal class ToolbarContainerView private constructor(
             }
     }
 
-    override fun onDestroy() {
-        this.stopActivityObservation()
-        super.onDestroy()
-    }
+    override fun onDestroy() = this.activity.removeObserver(this)
 
     override fun registerViews() {
         this.registerExitView()
@@ -41,6 +38,4 @@ internal class ToolbarContainerView private constructor(
     private fun registerExitView() = ExitView.observe(this.activity, this.binding.exit)
 
     private fun registerTitleView() = TitleView.observe(this.activity, this.binding.title)
-
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

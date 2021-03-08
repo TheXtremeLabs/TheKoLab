@@ -94,7 +94,6 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         this.checkPermissions()
         this.setViewPager()
         this.applyAppsRecyclerView()
-        super.onStart()
     }
 
     private fun applyAppsRecyclerView() {

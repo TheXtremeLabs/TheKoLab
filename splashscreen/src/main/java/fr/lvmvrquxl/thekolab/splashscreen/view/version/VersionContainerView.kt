@@ -28,10 +28,7 @@ internal class VersionContainerView private constructor(
             }
     }
 
-    override fun onDestroy() {
-        this.activity.removeObserver(this)
-        super.onDestroy()
-    }
+    override fun onDestroy() = this.activity.removeObserver(this)
 
     override fun registerViews() {
         VersionNameView.observe(this.activity, this.binding.versionName)

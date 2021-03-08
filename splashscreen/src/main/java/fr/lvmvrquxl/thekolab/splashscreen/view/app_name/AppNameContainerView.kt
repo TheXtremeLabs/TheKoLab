@@ -29,10 +29,7 @@ internal class AppNameContainerView private constructor(
             }
     }
 
-    override fun onDestroy() {
-        this.activity.removeObserver(this)
-        super.onDestroy()
-    }
+    override fun onDestroy() = this.activity.removeObserver(this)
 
     override fun registerViews() {
         AppNameEndView.observe(this.activity, this.binding.appNameEnd)
