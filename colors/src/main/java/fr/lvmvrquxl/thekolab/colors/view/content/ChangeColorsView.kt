@@ -46,7 +46,7 @@ internal class ChangeColorsView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
-            super.viewModel.previousColor?.let { color: Color -> this.startColor(color.value) }
+            super.viewModel?.previousColor?.let { color: Color -> this.startColor(color.value) }
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
@@ -65,7 +65,7 @@ internal class ChangeColorsView private constructor(
     private fun setBackgroundColor() =
         super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }
 
-    private fun setClickListener() = this.view.setOnClickListener { super.viewModel.updateColor() }
+    private fun setClickListener() = this.view.setOnClickListener { super.viewModel?.updateColor() }
 
     private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

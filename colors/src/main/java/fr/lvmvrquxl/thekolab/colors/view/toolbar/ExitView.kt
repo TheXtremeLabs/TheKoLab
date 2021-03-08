@@ -38,7 +38,7 @@ internal class ExitView private constructor(
             return super.mediumAnimation.apply {
                 this.emptyAlpha()
                 this.delay(EXIT_ANIMATION_DELAY)
-                this.onEnd { super.viewModel.closeActivity() }
+                this.onEnd { super.viewModel?.closeActivity() }
             }
         }
 
@@ -51,7 +51,7 @@ internal class ExitView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.COLOR_FILTER)
-            super.viewModel.previousColor?.let { color: Color -> this.startColor(color.value) }
+            super.viewModel?.previousColor?.let { color: Color -> this.startColor(color.value) }
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 
@@ -70,7 +70,7 @@ internal class ExitView private constructor(
     private fun setColorFilter() =
         super.color?.let { color: Color -> this.view.setColorFilter(color.value) }
 
-    private fun setListener() = this.view.setOnClickListener { super.viewModel.onBackPressed() }
+    private fun setListener() = this.view.setOnClickListener { super.viewModel?.onBackPressed() }
 
     private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

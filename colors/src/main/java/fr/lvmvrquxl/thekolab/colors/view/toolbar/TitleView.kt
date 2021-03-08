@@ -44,7 +44,7 @@ internal class TitleView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.TEXT_COLOR)
-            super.viewModel.previousColor?.let { color: Color -> this.startColor(color.value) }
+            super.viewModel?.previousColor?.let { color: Color -> this.startColor(color.value) }
             super.color?.let { color: Color -> this.endColor(color.value) }
         }
 

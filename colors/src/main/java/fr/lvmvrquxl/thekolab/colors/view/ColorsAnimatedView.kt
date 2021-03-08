@@ -2,11 +2,11 @@ package fr.lvmvrquxl.thekolab.colors.view
 
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
@@ -14,25 +14,14 @@ import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 /**
  * Parent of all animated views in the colors activity.
  *
- * @param activity Instance of the colors activity
- * @param view View to animate
- *
  * @since 1.0.0
- *
- * @see AnimatedView
- * @see AppCompatActivity
- * @see View
  */
-internal abstract class ColorsAnimatedView(
-    private val activity: AppCompatActivity,
-    private val view: View
-) : AnimatedView(activity, view) {
+internal abstract class ColorsAnimatedView(private val activity: Activity, private val view: View) :
+    AnimatedView(activity, view) {
     /**
      * ARGB animation instance for the view.
      *
      * @since 1.0.0
-     *
-     * @see ArgbAnimation
      */
     protected val argbAnimation: ArgbAnimation
         get() = ArgbAnimation.animate(this.view)
@@ -41,8 +30,6 @@ internal abstract class ColorsAnimatedView(
      * Animation instance with a medium duration, corresponding to 400 milliseconds.
      *
      * @since 1.0.0
-     *
-     * @see Animation
      */
     protected val mediumAnimation: Animation
         get() = super.animation.apply { this.mediumDuration() }
@@ -62,38 +49,41 @@ internal abstract class ColorsAnimatedView(
         }
 
     /**
-     * View model's instance of the activity.
-     *
-     * @since 1.0.0
-     *
-     * @see ColorsViewModel
-     */
-    protected val viewModel: ColorsViewModel
-        get() = ColorsViewModel.instance(this.activity)
-
-    /**
      * Current color to display.
      *
      * @since 1.0.0
-     *
-     * @see Color
      */
     protected var color: Color? = null
 
-    override fun observeViewModel() {
-        this.viewModel.color.observe(this.activity, this.colorObserver)
-        this.viewModel.state.observe(this.activity, this.stateObserver)
+    /**
+     * View model's instance of the activity.
+     *
+     * @since 1.0.0
+     */
+    protected var viewModel: ColorsViewModel? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        this.viewModel = ColorsViewModel.instance(this.activity).apply {
+            this.color.observe(
+                this@ColorsAnimatedView.activity,
+                this@ColorsAnimatedView.colorObserver
+            )
+            this.state.observe(
+                this@ColorsAnimatedView.activity,
+                this@ColorsAnimatedView.stateObserver
+            )
+        }
     }
 
     override fun onDestroy() {
-        this.color = null
+        this.destroyColor()
+        this.destroyViewModel()
         super.onDestroy()
     }
 
     @CallSuper
-    override fun onStart() {
-        super.hide()
-    }
+    override fun onStart() = super.hide()
 
     /**
      * Disable click on the current view.
@@ -111,5 +101,13 @@ internal abstract class ColorsAnimatedView(
      */
     protected fun enableClick() {
         this.view.isClickable = true
+    }
+
+    private fun destroyColor() {
+        this.color = null
+    }
+
+    private fun destroyViewModel() {
+        this.viewModel = null
     }
 }
