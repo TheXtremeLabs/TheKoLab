@@ -10,14 +10,7 @@ import kotlinx.coroutines.Runnable
  *
  * This class should be used for animating given view in an activity.
  *
- * @param activity Activity for retrieving animation's duration from resources
- * @param target View to animate
- *
  * @since 1.0.0
- *
- * @see AppCompatActivity
- * @see Runnable
- * @see View
  */
 class Animation private constructor(
     private val activity: AppCompatActivity,
@@ -33,9 +26,6 @@ class Animation private constructor(
          * @return New instance of animation
          *
          * @since 1.0.0
-         *
-         * @see AppCompatActivity
-         * @see View
          */
         fun animate(activity: AppCompatActivity, target: View): Animation =
             Animation(activity, target)

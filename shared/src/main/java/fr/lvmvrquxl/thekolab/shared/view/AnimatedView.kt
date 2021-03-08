@@ -10,8 +10,6 @@ import kotlinx.coroutines.Runnable
  * Parent of all animated views.
  *
  * @since 1.0.0
- *
- * @see LifecycleView
  */
 abstract class AnimatedView(
     private val activity: AppCompatActivity,
@@ -21,8 +19,6 @@ abstract class AnimatedView(
      * Animation executed when the user closes the activity.
      *
      * @since 1.0.0
-     *
-     * @see Runnable
      */
     protected open val exitAnimation: Runnable
         get() = this.animation
@@ -31,8 +27,6 @@ abstract class AnimatedView(
      * Animation executed when the activity starts.
      *
      * @since 1.0.0
-     *
-     * @see Runnable
      */
     protected open val startAnimation: Runnable
         get() = this.animation
@@ -41,8 +35,6 @@ abstract class AnimatedView(
      * Animation executed when displayed data is updated.
      *
      * @since 1.0.0
-     *
-     * @see Runnable
      */
     protected open val updateAnimation: Runnable
         get() = this.animation
@@ -51,8 +43,6 @@ abstract class AnimatedView(
      * Animation instance for the view.
      *
      * @since 1.0.0
-     *
-     * @see Animation
      */
     protected val animation: Animation
         get() = Animation.animate(this.activity, this.view)
@@ -73,8 +63,9 @@ abstract class AnimatedView(
         this.currentAnimation?.cancel()
     }
 
-    // TODO: Add documentation
-    protected open fun observeViewModel() {}
+    @Deprecated("Will be removed in version 2.0.0")
+    protected open fun observeViewModel() {
+    }
 
     /**
      * Hide the current view.
@@ -85,7 +76,11 @@ abstract class AnimatedView(
         this.view.alpha = 0f
     }
 
-    // TODO: Add documentation
+    /**
+     * Make the current view visible.
+     *
+     * @since 2.0.0
+     */
     protected fun setVisible() {
         this.view.visibility = View.VISIBLE
     }
@@ -111,12 +106,24 @@ abstract class AnimatedView(
      */
     protected fun showUpdateAnimation() = this.updateAnimation.run()
 
-    // TODO: Add documentation
+    /**
+     * Set the translation X of the current view.
+     *
+     * @param translation X value
+     *
+     * @since 2.0.0
+     */
     protected fun translationX(translation: Float) {
         this.view.translationX = translation
     }
 
-    // TODO: Add documentation
+    /**
+     * Set the translation Y of the current view.
+     *
+     * @param translation Y value
+     *
+     * @since 2.0.0
+     */
     @Suppress("SameParameterValue")
     protected fun translationY(translation: Float) {
         this.view.translationY = translation

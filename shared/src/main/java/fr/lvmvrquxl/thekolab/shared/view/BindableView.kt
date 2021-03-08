@@ -3,14 +3,20 @@ package fr.lvmvrquxl.thekolab.shared.view
 import android.view.View
 import androidx.viewbinding.ViewBinding
 
-// TODO: Add documentation
+/**
+ * Parent of application's bindable views.
+ *
+ * Bindable views should be activities or fragments.
+ *
+ * @param VB View binding's type
+ *
+ * @since 2.0.0
+ */
 abstract class BindableView<VB : ViewBinding> : ContainerView() {
     /**
      * Root of the view.
      *
      * @since 1.0.0
-     *
-     * @see [View]
      */
     val root: View?
         get(): View? = this.viewBinding?.root
@@ -27,7 +33,11 @@ abstract class BindableView<VB : ViewBinding> : ContainerView() {
         super.onDestroy()
     }
 
-    // TODO: Add documentation
+    /**
+     * Bind the typed view.
+     *
+     * @since 2.0.0
+     */
     protected abstract fun bindView()
 
     private fun destroyViewBinding() {
