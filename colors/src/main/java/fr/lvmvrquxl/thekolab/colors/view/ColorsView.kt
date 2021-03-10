@@ -45,8 +45,8 @@ internal class ColorsView private constructor(private val activity: Activity) :
     }
 
     override fun registerViews() {
-        this.registerContainerView()
-        this.registerToolbarView()
+        this.registerContainerLayout()
+        this.registerToolbarLayout()
     }
 
     private fun destroyContentBinding() {
@@ -57,14 +57,15 @@ internal class ColorsView private constructor(private val activity: Activity) :
         this.toolbarBinding = null
     }
 
-    private fun registerContainerView() =
+    private fun registerContainerLayout() =
         this.contentBinding?.let { binding: ColorsContentBinding ->
             ContentLayoutView.observe(this.activity, binding)
         }
 
-    private fun registerToolbarView() = this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
-        ToolbarLayoutView.observe(this.activity, binding)
-    }
+    private fun registerToolbarLayout() =
+        this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
+            ToolbarLayoutView.observe(this.activity, binding)
+        }
 
     private fun stopActivityObservation() = this.activity.removeObserver(this)
 }
