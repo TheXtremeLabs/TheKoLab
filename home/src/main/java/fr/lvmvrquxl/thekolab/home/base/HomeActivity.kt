@@ -16,6 +16,11 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  */
 class HomeActivity : AppCompatActivity() {
     companion object {
+        /**
+         * Class of the home's activity.
+         *
+         * @since 2.0.0
+         */
         val javaClass: Class<HomeActivity> = HomeActivity::class.java
     }
 

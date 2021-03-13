@@ -31,15 +31,17 @@ class SplashscreenActivity : Activity() {
             SplashscreenViewModel.instance.apply { this.observe(this@SplashscreenActivity) }
     }
 
+    override fun observeViewModelState() {
+        this.viewModel?.state?.observe(this) { state: SplashscreenState ->
+            if (SplashscreenState.CLOSE == state) this.goToHome()
+        }
+    }
+
     override fun onBackPressed() {}
 
     override fun onDestroy() {
         this.destroyViewModel()
         super.onDestroy()
-    }
-
-    override fun onEndOfInit() {
-        this.observeViewModelState()
     }
 
     private fun destroyViewModel() {
@@ -51,9 +53,4 @@ class SplashscreenActivity : Activity() {
         super.startActivity(intent)
         super.finishAffinity()
     }
-
-    private fun observeViewModelState() =
-        this.viewModel?.state?.observe(this) { state: SplashscreenState ->
-            if (SplashscreenState.CLOSE == state) this.goToHome()
-        }
 }

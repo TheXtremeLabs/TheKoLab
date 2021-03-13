@@ -58,7 +58,7 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     }
 
     private val apps: List<App> = mutableListOf(
-        App("Colors", "Change colors programmatically", ColorsActivity::class.java)
+        App("Colors", "Change colors programmatically", ColorsActivity.javaClass)
     )
     private val appAdapter: AppAdapter = AppAdapter(this.apps)
     private var appsRecyclerView: RecyclerView? = null

@@ -11,12 +11,27 @@ import fr.lvmvrquxl.thekolab.shared.activity.Activity
  * @since 1.0.0
  */
 class ColorsActivity : Activity() {
+    companion object {
+        /**
+         * Class of the colors activity.
+         *
+         * @since 2.0.0
+         */
+        val javaClass: Class<ColorsActivity> = ColorsActivity::class.java
+    }
+
     private var viewModel: ColorsViewModel? = null
 
     override fun initView() = ColorsView.observe(this)
 
     override fun initViewModel() {
         this.viewModel = ColorsViewModel.instance.apply { this.observe(this@ColorsActivity) }
+    }
+
+    override fun observeViewModelState() {
+        this.viewModel?.state?.observe(this) { state: ColorsState ->
+            if (ColorsState.CLOSABLE == state) super.onBackPressed()
+        }
     }
 
     override fun onBackPressed() {
@@ -28,16 +43,7 @@ class ColorsActivity : Activity() {
         super.onDestroy()
     }
 
-    override fun onEndOfInit() {
-        this.observeViewModelState()
-    }
-
     private fun destroyViewModel() {
         this.viewModel = null
     }
-
-    private fun observeViewModelState() =
-        this.viewModel?.state?.observe(this) { state: ColorsState ->
-            if (ColorsState.CLOSABLE == state) super.onBackPressed()
-        }
 }

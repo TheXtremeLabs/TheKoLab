@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
 /**
- * Base class of all activities of the application.
+ * Base class of application's activities.
  *
  * @since 2.0.0
  */
@@ -12,7 +12,7 @@ abstract class Activity : AppCompatActivity() {
     init {
         this.initView()
         this.initViewModel()
-        this.onEndOfInit()
+        this.observeViewModelState()
     }
 
     /**
@@ -30,11 +30,11 @@ abstract class Activity : AppCompatActivity() {
     protected abstract fun initViewModel()
 
     /**
-     * Method executed when the init block is finishing.
+     * Observe the state of the current activity's view model.
      *
      * @since 2.0.0
      */
-    protected open fun onEndOfInit() {}
+    protected abstract fun observeViewModelState()
 
     /**
      * Add an observer responsible for tracking lifecycle events of the activity.
