@@ -13,10 +13,10 @@ import fr.lvmvrquxl.thekolab.shared.activity.Activity
 class ColorsActivity : Activity() {
     private var viewModel: ColorsViewModel? = null
 
-    // TODO: Share this method in parent with other activities
-    init {
-        this.initView()
-        this.initViewModel()
+    override fun initView() = ColorsView.observe(this)
+
+    override fun initViewModel() {
+        this.viewModel = ColorsViewModel.instance.apply { this.observe(this@ColorsActivity) }
     }
 
     override fun onBackPressed() {
@@ -28,15 +28,12 @@ class ColorsActivity : Activity() {
         super.onDestroy()
     }
 
-    private fun destroyViewModel() {
-        this.viewModel = null
+    override fun onEndOfInit() {
+        this.observeViewModelState()
     }
 
-    private fun initView() = ColorsView.observe(this)
-
-    private fun initViewModel() {
-        this.viewModel = ColorsViewModel.instance.apply { this.observe(this@ColorsActivity) }
-        this.observeViewModelState()
+    private fun destroyViewModel() {
+        this.viewModel = null
     }
 
     private fun observeViewModelState() =
