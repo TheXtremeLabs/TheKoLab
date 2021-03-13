@@ -1,6 +1,5 @@
 package fr.lvmvrquxl.thekolab.colors.activity
 
-import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.view.ColorsView
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
@@ -12,20 +11,36 @@ import fr.lvmvrquxl.thekolab.shared.activity.Activity
  * @since 1.0.0
  */
 class ColorsActivity : Activity() {
-    private val stateObserver: Observer<ColorsState>
-        get() = Observer { state: ColorsState ->
-            if (ColorsState.CLOSABLE == state) super.onBackPressed()
-        }
+    private var viewModel: ColorsViewModel? = null
 
-    private val viewModel: ColorsViewModel
-        get() = ColorsViewModel.instance(this).apply {
-            this.state.observe(this@ColorsActivity, this@ColorsActivity.stateObserver)
-        }
-
+    // TODO: Share this method in parent with other activities
     init {
-        ColorsView.observe(this)
-        this.lifecycle.addObserver(this.viewModel)
+        this.initView()
+        this.initViewModel()
     }
 
-    override fun onBackPressed() = this.viewModel.onBackPressed()
+    override fun onBackPressed() {
+        this.viewModel?.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        this.destroyViewModel()
+        super.onDestroy()
+    }
+
+    private fun destroyViewModel() {
+        this.viewModel = null
+    }
+
+    private fun initView() = ColorsView.observe(this)
+
+    private fun initViewModel() {
+        this.viewModel = ColorsViewModel.instance.apply { this.observe(this@ColorsActivity) }
+        this.observeViewModelState()
+    }
+
+    private fun observeViewModelState() =
+        this.viewModel?.state?.observe(this) { state: ColorsState ->
+            if (ColorsState.CLOSABLE == state) super.onBackPressed()
+        }
 }

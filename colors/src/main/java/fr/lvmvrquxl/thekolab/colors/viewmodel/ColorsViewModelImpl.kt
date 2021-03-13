@@ -1,10 +1,10 @@
 package fr.lvmvrquxl.thekolab.colors.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.repository.IColorsRepository
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -30,7 +30,6 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
     private val colorData: MutableLiveData<Color> = MutableLiveData()
     private val stateData: MutableLiveData<ColorsState> = MutableLiveData()
 
-    private var context: Context? = null
     private var currentState: ColorsState? = null
     private var currentColor: Color? = null
     private var previousColorData: Color? = null
@@ -49,7 +48,6 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
     }
 
     override fun onCleared() {
-        this.context = null
         this.currentState = null
         this.currentColor = null
         this.previousColorData = null
@@ -58,8 +56,8 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
 
     override fun onCreate() {
         this.currentState = ColorsState.CREATE
-        this.context?.let { context: Context ->
-            this.repository = IColorsRepository.instance(context)
+        super.activity?.let { activity: Activity ->
+            this.repository = IColorsRepository.instance(activity)
         }
         this.syncState()
     }
@@ -101,31 +99,10 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
         this.syncState()
     }
 
-    /**
-     * Set the current context and init a new repository with it.
-     *
-     * @param context New context
-     *
-     * @return Instance of the view model
-     *
-     * @since 1.0.0
-     *
-     * @see Context
-     * @see ColorsViewModel
-     */
-    fun withContext(context: Context): ColorsViewModel = runBlocking(Dispatchers.Default) {
-        this@ColorsViewModelImpl.initContext(context)
-        this@ColorsViewModelImpl
-    }
-
     private fun backupColor() = runBlocking(Dispatchers.Default) {
         this@ColorsViewModelImpl.currentColor?.let { color: Color ->
             this@ColorsViewModelImpl.repository?.backupColor(color)
         }
-    }
-
-    private fun initContext(context: Context) = runBlocking(Dispatchers.Default) {
-        if (null == this@ColorsViewModelImpl.context) this@ColorsViewModelImpl.context = context
     }
 
     private fun pickRandomColor(): Color? = runBlocking(Dispatchers.Default) {

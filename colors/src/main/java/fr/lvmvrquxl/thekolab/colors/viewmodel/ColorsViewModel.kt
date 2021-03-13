@@ -1,8 +1,8 @@
 package fr.lvmvrquxl.thekolab.colors.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 
 /**
@@ -13,26 +13,17 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 internal abstract class ColorsViewModel : ViewModel() {
     companion object {
         /**
-         * Get instance of the view model.
+         * Instance of the view model.
          *
-         * @param context Context of the view model
-         *
-         * @return Instance of the view model
-         *
-         * @since 1.0.0
-         *
-         * @see Context
+         * @since 2.0.0
          */
-        fun instance(context: Context): ColorsViewModel = ColorsViewModelImpl.withContext(context)
+        val instance: ColorsViewModel = ColorsViewModelImpl
     }
 
     /**
      * Current color to be displayed.
      *
      * @since 1.0.0
-     *
-     * @see Color
-     * @see LiveData
      */
     abstract val color: LiveData<Color>
 
@@ -40,8 +31,6 @@ internal abstract class ColorsViewModel : ViewModel() {
      * Previous color that was displayed.
      *
      * @since 1.0.0
-     *
-     * @see Color
      */
     abstract val previousColor: Color?
 
@@ -49,11 +38,20 @@ internal abstract class ColorsViewModel : ViewModel() {
      * Current state of the colors activity.
      *
      * @since 1.0.0
-     *
-     * @see ColorsState
-     * @see LiveData
      */
     abstract val state: LiveData<ColorsState>
+
+    /**
+     * Instance of the colors activity.
+     *
+     * @since 2.0.0
+     */
+    protected var activity: Activity? = null
+
+    override fun onDestroy() {
+        this.stopActivityObservation()
+        super.onDestroy()
+    }
 
     /**
      * Update the color to be displayed.
@@ -61,4 +59,16 @@ internal abstract class ColorsViewModel : ViewModel() {
      * @since 1.0.0
      */
     abstract fun updateColor()
+
+    /**
+     * Observe the given activity's lifecycle.
+     *
+     * @param activity Splashscreen's activity
+     *
+     * @since 2.0.0
+     */
+    fun observe(activity: Activity) =
+        activity.apply { this@ColorsViewModel.activity = this }.addObserver(this)
+
+    private fun stopActivityObservation() = this.activity?.removeObserver(this)
 }

@@ -105,7 +105,7 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
     }
 
     private fun initViewModel() {
-        this.viewModel = ColorsViewModel.instance(this.activity)
+        this.viewModel = ColorsViewModel.instance
     }
 
     private fun observeViewModelColor() =
