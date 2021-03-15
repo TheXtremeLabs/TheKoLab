@@ -42,7 +42,8 @@ abstract class StateManager : LifecycleObserver {
     val currentState: LiveData<String>
         get() = this.currentStateData
 
-    private var currentStateData: MutableLiveData<String> = MutableLiveData()
+    private val currentStateData: MutableLiveData<String> = MutableLiveData()
+
     private var currentStateValue: String? = null
 
     @CallSuper
@@ -81,9 +82,8 @@ abstract class StateManager : LifecycleObserver {
      *
      * @since 2.0.0
      */
-    protected fun currentStateEquals(value: String): Boolean = runBlocking(Dispatchers.Default) {
-        this@StateManager.currentStateValue == value
-    }
+    protected fun currentStateEquals(value: String): Boolean =
+        runBlocking(Dispatchers.Default) { this@StateManager.currentStateValue == value }
 
     /**
      * Update current state of the activity.
