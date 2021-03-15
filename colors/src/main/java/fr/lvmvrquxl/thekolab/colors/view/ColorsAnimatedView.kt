@@ -2,14 +2,14 @@ package fr.lvmvrquxl.thekolab.colors.view
 
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsStateManager
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
+import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
 
 /**
  * Parent of all animated views in the colors activity.
@@ -33,20 +33,6 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
      */
     protected val mediumAnimation: Animation
         get() = super.animation.apply { this.mediumDuration() }
-
-    private val colorObserver: Observer<Color>
-        get() = Observer { color: Color -> this.color = color }
-
-    private val stateObserver: Observer<ColorsState>
-        get() = Observer { state: ColorsState ->
-            when (state) {
-                ColorsState.EXIT -> super.showExitAnimation()
-                ColorsState.RESUME -> super.showStartAnimation()
-                ColorsState.UPDATE -> super.showUpdateAnimation()
-                else -> {
-                }
-            }
-        }
 
     /**
      * Current color to display.
@@ -109,8 +95,14 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
     }
 
     private fun observeViewModelColor() =
-        this.viewModel?.color?.observe(this.activity, this.colorObserver)
+        this.viewModel?.color?.observe(this.activity) { color: Color -> this.color = color }
 
     private fun observeViewModelState() =
-        this.viewModel?.state?.observe(this.activity, this.stateObserver)
+        this.viewModel?.state?.observe(this.activity) { state: String ->
+            when (state) {
+                ColorsStateManager.CHANGE_COLORS -> super.showUpdateAnimation()
+                ColorsStateManager.EXIT -> super.showExitAnimation()
+                StateManager.RESUME -> super.showStartAnimation()
+            }
+        }
 }

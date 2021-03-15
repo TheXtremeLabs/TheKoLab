@@ -4,6 +4,8 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
+// TODO: Refactor this class by adding inheritance from StateManager (shared module)
+
 /**
  * Manager of the splashscreen activity's state.
  *
