@@ -8,8 +8,7 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
  *
  * @since 2.0.0
  */
-internal class ColorsStateManager private constructor(private val activity: Activity) :
-    StateManager() {
+internal class ColorsStateManager private constructor(activity: Activity) : StateManager(activity) {
     companion object {
         /**
          * Change colors state.
@@ -36,11 +35,6 @@ internal class ColorsStateManager private constructor(private val activity: Acti
             ColorsStateManager(activity).apply { activity.addObserver(this) }
     }
 
-    override fun onDestroy() {
-        this.stopActivityObservation()
-        super.onDestroy()
-    }
-
     /**
      * Notify that the activity should change displayed colors.
      *
@@ -65,6 +59,4 @@ internal class ColorsStateManager private constructor(private val activity: Acti
      * @since 2.0.0
      */
     fun isExiting(): Boolean = super.currentStateEquals(EXIT)
-
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
 }

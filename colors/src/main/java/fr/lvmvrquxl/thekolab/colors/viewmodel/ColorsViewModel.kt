@@ -49,13 +49,17 @@ internal abstract class ColorsViewModel : ViewModel() {
      * @since 2.0.0
      */
     protected var activity: Activity? = null
+    private var stateManager: ColorsStateManager? = null
 
-    /**
-     * Instance of the activity's state manager.
-     *
-     * @since 2.0.0
-     */
-    protected var stateManager: ColorsStateManager? = null
+    @CallSuper
+    override fun closeActivity() {
+        this.stateManager?.close()
+    }
+
+    @CallSuper
+    override fun onBackPressed() {
+        if (false == this.stateManager?.isExiting()) this.stateManager?.exit()
+    }
 
     @CallSuper
     override fun onCleared() {
@@ -69,11 +73,14 @@ internal abstract class ColorsViewModel : ViewModel() {
     }
 
     /**
-     * Update the color to be displayed.
+     * Change colors to be displayed.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
-    abstract fun updateColor()
+    @CallSuper
+    open fun changeColors() {
+        this.stateManager?.changeColors()
+    }
 
     /**
      * Observe the given activity's lifecycle.

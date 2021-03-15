@@ -3,6 +3,7 @@ package fr.lvmvrquxl.thekolab.shared.viewmodel
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -12,7 +13,7 @@ import kotlinx.coroutines.runBlocking
  *
  * @since 2.0.0
  */
-abstract class StateManager : LifecycleObserver {
+abstract class StateManager(private val activity: Activity) : LifecycleObserver {
     companion object {
         /**
          * Close state.
@@ -46,11 +47,19 @@ abstract class StateManager : LifecycleObserver {
 
     private var currentStateValue: String? = null
 
+    init {
+        this.observeActivity()
+    }
+
     @CallSuper
     override fun onCreate() = this.setCurrentState(CREATE)
 
     @CallSuper
-    override fun onDestroy() = this.setCurrentState(DESTROY)
+    override fun onDestroy() {
+        this.setCurrentState(DESTROY)
+        this.destroyCurrentStateValue()
+        this.stopActivityObservation()
+    }
 
     @CallSuper
     override fun onPause() = this.setCurrentState(PAUSE)
@@ -96,6 +105,14 @@ abstract class StateManager : LifecycleObserver {
         runBlocking(Dispatchers.Default) { this@StateManager.currentStateValue = value }
         this.syncCurrentState()
     }
+
+    private fun destroyCurrentStateValue() {
+        this.currentStateValue = null
+    }
+
+    private fun observeActivity() = this.activity.addObserver(this)
+
+    private fun stopActivityObservation() = this.activity.removeObserver(this)
 
     private fun syncCurrentState() =
         this.currentStateValue?.let { state: String -> this.currentStateData.value = state }

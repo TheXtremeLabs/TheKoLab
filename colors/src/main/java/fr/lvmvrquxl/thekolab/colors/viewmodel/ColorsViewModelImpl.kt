@@ -8,6 +8,8 @@ import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
+// TODO: Change Singleton pattern to a lazy singleton with inner class builder
+
 /**
  * The view model of the colors activity.
  *
@@ -25,14 +27,6 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
     private var currentColor: Color? = null
     private var previousColorData: Color? = null
     private var repository: IColorsRepository? = null
-
-    override fun closeActivity() {
-        super.stateManager?.close()
-    }
-
-    override fun onBackPressed() {
-        if (false == super.stateManager?.isExiting()) super.stateManager?.exit()
-    }
 
     override fun onCleared() {
         this.currentColor = null
@@ -56,11 +50,11 @@ internal object ColorsViewModelImpl : ColorsViewModel() {
         this.backupColor()
     }
 
-    override fun updateColor() {
+    override fun changeColors() {
         this.updatePreviousColor()
         this.updateCurrentColor()
         this.syncColor()
-        super.stateManager?.changeColors()
+        super.changeColors()
     }
 
     private fun backupColor() {

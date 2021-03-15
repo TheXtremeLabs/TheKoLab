@@ -65,7 +65,8 @@ internal class ChangeColorsView private constructor(
     private fun setBackgroundColor() =
         super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }
 
-    private fun setClickListener() = this.view.setOnClickListener { super.viewModel?.updateColor() }
+    private fun setClickListener() =
+        this.view.setOnClickListener { super.viewModel?.changeColors() }
 
     private fun stopActivityObservation() = this.activity.removeObserver(this)
 }
