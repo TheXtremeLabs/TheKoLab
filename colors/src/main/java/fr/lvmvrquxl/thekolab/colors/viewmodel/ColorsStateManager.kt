@@ -27,12 +27,13 @@ internal class ColorsStateManager private constructor(activity: Activity) : Stat
         /**
          * Observe the given activity's lifecycle.
          *
+         * @param activity Activity to observe
+         *
          * @return New instance of the manager
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity) =
-            ColorsStateManager(activity).apply { activity.addObserver(this) }
+        fun observe(activity: Activity): ColorsStateManager = ColorsStateManager(activity)
     }
 
     /**

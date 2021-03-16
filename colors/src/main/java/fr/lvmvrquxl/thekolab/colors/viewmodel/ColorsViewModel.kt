@@ -25,7 +25,7 @@ internal abstract class ColorsViewModel : ViewModel() {
      *
      * @since 1.0.0
      */
-    abstract val color: LiveData<Color>
+    abstract val color: LiveData<Color>?
 
     /**
      * Previous color that was displayed.

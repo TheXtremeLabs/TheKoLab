@@ -2,48 +2,60 @@ package fr.lvmvrquxl.thekolab.colors.repository
 
 import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.model.IColors
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
 
 /**
- * Implementation of the colors repository.
+ * Interface of colors repository.
+ *
+ * This interface should be used for accessing colors data from model layer.
  *
  * @since 1.0.0
- *
- * @see [IColorsRepository]
  */
-internal object ColorsRepository : IColorsRepository {
-    override val firstColor: Color?
-        get() = when (this.colorBackup) {
-            null -> this.colors?.default
-            else -> this.colorBackup
-        }
-    override val randomColor: Color?
-        get() = this.colors?.random
-
-    private const val SCOPE_NAME: String = "ColorsRepository"
-    private val coroutineScope: CoroutineScope = CoroutineScope(CoroutineName(SCOPE_NAME))
-    private var colorBackup: Color? = null
-    private var colors: IColors? = null
-
-    override fun backupColor(color: Color): Job = this.coroutineScope.launch {
-        this@ColorsRepository.colorBackup = color
+internal interface ColorsRepository {
+    companion object {
+        /**
+         * Get instance of colors repository.
+         *
+         * @param context Context of the repository
+         *
+         * @return Instance of colors repository
+         *
+         * @since 1.0.0
+         *
+         * @see [Context]
+         */
+        fun instance(context: Context): ColorsRepository = ColorsRepositoryImpl.withContext(context)
     }
 
     /**
-     * Update context and init new colors to display.
-     *
-     * @param context New context
-     *
-     * @return Instance of repository
+     * First color to display.
      *
      * @since 1.0.0
      *
-     * @see [Context]
-     * @see [IColorsRepository]
+     * @see [Color]
      */
-    fun withContext(context: Context): IColorsRepository = runBlocking(Dispatchers.Default) {
-        this@ColorsRepository.colors = IColors.create(context)
-        this@ColorsRepository
-    }
+    val firstColor: Color?
+
+    /**
+     * Random color to display.
+     *
+     * @since 1.0.0
+     *
+     * @see [Color]
+     */
+    val randomColor: Color?
+
+    /**
+     * Backup given color, which will be the first displayed color.
+     *
+     * @param color Color to backup
+     *
+     * @return Coroutine's job responsible for saving color
+     *
+     * @since 1.0.0
+     *
+     * @see [Color]
+     * @see [Job]
+     */
+    fun backupColor(color: Color): Job
 }
