@@ -1,6 +1,5 @@
 package fr.lvmvrquxl.thekolab.colors.viewmodel
 
-import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
@@ -18,7 +17,7 @@ internal abstract class ColorsViewModel : ViewModel() {
          *
          * @since 2.0.0
          */
-        val instance: ColorsViewModel = ColorsViewModelImpl
+        val instance: ColorsViewModel by lazy { ColorsViewModelImpl.create() }
     }
 
     /**
@@ -40,72 +39,21 @@ internal abstract class ColorsViewModel : ViewModel() {
      *
      * @since 2.0.0
      */
-    val state: LiveData<String>?
-        get() = this.stateManager?.currentState
-
-    /**
-     * Instance of the colors activity.
-     *
-     * @since 2.0.0
-     */
-    protected var activity: Activity? = null
-    private var stateManager: ColorsStateManager? = null
-
-    @CallSuper
-    override fun closeActivity() {
-        this.stateManager?.close()
-    }
-
-    @CallSuper
-    override fun onBackPressed() {
-        if (false == this.stateManager?.isExiting()) this.stateManager?.exit()
-    }
-
-    @CallSuper
-    override fun onCleared() {
-        this.clearActivity()
-        this.clearStateManager()
-    }
-
-    override fun onDestroy() {
-        this.stopActivityObservation()
-        super.onDestroy()
-    }
+    abstract val state: LiveData<String>?
 
     /**
      * Change colors to be displayed.
      *
      * @since 2.0.0
      */
-    @CallSuper
-    open fun changeColors() {
-        this.stateManager?.changeColors()
-    }
+    abstract fun changeColors()
 
     /**
      * Observe the given activity's lifecycle.
      *
-     * @param activity Splashscreen's activity
+     * @param activity Instance of the colors activity
      *
      * @since 2.0.0
      */
-    fun observe(activity: Activity) = activity.apply {
-        this@ColorsViewModel.activity = this
-        this@ColorsViewModel.initStateManager()
-    }.addObserver(this)
-
-    private fun clearActivity() {
-        this.activity = null
-    }
-
-    private fun clearStateManager() {
-        this.stateManager = null
-    }
-
-    private fun initStateManager() {
-        this.stateManager =
-            this.activity?.let { activity: Activity -> ColorsStateManager.observe(activity) }
-    }
-
-    private fun stopActivityObservation() = this.activity?.removeObserver(this)
+    abstract fun observe(activity: Activity)
 }
