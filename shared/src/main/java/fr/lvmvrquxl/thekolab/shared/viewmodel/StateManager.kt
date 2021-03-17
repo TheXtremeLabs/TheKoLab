@@ -10,22 +10,16 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
  * Manager of the activity's states.
  *
  * @param activityReference Reference of the current activity
- *
- * @since 2.0.0
  */
 abstract class StateManager(private val activityReference: ActivityReference) : LifecycleObserver {
     companion object {
         /**
          * Close state.
-         *
-         * @since 2.0.0
          */
         const val CLOSE: String = "close"
 
         /**
          * Resume state.
-         *
-         * @since 2.0.0
          */
         const val RESUME: String = "resume"
         private const val CREATE: String = "create"
@@ -37,8 +31,6 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
 
     /**
      * Current state of the application.
-     *
-     * @since 2.0.0
      */
     val currentState: LiveData<String>
         get() = this.currentStateData
@@ -75,8 +67,6 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
 
     /**
      * Notify that the application is closing.
-     *
-     * @since 2.0.0
      */
     fun close() = this.setCurrentState(CLOSE)
 
@@ -88,8 +78,6 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
      * @return
      *  - `true` : the current state is equal to the given value
      *  - `false` : the current state is not equal to the given value
-     *
-     * @since 2.0.0
      */
     protected fun currentStateEquals(value: String): Boolean = this.currentStateValue == value
 
@@ -97,8 +85,6 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
      * Update current state of the activity.
      *
      * @param value New value
-     *
-     * @since 2.0.0
      */
     protected fun setCurrentState(value: String) {
         this.currentStateValue = value
