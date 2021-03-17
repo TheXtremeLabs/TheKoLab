@@ -3,18 +3,18 @@ package fr.lvmvrquxl.thekolab.colors.view.content
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the color information.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 internal class ColorInfoView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val view: MaterialTextView
-) : ColorsAnimatedView(activity, view) {
+) : ColorsAnimatedView(activityReference, view) {
     companion object {
         private const val EXIT_ANIMATION_DELAY: Long = 250
         private const val START_ANIMATION_DELAY: Long = 250
@@ -22,13 +22,16 @@ internal class ColorInfoView private constructor(
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Colors activity
+         * @param activityReference Reference of the colors activity
          * @param view View corresponding to the color information
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, view: MaterialTextView) =
-            ColorInfoView(activity, view).let { v: ColorInfoView -> activity.addObserver(v) }
+        fun observe(activityReference: ActivityReference, view: MaterialTextView) {
+            ColorInfoView(activityReference, view).let { v: ColorInfoView ->
+                activityReference.get()?.addObserver(v)
+            }
+        }
     }
 
     override val exitAnimation: Runnable
@@ -66,5 +69,5 @@ internal class ColorInfoView private constructor(
     private fun setTextColor() =
         super.color?.let { color: Color -> this.view.setTextColor(color.value) }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() = this.activityReference.get()?.removeObserver(this)
 }

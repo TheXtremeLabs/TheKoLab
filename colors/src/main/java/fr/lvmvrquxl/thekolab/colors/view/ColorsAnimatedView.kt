@@ -6,6 +6,7 @@ import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsStateManager
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
@@ -14,10 +15,15 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
 /**
  * Parent of all animated views in the colors activity.
  *
+ * @param activityReference Reference of the colors activity
+ * @param view Current view
+ *
  * @since 1.0.0
  */
-internal abstract class ColorsAnimatedView(private val activity: Activity, private val view: View) :
-    AnimatedView(activity, view) {
+internal abstract class ColorsAnimatedView(
+    private val activityReference: ActivityReference,
+    private val view: View
+) : AnimatedView(activityReference, view) {
     /**
      * ARGB animation instance for the view.
      *
@@ -94,15 +100,19 @@ internal abstract class ColorsAnimatedView(private val activity: Activity, priva
         this.viewModel = ColorsViewModel.instance
     }
 
-    private fun observeViewModelColor() =
-        this.viewModel?.color?.observe(this.activity) { color: Color -> this.color = color }
+    private fun observeViewModelColor() = this.activityReference.get()?.let { activity: Activity ->
+        this.viewModel?.color?.observe(activity) { color: Color -> this.color = color }
+    }
 
-    private fun observeViewModelState() =
-        this.viewModel?.state?.observe(this.activity) { state: String ->
-            when (state) {
-                ColorsStateManager.CHANGE_COLORS -> super.showUpdateAnimation()
-                ColorsStateManager.EXIT -> super.showExitAnimation()
-                StateManager.RESUME -> super.showStartAnimation()
+    private fun observeViewModelState() {
+        this.activityReference.get()?.let { activity: Activity ->
+            this.viewModel?.state?.observe(activity) { state: String ->
+                when (state) {
+                    ColorsStateManager.CHANGE_COLORS -> super.showUpdateAnimation()
+                    ColorsStateManager.EXIT -> super.showExitAnimation()
+                    StateManager.RESUME -> super.showStartAnimation()
+                }
             }
         }
+    }
 }

@@ -2,9 +2,9 @@ package fr.lvmvrquxl.thekolab.home.base
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
@@ -12,9 +12,9 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * This activity is managing the lifecycle of the home page.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : Activity() {
     companion object {
         /**
          * Class of the home's activity.
@@ -32,6 +32,12 @@ class HomeActivity : AppCompatActivity() {
             Intent(this, this::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
+
+    override fun initView() {}
+
+    override fun initViewModel() {}
+
+    override fun observeViewModelState() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun createView() {
-        this.view = HomeView.create(this).apply {
+        this.view = HomeView.create(super.reference).apply {
             this.onCreate()
             super.setContentView(this.root)
         }

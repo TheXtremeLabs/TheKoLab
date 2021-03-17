@@ -1,6 +1,6 @@
 package fr.lvmvrquxl.thekolab.splashscreen.view.app_name
 
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
 
@@ -11,29 +11,31 @@ import fr.lvmvrquxl.thekolab.splashscreen.databinding.SplashscreenAppNameBinding
  * @since 2.0.0
  */
 internal class AppNameLayoutView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val binding: SplashscreenAppNameBinding
 ) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Splashscreen's activity
+         * @param activityReference Reference of the splashscreen's activity
          * @param binding Binding of the view
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, binding: SplashscreenAppNameBinding) =
-            AppNameLayoutView(activity, binding).let { view: AppNameLayoutView ->
-                activity.addObserver(view)
+        fun observe(activityReference: ActivityReference, binding: SplashscreenAppNameBinding) =
+            AppNameLayoutView(activityReference, binding).let { view: AppNameLayoutView ->
+                activityReference.get()?.addObserver(view)
             }
     }
 
-    override fun onDestroy() = this.activity.removeObserver(this)
+    override fun onDestroy() {
+        this.activityReference.get()?.removeObserver(this)
+    }
 
     override fun registerViews() {
-        AppNameEndView.observe(this.activity, this.binding.appNameEnd)
-        AppNameStartView.observe(this.activity, this.binding.appNameStart)
-        LogoView.observe(this.activity, this.binding.logo)
+        AppNameEndView.observe(this.activityReference, this.binding.appNameEnd)
+        AppNameStartView.observe(this.activityReference, this.binding.appNameStart)
+        LogoView.observe(this.activityReference, this.binding.logo)
     }
 }

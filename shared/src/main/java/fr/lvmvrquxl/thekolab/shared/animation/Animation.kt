@@ -2,7 +2,8 @@ package fr.lvmvrquxl.thekolab.shared.animation
 
 import android.view.View
 import android.view.ViewPropertyAnimator
-import androidx.appcompat.app.AppCompatActivity
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import kotlinx.coroutines.Runnable
 
 /**
@@ -13,35 +14,41 @@ import kotlinx.coroutines.Runnable
  * @since 1.0.0
  */
 class Animation private constructor(
-    private val activity: AppCompatActivity,
+    private val activityReference: ActivityReference,
     private val target: View
 ) : Runnable {
     companion object {
         /**
          * Create a new instance of animation.
          *
-         * @param activity Activity for retrieving animation's duration from resources
+         * @param activityReference Activity's reference
          * @param target View to animate
          *
          * @return New instance of animation
          *
-         * @since 1.0.0
+         * @since 2.0.0
          */
-        fun animate(activity: AppCompatActivity, target: View): Animation =
-            Animation(activity, target)
+        fun animate(activityReference: ActivityReference, target: View): Animation =
+            Animation(activityReference, target)
     }
 
-    private val longDuration: Long =
-        this.activity.resources.getInteger(android.R.integer.config_longAnimTime).toLong()
-    private val mediumDuration: Long =
-        this.activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-    private val shortDuration: Long =
-        this.activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+    private val longDuration: Long?
+        get() = this.activityReference.get()?.let { activity: Activity ->
+            activity.resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+        }
+    private val mediumDuration: Long?
+        get() = this.activityReference.get()?.let { activity: Activity ->
+            activity.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
+        }
+    private val shortDuration: Long?
+        get() = this.activityReference.get()?.let { activity: Activity ->
+            activity.resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+        }
 
     private var alpha: Float = 1f
     private var currentAnimator: ViewPropertyAnimator? = null
     private var delay: Long = 0
-    private var duration: Long = this.shortDuration
+    private var duration: Long? = this.shortDuration
     private var onEnd: () -> Unit = {}
     private var onStart: () -> Unit = {}
     private var translationXBy: Float = 0f
@@ -49,7 +56,7 @@ class Animation private constructor(
 
     override fun run() = this.target.animate().apply {
         this.alpha(this@Animation.alpha)
-        this.duration = this@Animation.duration
+        this@Animation.duration?.let { value: Long -> this.duration = value }
         this.startDelay = this@Animation.delay
         this.translationXBy(this@Animation.translationXBy)
         this.translationYBy(this@Animation.translationYBy)

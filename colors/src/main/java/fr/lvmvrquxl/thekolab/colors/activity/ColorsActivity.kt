@@ -22,7 +22,7 @@ class ColorsActivity : Activity() {
 
     private var viewModel: ColorsViewModel? = null
 
-    override fun initView() = ColorsView.observe(this)
+    override fun initView() = ColorsView.observe(super.reference)
 
     override fun initViewModel() {
         this.viewModel = ColorsViewModel.instance.apply { this.observe(this@ColorsActivity) }

@@ -3,32 +3,35 @@ package fr.lvmvrquxl.thekolab.colors.view.content
 import com.google.android.material.button.MaterialButton
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the change colors button.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 internal class ChangeColorsView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val view: MaterialButton
-) : ColorsAnimatedView(activity, view) {
+) : ColorsAnimatedView(activityReference, view) {
     companion object {
         private const val START_ANIMATION_DELAY: Long = 750
 
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Colors activity
+         * @param activityReference Reference of the colors activity
          * @param view View corresponding to the change colors button
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, view: MaterialButton) =
-            ChangeColorsView(activity, view).let { v: ChangeColorsView -> activity.addObserver(v) }
+        fun observe(activityReference: ActivityReference, view: MaterialButton) {
+            ChangeColorsView(activityReference, view).let { v: ChangeColorsView ->
+                activityReference.get()?.addObserver(v)
+            }
+        }
     }
 
     override val exitAnimation: Runnable
@@ -68,5 +71,5 @@ internal class ChangeColorsView private constructor(
     private fun setClickListener() =
         this.view.setOnClickListener { super.viewModel?.changeColors() }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() = this.activityReference.get()?.removeObserver(this)
 }

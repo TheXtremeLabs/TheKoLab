@@ -9,6 +9,13 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
  * @since 2.0.0
  */
 abstract class Activity : AppCompatActivity() {
+    /**
+     * Reference of the current activity.
+     *
+     * @since 2.0.0
+     */
+    protected val reference: ActivityReference by lazy { ActivityReference.create(this) }
+
     init {
         this.initView()
         this.initViewModel()

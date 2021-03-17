@@ -3,19 +3,19 @@ package fr.lvmvrquxl.thekolab.colors.view.toolbar
 import com.google.android.material.textview.MaterialTextView
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
 import kotlinx.coroutines.Runnable
 
 /**
  * View of the title.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 internal class TitleView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val view: MaterialTextView
-) : ColorsAnimatedView(activity, view) {
+) : ColorsAnimatedView(activityReference, view) {
     companion object {
         private const val EXIT_ANIMATION_DELAY: Long = 500
         private const val START_ANIMATION_DELAY: Long = 500
@@ -23,13 +23,16 @@ internal class TitleView private constructor(
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Colors activity
+         * @param activityReference Reference of the colors activity
          * @param view View corresponding to the activity's title
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, view: MaterialTextView) =
-            TitleView(activity, view).let { v: TitleView -> activity.addObserver(v) }
+        fun observe(activityReference: ActivityReference, view: MaterialTextView) {
+            TitleView(activityReference, view).let { v: TitleView ->
+                activityReference.get()?.addObserver(v)
+            }
+        }
     }
 
     override val exitAnimation: Runnable
@@ -61,5 +64,7 @@ internal class TitleView private constructor(
     private fun setTextColor() =
         super.color?.let { color: Color -> this.view.setTextColor(color.value) }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() {
+        this.activityReference.get()?.removeObserver(this)
+    }
 }

@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.colors.view.content
 
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 
 /**
@@ -10,25 +10,28 @@ import fr.lvmvrquxl.thekolab.shared.view.LayoutView
  * @since 2.0.0
  */
 internal class ContentLayoutView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val binding: ColorsContentBinding
 ) : LayoutView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Colors activity
+         * @param activityReference Colors activity's reference
          * @param binding Binding of the view
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, binding: ColorsContentBinding) =
-            ContentLayoutView(activity, binding).let { view: ContentLayoutView ->
-                activity.addObserver(view)
+        fun observe(activityReference: ActivityReference, binding: ColorsContentBinding) {
+            ContentLayoutView(activityReference, binding).let { view: ContentLayoutView ->
+                activityReference.get()?.addObserver(view)
             }
+        }
     }
 
-    override fun onDestroy() = this.activity.removeObserver(this)
+    override fun onDestroy() {
+        this.activityReference.get()?.removeObserver(this)
+    }
 
     override fun registerViews() {
         this.registerChangeColorsView()
@@ -36,8 +39,8 @@ internal class ContentLayoutView private constructor(
     }
 
     private fun registerChangeColorsView() =
-        ChangeColorsView.observe(this.activity, this.binding.changeColors)
+        ChangeColorsView.observe(this.activityReference, this.binding.changeColors)
 
     private fun registerColorInfoView() =
-        ColorInfoView.observe(this.activity, this.binding.colorInfo)
+        ColorInfoView.observe(this.activityReference, this.binding.colorInfo)
 }

@@ -1,21 +1,15 @@
 package fr.lvmvrquxl.thekolab.shared.permission
 
 import android.Manifest
-import android.app.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Internet permission.
  *
- * @param activity Activity that requests permission
- *
- * @since 1.0.0
- *
- * @see [Activity]
- * @see [Permission]
- * @see [PermissionIdentity]
+ * @since 2.0.0
  */
-internal class InternetPermission private constructor(activity: Activity) :
-    Permission(activity, PermissionIdentity(NAME, PERMISSION, REQUEST_CODE)) {
+internal class InternetPermission private constructor(activityReference: ActivityReference) :
+    Permission(activityReference, PermissionIdentity(NAME, PERMISSION, REQUEST_CODE)) {
     companion object {
         private const val NAME: String = "internet"
         private const val PERMISSION: String = Manifest.permission.INTERNET
@@ -24,13 +18,11 @@ internal class InternetPermission private constructor(activity: Activity) :
         /**
          * Create an instance of internet permission.
          *
-         * @param activity Activity that needs the permission
+         * @param activityReference Reference of the activity that needs internet permission
          *
-         * @since 1.0.0
-         *
-         * @see [Activity]
-         * @see [Permission]
+         * @since 2.0.0
          */
-        fun create(activity: Activity): Permission = InternetPermission(activity)
+        fun create(activityReference: ActivityReference): Permission =
+            InternetPermission(activityReference)
     }
 }

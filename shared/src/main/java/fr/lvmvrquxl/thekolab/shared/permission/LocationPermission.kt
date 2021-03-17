@@ -1,21 +1,15 @@
 package fr.lvmvrquxl.thekolab.shared.permission
 
 import android.Manifest
-import android.app.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Location permission.
  *
- * @param activity Activity that requests permission
- *
  * @since 1.0.0
- *
- * @see [Activity]
- * @see [Permission]
- * @see [PermissionIdentity]
  */
-internal class LocationPermission private constructor(activity: Activity) :
-    Permission(activity, PermissionIdentity(NAME, PERMISSION, REQUEST_CODE)) {
+internal class LocationPermission private constructor(activityReference: ActivityReference) :
+    Permission(activityReference, PermissionIdentity(NAME, PERMISSION, REQUEST_CODE)) {
     companion object {
         private const val NAME: String = "location"
         private const val PERMISSION: String = Manifest.permission.ACCESS_COARSE_LOCATION
@@ -24,13 +18,11 @@ internal class LocationPermission private constructor(activity: Activity) :
         /**
          * Create an instance of location permission.
          *
-         * @param activity Activity that requests permission
+         * @param activityReference Reference of the activity that requests location permission
          *
-         * @since 1.0.0
-         *
-         * @see [Activity]
-         * @see [Permission]
+         * @since 2.0.0
          */
-        fun create(activity: Activity): Permission = LocationPermission(activity)
+        fun create(activityReference: ActivityReference): Permission =
+            LocationPermission(activityReference)
     }
 }

@@ -6,34 +6,40 @@ import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
 import fr.lvmvrquxl.thekolab.colors.view.content.ContentLayoutView
 import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarLayoutView
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
  * Main view of the colors activity.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
-internal class ColorsView private constructor(private val activity: Activity) :
-    ActivityView<ColorsActivityBinding>(activity) {
+internal class ColorsView private constructor(private val activityReference: ActivityReference) :
+    ActivityView<ColorsActivityBinding>(activityReference) {
     companion object {
         /**
          * Observe the given activity lifecycle.
          *
-         * @param activity Colors activity
+         * @param activityReference Colors activity's reference
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity) =
-            ColorsView(activity).let { view: ColorsView -> activity.addObserver(view) }
+        fun observe(activityReference: ActivityReference) {
+            ColorsView(activityReference).let { view: ColorsView ->
+                activityReference.get()?.addObserver(view)
+            }
+        }
     }
 
     private var contentBinding: ColorsContentBinding? = null
     private var toolbarBinding: ColorsToolbarBinding? = null
 
     override fun bindView() {
-        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater).apply {
-            this@ColorsView.contentBinding = this.colorsContent
-            this@ColorsView.toolbarBinding = this.colorsToolbar
+        this.activityReference.get()?.let { activity: Activity ->
+            super.viewBinding = ColorsActivityBinding.inflate(activity.layoutInflater).apply {
+                this@ColorsView.contentBinding = this.colorsContent
+                this@ColorsView.toolbarBinding = this.colorsToolbar
+            }
         }
     }
 
@@ -59,13 +65,13 @@ internal class ColorsView private constructor(private val activity: Activity) :
 
     private fun registerContainerLayout() =
         this.contentBinding?.let { binding: ColorsContentBinding ->
-            ContentLayoutView.observe(this.activity, binding)
+            ContentLayoutView.observe(this.activityReference, binding)
         }
 
     private fun registerToolbarLayout() =
         this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
-            ToolbarLayoutView.observe(this.activity, binding)
+            ToolbarLayoutView.observe(this.activityReference, binding)
         }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() = this.activityReference.get()?.removeObserver(this)
 }

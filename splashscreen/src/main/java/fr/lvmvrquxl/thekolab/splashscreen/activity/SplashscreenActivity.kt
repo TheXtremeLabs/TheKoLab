@@ -24,7 +24,7 @@ class SplashscreenActivity : Activity() {
 
     private var viewModel: SplashscreenViewModel? = null
 
-    override fun initView() = SplashscreenView.observe(this)
+    override fun initView() = SplashscreenView.observe(super.reference)
 
     override fun initViewModel() {
         this.viewModel =
