@@ -3,14 +3,14 @@ package fr.lvmvrquxl.thekolab.colors.view
 import android.view.View
 import androidx.annotation.CallSuper
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsStateManager
+import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsStateViewModel
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimation
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
-import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
+import fr.lvmvrquxl.thekolab.shared.viewmodel.StateViewModel
 
 /**
  * Parent of all animated views in the colors activity.
@@ -94,9 +94,9 @@ internal abstract class ColorsAnimatedView(
         this.activityReference.get()?.let { activity: Activity ->
             this.viewModel?.state?.observe(activity) { state: String ->
                 when (state) {
-                    ColorsStateManager.CHANGE_COLORS -> super.showUpdateAnimation()
-                    ColorsStateManager.EXIT -> super.showExitAnimation()
-                    StateManager.RESUME -> super.showStartAnimation()
+                    ColorsStateViewModel.CHANGE_COLORS -> super.showUpdateAnimation()
+                    ColorsStateViewModel.EXIT -> super.showExitAnimation()
+                    StateViewModel.RESUME -> super.showStartAnimation()
                 }
             }
         }

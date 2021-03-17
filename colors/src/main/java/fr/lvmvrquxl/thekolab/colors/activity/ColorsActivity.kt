@@ -3,7 +3,7 @@ package fr.lvmvrquxl.thekolab.colors.activity
 import fr.lvmvrquxl.thekolab.colors.view.ColorsView
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
+import fr.lvmvrquxl.thekolab.shared.viewmodel.StateViewModel
 
 /**
  * Activity of the colors feature.
@@ -26,7 +26,7 @@ class ColorsActivity : Activity() {
 
     override fun observeViewModelState() {
         this.viewModel?.state?.observe(this) { state: String ->
-            if (StateManager.CLOSE == state) super.onBackPressed()
+            if (StateViewModel.CLOSE == state) super.onBackPressed()
         }
     }
 

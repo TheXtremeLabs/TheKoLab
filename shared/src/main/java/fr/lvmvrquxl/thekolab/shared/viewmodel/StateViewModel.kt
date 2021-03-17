@@ -4,14 +4,13 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
 /**
- * Manager of the activity's states.
+ * View model of the activity's states.
  *
  * @param activityReference Reference of the current activity
  */
-abstract class StateManager(private val activityReference: ActivityReference) : LifecycleObserver {
+abstract class StateViewModel(private val activityReference: ActivityReference) : ViewModel() {
     companion object {
         /**
          * Close state.
@@ -43,14 +42,15 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
         this.observeActivity()
     }
 
+    override fun onCleared() = this.clearCurrentStateValue()
+
     @CallSuper
     override fun onCreate() = this.setCurrentState(CREATE)
 
-    @CallSuper
     override fun onDestroy() {
         this.setCurrentState(DESTROY)
-        this.destroyCurrentStateValue()
         this.stopActivityObservation()
+        super.onDestroy()
     }
 
     @CallSuper
@@ -64,6 +64,10 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
 
     @CallSuper
     override fun onStop() = this.setCurrentState(STOP)
+
+    private fun clearCurrentStateValue() {
+        this.currentStateValue = null
+    }
 
     /**
      * Notify that the application is closing.
@@ -89,10 +93,6 @@ abstract class StateManager(private val activityReference: ActivityReference) : 
     protected fun setCurrentState(value: String) {
         this.currentStateValue = value
         this.syncCurrentState()
-    }
-
-    private fun destroyCurrentStateValue() {
-        this.currentStateValue = null
     }
 
     private fun observeActivity() {

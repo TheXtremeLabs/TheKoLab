@@ -18,42 +18,42 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
     }
 
     override val color: LiveData<Color>?
-        get() = this.colorManager?.currentColor
+        get() = this.colorViewModel?.currentColor
 
     override val previousColor: Color?
-        get() = this.colorManager?.previousColor
+        get() = this.colorViewModel?.previousColor
 
     override val state: LiveData<String>?
-        get() = this.stateManager?.currentState
+        get() = this.stateViewModel?.currentState
 
     private var activityReference: ActivityReference? = null
-    private var colorManager: ColorsColorManager? = null
-    private var stateManager: ColorsStateManager? = null
+    private var colorViewModel: ColorsColorViewModel? = null
+    private var stateViewModel: ColorsStateViewModel? = null
 
     override fun changeColors() {
-        this.colorManager?.changeColors()
-        this.stateManager?.changeColors()
+        this.colorViewModel?.changeColors()
+        this.stateViewModel?.changeColors()
     }
 
     override fun closeActivity() {
-        this.stateManager?.close()
+        this.stateViewModel?.close()
     }
 
     override fun observe(activityReference: ActivityReference) {
         this.activityReference =
             activityReference.apply { this.get()?.addObserver(this@ColorsViewModelImpl) }
-        this.initColorManager()
-        this.initStateManager()
+        this.initColorViewModel()
+        this.initStateViewModel()
     }
 
     override fun onBackPressed() {
-        if (false == this.stateManager?.isExiting()) this.stateManager?.exit()
+        if (false == this.stateViewModel?.isExiting()) this.stateViewModel?.exit()
     }
 
     override fun onCleared() {
         this.clearActivityReference()
-        this.clearColorManager()
-        this.clearStateManager()
+        this.clearColorViewModel()
+        this.clearStateViewModel()
     }
 
     override fun onDestroy() {
@@ -65,23 +65,23 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
         this.activityReference = null
     }
 
-    private fun clearColorManager() {
-        this.colorManager = null
+    private fun clearColorViewModel() {
+        this.colorViewModel = null
     }
 
-    private fun clearStateManager() {
-        this.stateManager = null
+    private fun clearStateViewModel() {
+        this.stateViewModel = null
     }
 
-    private fun initColorManager() {
-        this.colorManager = this.activityReference?.let { reference: ActivityReference ->
-            ColorsColorManager.observe(reference)
+    private fun initColorViewModel() {
+        this.colorViewModel = this.activityReference?.let { reference: ActivityReference ->
+            ColorsColorViewModel.observe(reference)
         }
     }
 
-    private fun initStateManager() {
-        this.stateManager = this.activityReference?.let { reference: ActivityReference ->
-            ColorsStateManager.observe(reference)
+    private fun initStateViewModel() {
+        this.stateViewModel = this.activityReference?.let { reference: ActivityReference ->
+            ColorsStateViewModel.observe(reference)
         }
     }
 

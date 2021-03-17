@@ -5,26 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.repository.ColorsRepository
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
+import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 /**
- * Manager of the color displayed in the colors activity.
+ * View model of the color displayed in the colors activity.
  */
-internal class ColorsColorManager private constructor(
+internal class ColorsColorViewModel private constructor(
     private val activityReference: ActivityReference
-) : LifecycleView() {
+) : ViewModel() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
          *
          * @param activityReference Reference of the activity to observe
          *
-         * @return New instance of the manager
+         * @return New instance of the view model
          */
-        fun observe(activityReference: ActivityReference): ColorsColorManager =
-            ColorsColorManager(activityReference).apply {
+        fun observe(activityReference: ActivityReference): ColorsColorViewModel =
+            ColorsColorViewModel(activityReference).apply {
                 activityReference.get()?.addObserver(this)
             }
     }
@@ -47,13 +47,17 @@ internal class ColorsColorManager private constructor(
     private var previousColorValue: Color? = null
     private var repository: ColorsRepository? = null
 
+    override fun onCleared() {
+        this.clearCurrentColor()
+        this.clearPreviousColor()
+        this.clearRepository()
+    }
+
     override fun onCreate() = this.initRepository()
 
     override fun onDestroy() {
-        this.destroyCurrentColor()
-        this.destroyPreviousColor()
-        this.destroyRepository()
         this.stopActivityObservation()
+        super.onDestroy()
     }
 
     override fun onStart() {
@@ -72,34 +76,34 @@ internal class ColorsColorManager private constructor(
         this.syncCurrentColor()
     }
 
+    private fun clearCurrentColor() {
+        this.currentColorValue = null
+    }
+
+    private fun clearPreviousColor() {
+        this.previousColorValue = null
+    }
+
+    private fun clearRepository() {
+        this.repository = null
+    }
+
     private fun backupCurrentColor() {
         this.currentColorValue?.let { color: Color ->
             runBlocking(Dispatchers.Default) {
-                this@ColorsColorManager.repository?.backupColor(color)
+                this@ColorsColorViewModel.repository?.backupColor(color)
             }
         }
     }
 
-    private fun destroyCurrentColor() {
-        this.currentColorValue = null
-    }
-
-    private fun destroyPreviousColor() {
-        this.previousColorValue = null
-    }
-
-    private fun destroyRepository() {
-        this.repository = null
-    }
-
     private fun initCurrentColor() {
         this.currentColorValue =
-            runBlocking(Dispatchers.Default) { this@ColorsColorManager.repository?.firstColor() }
+            runBlocking(Dispatchers.Default) { this@ColorsColorViewModel.repository?.firstColor() }
     }
 
     private fun initRepository() {
         this.repository = runBlocking(Dispatchers.Default) {
-            ColorsRepository.instance(this@ColorsColorManager.activityReference)
+            ColorsRepository.instance(this@ColorsColorViewModel.activityReference)
         }
     }
 
@@ -107,7 +111,7 @@ internal class ColorsColorManager private constructor(
         var color: Color? = null
         while (null == color || this.currentColorValue == color)
             color = runBlocking(Dispatchers.Default) {
-                this@ColorsColorManager.repository?.randomColor()
+                this@ColorsColorViewModel.repository?.randomColor()
             }
         return color
     }

@@ -6,8 +6,6 @@ import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
 
 /**
  * Parent of the application's view models.
- *
- * @since 2.0.0
  */
 abstract class ViewModel : ViewModel(), LifecycleObserver {
     override fun onCreate() {}
@@ -25,15 +23,11 @@ abstract class ViewModel : ViewModel(), LifecycleObserver {
 
     /**
      * Close the activity.
-     *
-     * @since 2.0.0
      */
-    abstract fun closeActivity()
+    open fun closeActivity() {}
 
     /**
      * Callback when the user click on the back button of the navigation bar.
-     *
-     * @since 2.0.0
      */
     open fun onBackPressed() {}
 }
