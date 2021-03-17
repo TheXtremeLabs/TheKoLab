@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.repository.ColorsRepository
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -14,20 +14,23 @@ import kotlinx.coroutines.runBlocking
  *
  * @since 2.0.0
  */
-internal class ColorsColorManager private constructor(private val activity: Activity) :
-    LifecycleView() {
+internal class ColorsColorManager private constructor(
+    private val activityReference: ActivityReference
+) : LifecycleView() {
     companion object {
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Activity to observe
+         * @param activityReference Reference of the activity to observe
          *
          * @return New instance of the manager
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity): ColorsColorManager =
-            ColorsColorManager(activity).apply { activity.addObserver(this) }
+        fun observe(activityReference: ActivityReference): ColorsColorManager =
+            ColorsColorManager(activityReference).apply {
+                activityReference.get()?.addObserver(this)
+            }
     }
 
     /**
@@ -105,7 +108,7 @@ internal class ColorsColorManager private constructor(private val activity: Acti
 
     private fun initRepository() = runBlocking(Dispatchers.Default) {
         this@ColorsColorManager.repository =
-            ColorsRepository.instance(this@ColorsColorManager.activity)
+            ColorsRepository.instance(this@ColorsColorManager.activityReference)
     }
 
     private fun pickRandomColor(): Color? = runBlocking(Dispatchers.Default) {
@@ -115,7 +118,9 @@ internal class ColorsColorManager private constructor(private val activity: Acti
         color
     }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() {
+        this.activityReference.get()?.removeObserver(this)
+    }
 
     private fun syncCurrentColor() =
         this.currentColorValue?.let { color: Color -> this.currentColorData.value = color }

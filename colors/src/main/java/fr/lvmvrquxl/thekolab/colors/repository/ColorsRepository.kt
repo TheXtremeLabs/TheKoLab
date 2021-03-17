@@ -1,7 +1,8 @@
 package fr.lvmvrquxl.thekolab.colors.repository
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import kotlinx.coroutines.Job
 
 /**
@@ -16,15 +17,16 @@ internal interface ColorsRepository {
         /**
          * Get instance of colors repository.
          *
-         * @param context Context of the repository
+         * @param activityReference Reference of the colors activity
          *
          * @return Instance of colors repository
          *
          * @since 1.0.0
-         *
-         * @see [Context]
          */
-        fun instance(context: Context): ColorsRepository = ColorsRepositoryImpl.withContext(context)
+        fun instance(activityReference: ActivityReference): ColorsRepository? =
+            activityReference.get()?.let { activity: Activity ->
+                ColorsRepositoryImpl.withContext(activity)
+            }
     }
 
     /**

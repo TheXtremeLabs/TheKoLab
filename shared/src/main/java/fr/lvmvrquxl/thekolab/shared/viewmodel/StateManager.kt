@@ -3,17 +3,17 @@ package fr.lvmvrquxl.thekolab.shared.viewmodel
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 
 /**
  * Manager of the activity's states.
  *
+ * @param activityReference Reference of the current activity
+ *
  * @since 2.0.0
  */
-abstract class StateManager(private val activity: Activity) : LifecycleObserver {
+abstract class StateManager(private val activityReference: ActivityReference) : LifecycleObserver {
     companion object {
         /**
          * Close state.
@@ -91,8 +91,7 @@ abstract class StateManager(private val activity: Activity) : LifecycleObserver 
      *
      * @since 2.0.0
      */
-    protected fun currentStateEquals(value: String): Boolean =
-        runBlocking(Dispatchers.Default) { this@StateManager.currentStateValue == value }
+    protected fun currentStateEquals(value: String): Boolean = this.currentStateValue == value
 
     /**
      * Update current state of the activity.
@@ -102,7 +101,7 @@ abstract class StateManager(private val activity: Activity) : LifecycleObserver 
      * @since 2.0.0
      */
     protected fun setCurrentState(value: String) {
-        runBlocking(Dispatchers.Default) { this@StateManager.currentStateValue = value }
+        this.currentStateValue = value
         this.syncCurrentState()
     }
 
@@ -110,10 +109,15 @@ abstract class StateManager(private val activity: Activity) : LifecycleObserver 
         this.currentStateValue = null
     }
 
-    private fun observeActivity() = this.activity.addObserver(this)
+    private fun observeActivity() {
+        this.activityReference.get()?.addObserver(this)
+    }
 
-    private fun stopActivityObservation() = this.activity.removeObserver(this)
+    private fun stopActivityObservation() {
+        this.activityReference.get()?.removeObserver(this)
+    }
 
-    private fun syncCurrentState() =
+    private fun syncCurrentState() {
         this.currentStateValue?.let { state: String -> this.currentStateData.value = state }
+    }
 }

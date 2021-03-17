@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.colors.viewmodel
 
 import androidx.lifecycle.LiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 
 /**
@@ -51,9 +51,9 @@ internal abstract class ColorsViewModel : ViewModel() {
     /**
      * Observe the given activity's lifecycle.
      *
-     * @param activity Instance of the colors activity
+     * @param activityReference Reference of the colors activity
      *
      * @since 2.0.0
      */
-    abstract fun observe(activity: Activity)
+    abstract fun observe(activityReference: ActivityReference)
 }

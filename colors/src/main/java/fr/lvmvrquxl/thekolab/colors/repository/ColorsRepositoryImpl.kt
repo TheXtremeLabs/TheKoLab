@@ -38,9 +38,6 @@ internal object ColorsRepositoryImpl : ColorsRepository {
      * @return Instance of repository
      *
      * @since 1.0.0
-     *
-     * @see [Context]
-     * @see [ColorsRepository]
      */
     fun withContext(context: Context): ColorsRepository = runBlocking(Dispatchers.Default) {
         this@ColorsRepositoryImpl.colors = IColors.create(context)

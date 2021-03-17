@@ -2,13 +2,12 @@ package fr.lvmvrquxl.thekolab.colors.viewmodel
 
 import androidx.lifecycle.LiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
-import java.lang.ref.WeakReference
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * The view model's implementation of the colors activity.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
     companion object {
@@ -31,7 +30,7 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
     override val state: LiveData<String>?
         get() = this.stateManager?.currentState
 
-    private var activityReference: WeakReference<Activity>? = null
+    private var activityReference: ActivityReference? = null
     private var colorManager: ColorsColorManager? = null
     private var stateManager: ColorsStateManager? = null
 
@@ -44,20 +43,21 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
         this.stateManager?.close()
     }
 
-    override fun observe(activity: Activity) = activity.apply {
-        this@ColorsViewModelImpl.initActivityReference(this)
-        this@ColorsViewModelImpl.initColorManager(this)
-        this@ColorsViewModelImpl.initStateManager(this)
-    }.addObserver(this)
+    override fun observe(activityReference: ActivityReference) {
+        this.activityReference =
+            activityReference.apply { this.get()?.addObserver(this@ColorsViewModelImpl) }
+        this.initColorManager()
+        this.initStateManager()
+    }
 
     override fun onBackPressed() {
         if (false == this.stateManager?.isExiting()) this.stateManager?.exit()
     }
 
     override fun onCleared() {
-        this.activityReference = null
-        this.colorManager = null
-        this.stateManager = null
+        this.clearActivityReference()
+        this.clearColorManager()
+        this.clearStateManager()
     }
 
     override fun onDestroy() {
@@ -65,16 +65,28 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
         super.onDestroy()
     }
 
-    private fun initActivityReference(activity: Activity) {
-        this.activityReference = WeakReference(activity)
+    private fun clearActivityReference() {
+        this.activityReference = null
     }
 
-    private fun initColorManager(activity: Activity) {
-        this.colorManager = ColorsColorManager.observe(activity)
+    private fun clearColorManager() {
+        this.colorManager = null
     }
 
-    private fun initStateManager(activity: Activity) {
-        this.stateManager = ColorsStateManager.observe(activity)
+    private fun clearStateManager() {
+        this.stateManager = null
+    }
+
+    private fun initColorManager() {
+        this.colorManager = this.activityReference?.let { reference: ActivityReference ->
+            ColorsColorManager.observe(reference)
+        }
+    }
+
+    private fun initStateManager() {
+        this.stateManager = this.activityReference?.let { reference: ActivityReference ->
+            ColorsStateManager.observe(reference)
+        }
     }
 
     private fun stopActivityObservation() = this.activityReference?.get()?.removeObserver(this)

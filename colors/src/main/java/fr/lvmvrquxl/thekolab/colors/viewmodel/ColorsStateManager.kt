@@ -1,6 +1,6 @@
 package fr.lvmvrquxl.thekolab.colors.viewmodel
 
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
 
 /**
@@ -8,7 +8,8 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
  *
  * @since 2.0.0
  */
-internal class ColorsStateManager private constructor(activity: Activity) : StateManager(activity) {
+internal class ColorsStateManager private constructor(activityReference: ActivityReference) :
+    StateManager(activityReference) {
     companion object {
         /**
          * Change colors state.
@@ -27,13 +28,14 @@ internal class ColorsStateManager private constructor(activity: Activity) : Stat
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Activity to observe
+         * @param activityReference Reference of the activity to observe
          *
          * @return New instance of the manager
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity): ColorsStateManager = ColorsStateManager(activity)
+        fun observe(activityReference: ActivityReference): ColorsStateManager =
+            ColorsStateManager(activityReference)
     }
 
     /**
