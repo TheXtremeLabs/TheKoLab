@@ -69,9 +69,7 @@ internal class ColorsColorManager private constructor(
         this.syncCurrentColor()
     }
 
-    override fun onStop() {
-        this.backupCurrentColor()
-    }
+    override fun onStop() = this.backupCurrentColor()
 
     /**
      * Change colors to be displayed in the activity.
@@ -84,9 +82,11 @@ internal class ColorsColorManager private constructor(
         this.syncCurrentColor()
     }
 
-    private fun backupCurrentColor() = runBlocking(Dispatchers.Default) {
-        this@ColorsColorManager.currentColorValue?.let { color: Color ->
-            this@ColorsColorManager.repository?.backupColor(color)
+    private fun backupCurrentColor() {
+        this.currentColorValue?.let { color: Color ->
+            runBlocking(Dispatchers.Default) {
+                this@ColorsColorManager.repository?.backupColor(color)
+            }
         }
     }
 
@@ -102,20 +102,24 @@ internal class ColorsColorManager private constructor(
         this.repository = null
     }
 
-    private fun initCurrentColor() = runBlocking(Dispatchers.Default) {
-        this@ColorsColorManager.currentColorValue = this@ColorsColorManager.repository?.firstColor
+    private fun initCurrentColor() {
+        this.currentColorValue =
+            runBlocking(Dispatchers.Default) { this@ColorsColorManager.repository?.firstColor() }
     }
 
-    private fun initRepository() = runBlocking(Dispatchers.Default) {
-        this@ColorsColorManager.repository =
+    private fun initRepository() {
+        this.repository = runBlocking(Dispatchers.Default) {
             ColorsRepository.instance(this@ColorsColorManager.activityReference)
+        }
     }
 
-    private fun pickRandomColor(): Color? = runBlocking(Dispatchers.Default) {
-        var color: Color? = this@ColorsColorManager.repository?.randomColor
-        while (this@ColorsColorManager.currentColorValue == color)
-            color = this@ColorsColorManager.repository?.randomColor
-        color
+    private fun pickRandomColor(): Color {
+        var color: Color? = null
+        while (null == color || this.currentColorValue == color)
+            color = runBlocking(Dispatchers.Default) {
+                this@ColorsColorManager.repository?.randomColor()
+            }
+        return color
     }
 
     private fun stopActivityObservation() {
@@ -130,6 +134,6 @@ internal class ColorsColorManager private constructor(
     }
 
     private fun updatePreviousColor() {
-        this@ColorsColorManager.previousColorValue = this@ColorsColorManager.currentColorValue
+        this.previousColorValue = this.currentColorValue
     }
 }

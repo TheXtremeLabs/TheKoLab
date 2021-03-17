@@ -9,26 +9,21 @@ import kotlinx.coroutines.*
  * Implementation of the colors repository.
  *
  * @since 1.0.0
- *
- * @see [ColorsRepository]
  */
 internal object ColorsRepositoryImpl : ColorsRepository {
-    override val firstColor: Color?
-        get() = when (this.colorBackup) {
-            null -> this.colors?.default
-            else -> this.colorBackup
-        }
-    override val randomColor: Color?
-        get() = this.colors?.random
-
-    private const val SCOPE_NAME: String = "ColorsRepository"
-    private val coroutineScope: CoroutineScope = CoroutineScope(CoroutineName(SCOPE_NAME))
     private var colorBackup: Color? = null
     private var colors: IColors? = null
 
-    override fun backupColor(color: Color): Job = this.coroutineScope.launch {
-        this@ColorsRepositoryImpl.colorBackup = color
+    override suspend fun backupColor(color: Color) {
+        this.colorBackup = color
     }
+
+    override suspend fun firstColor(): Color? = when (this.colorBackup) {
+        null -> this.colors?.default
+        else -> this.colorBackup
+    }
+
+    override suspend fun randomColor(): Color? = this.colors?.random
 
     /**
      * Update context and init new colors to display.

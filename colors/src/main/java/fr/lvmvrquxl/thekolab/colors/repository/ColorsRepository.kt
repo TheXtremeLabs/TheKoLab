@@ -3,14 +3,13 @@ package fr.lvmvrquxl.thekolab.colors.repository
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
-import kotlinx.coroutines.Job
 
 /**
  * Interface of colors repository.
  *
  * This interface should be used for accessing colors data from model layer.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 internal interface ColorsRepository {
     companion object {
@@ -21,43 +20,39 @@ internal interface ColorsRepository {
          *
          * @return Instance of colors repository
          *
-         * @since 1.0.0
+         * @since 2.0.0
          */
-        fun instance(activityReference: ActivityReference): ColorsRepository? =
-            activityReference.get()?.let { activity: Activity ->
-                ColorsRepositoryImpl.withContext(activity)
+        fun instance(activityReference: ActivityReference): ColorsRepository =
+            ColorsRepositoryImpl.apply {
+                activityReference.get()?.let { activity: Activity -> this.withContext(activity) }
             }
     }
 
     /**
-     * First color to display.
-     *
-     * @since 1.0.0
-     *
-     * @see [Color]
-     */
-    val firstColor: Color?
-
-    /**
-     * Random color to display.
-     *
-     * @since 1.0.0
-     *
-     * @see [Color]
-     */
-    val randomColor: Color?
-
-    /**
-     * Backup given color, which will be the first displayed color.
+     * Backup given color, which will be the first displayed color when user reopens
+     * the colors activity.
      *
      * @param color Color to backup
      *
-     * @return Coroutine's job responsible for saving color
-     *
-     * @since 1.0.0
-     *
-     * @see [Color]
-     * @see [Job]
+     * @since 2.0.0
      */
-    fun backupColor(color: Color): Job
+    suspend fun backupColor(color: Color)
+
+    /**
+     * Get the first color to display.
+     *
+     * @return First color to display
+     *
+     * @since 2.0.0
+     */
+    suspend fun firstColor(): Color?
+
+    /**
+     * Get a random color to display.
+     *
+     * @return Random color
+     *
+     * @since 2.0.0
+     */
+    suspend fun randomColor(): Color?
 }
