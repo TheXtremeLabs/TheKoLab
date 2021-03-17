@@ -9,8 +9,6 @@ import kotlinx.coroutines.Runnable
 
 /**
  * View of the change colors button.
- *
- * @since 2.0.0
  */
 internal class ChangeColorsView private constructor(
     private val activityReference: ActivityReference,
@@ -24,13 +22,10 @@ internal class ChangeColorsView private constructor(
          *
          * @param activityReference Reference of the colors activity
          * @param view View corresponding to the change colors button
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference, view: MaterialButton) {
-            ChangeColorsView(activityReference, view).let { v: ChangeColorsView ->
-                activityReference.get()?.addObserver(v)
-            }
+            val changeColorsView = ChangeColorsView(activityReference, view)
+            activityReference.get()?.addObserver(changeColorsView)
         }
     }
 

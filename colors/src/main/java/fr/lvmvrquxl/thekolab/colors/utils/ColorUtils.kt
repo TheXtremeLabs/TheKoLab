@@ -9,8 +9,6 @@ import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
  * Color utilities.
  *
  * This singleton object should be used for retrieving colors from resources.
- *
- * @since 1.0.0
  */
 internal object ColorUtils {
     private val blue: Int = R.color.blue
@@ -22,10 +20,6 @@ internal object ColorUtils {
      * @param context Context for retrieving color
      *
      * @return Blue color's value
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
      */
     fun blue(context: Context): Int = ContextCompat.getColor(context, this.blue)
 
@@ -35,10 +29,6 @@ internal object ColorUtils {
      * @param context Context for retrieving color
      *
      * @return Orange color's value
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
      */
     fun orange(context: Context): Int = SharedColorUtils.orange(context)
 
@@ -48,10 +38,6 @@ internal object ColorUtils {
      * @param context Context for retrieving color
      *
      * @return Purple color's value
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
      */
     fun purple(context: Context): Int = SharedColorUtils.purple(context)
 
@@ -61,10 +47,6 @@ internal object ColorUtils {
      * @param context Context for retrieving color
      *
      * @return Red color's value
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
      */
     fun red(context: Context): Int = ContextCompat.getColor(context, this.red)
 
@@ -74,10 +56,6 @@ internal object ColorUtils {
      * @param context Context for retrieving color
      *
      * @return White color's value
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
      */
     fun white(context: Context): Int = SharedColorUtils.white(context)
 }

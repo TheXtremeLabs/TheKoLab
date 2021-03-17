@@ -9,8 +9,6 @@ import kotlinx.coroutines.Runnable
 
 /**
  * View of the title.
- *
- * @since 2.0.0
  */
 internal class TitleView private constructor(
     private val activityReference: ActivityReference,
@@ -25,13 +23,10 @@ internal class TitleView private constructor(
          *
          * @param activityReference Reference of the colors activity
          * @param view View corresponding to the activity's title
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference, view: MaterialTextView) {
-            TitleView(activityReference, view).let { v: TitleView ->
-                activityReference.get()?.addObserver(v)
-            }
+            val titleView = TitleView(activityReference, view)
+            activityReference.get()?.addObserver(titleView)
         }
     }
 

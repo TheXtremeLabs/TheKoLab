@@ -8,8 +8,6 @@ import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
  * Interface of colors repository.
  *
  * This interface should be used for accessing colors data from model layer.
- *
- * @since 2.0.0
  */
 internal interface ColorsRepository {
     companion object {
@@ -19,8 +17,6 @@ internal interface ColorsRepository {
          * @param activityReference Reference of the colors activity
          *
          * @return Instance of colors repository
-         *
-         * @since 2.0.0
          */
         fun instance(activityReference: ActivityReference): ColorsRepository =
             ColorsRepositoryImpl.apply {
@@ -33,8 +29,6 @@ internal interface ColorsRepository {
      * the colors activity.
      *
      * @param color Color to backup
-     *
-     * @since 2.0.0
      */
     suspend fun backupColor(color: Color)
 
@@ -42,8 +36,6 @@ internal interface ColorsRepository {
      * Get the first color to display.
      *
      * @return First color to display
-     *
-     * @since 2.0.0
      */
     suspend fun firstColor(): Color?
 
@@ -51,8 +43,6 @@ internal interface ColorsRepository {
      * Get a random color to display.
      *
      * @return Random color
-     *
-     * @since 2.0.0
      */
     suspend fun randomColor(): Color?
 }

@@ -6,8 +6,6 @@ import fr.lvmvrquxl.thekolab.shared.view.LayoutView
 
 /**
  * View of the layout responsible for displaying the colors activity's content.
- *
- * @since 2.0.0
  */
 internal class ContentLayoutView private constructor(
     private val activityReference: ActivityReference,
@@ -19,13 +17,10 @@ internal class ContentLayoutView private constructor(
          *
          * @param activityReference Colors activity's reference
          * @param binding Binding of the view
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference, binding: ColorsContentBinding) {
-            ContentLayoutView(activityReference, binding).let { view: ContentLayoutView ->
-                activityReference.get()?.addObserver(view)
-            }
+            val contentLayoutView = ContentLayoutView(activityReference, binding)
+            activityReference.get()?.addObserver(contentLayoutView)
         }
     }
 

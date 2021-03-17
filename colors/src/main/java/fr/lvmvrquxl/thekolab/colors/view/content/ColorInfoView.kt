@@ -8,8 +8,6 @@ import kotlinx.coroutines.Runnable
 
 /**
  * View of the color information.
- *
- * @since 2.0.0
  */
 internal class ColorInfoView private constructor(
     private val activityReference: ActivityReference,
@@ -24,13 +22,10 @@ internal class ColorInfoView private constructor(
          *
          * @param activityReference Reference of the colors activity
          * @param view View corresponding to the color information
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference, view: MaterialTextView) {
-            ColorInfoView(activityReference, view).let { v: ColorInfoView ->
-                activityReference.get()?.addObserver(v)
-            }
+            val colorInfoView = ColorInfoView(activityReference, view)
+            activityReference.get()?.addObserver(colorInfoView)
         }
     }
 

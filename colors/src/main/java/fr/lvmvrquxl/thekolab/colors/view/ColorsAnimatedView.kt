@@ -17,8 +17,6 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
  *
  * @param activityReference Reference of the colors activity
  * @param view Current view
- *
- * @since 1.0.0
  */
 internal abstract class ColorsAnimatedView(
     private val activityReference: ActivityReference,
@@ -26,31 +24,23 @@ internal abstract class ColorsAnimatedView(
 ) : AnimatedView(activityReference, view) {
     /**
      * ARGB animation instance for the view.
-     *
-     * @since 1.0.0
      */
     protected val argbAnimation: ArgbAnimation
         get() = ArgbAnimation.animate(this.view)
 
     /**
      * Animation instance with a medium duration, corresponding to 400 milliseconds.
-     *
-     * @since 1.0.0
      */
     protected val mediumAnimation: Animation
         get() = super.animation.apply { this.mediumDuration() }
 
     /**
      * Current color to display.
-     *
-     * @since 1.0.0
      */
     protected var color: Color? = null
 
     /**
      * View model's instance of the activity.
-     *
-     * @since 1.0.0
      */
     protected var viewModel: ColorsViewModel? = null
 
@@ -72,8 +62,6 @@ internal abstract class ColorsAnimatedView(
 
     /**
      * Disable click on the current view.
-     *
-     * @since 1.0.0
      */
     protected fun disableClick() {
         this.view.isClickable = false
@@ -81,8 +69,6 @@ internal abstract class ColorsAnimatedView(
 
     /**
      * Enable click on the current view.
-     *
-     * @since 1.0.0
      */
     protected fun enableClick() {
         this.view.isClickable = true

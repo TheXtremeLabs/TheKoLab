@@ -8,11 +8,6 @@ import fr.lvmvrquxl.thekolab.colors.utils.StringUtils
  * White color.
  *
  * @param context Context for building color
- *
- * @since 1.0.0
- *
- * @see [Color]
- * @see [Context]
  */
 internal class White private constructor(context: Context) :
     Color(StringUtils.white(context), ColorUtils.white(context)) {
@@ -23,11 +18,6 @@ internal class White private constructor(context: Context) :
          * @param context Context for building color
          *
          * @return New instance of white color
-         *
-         * @since 1.0.0
-         *
-         * @see [Color]
-         * @see [Context]
          */
         fun create(context: Context): Color = White(context)
     }

@@ -7,15 +7,11 @@ import fr.lvmvrquxl.thekolab.shared.viewmodel.StateManager
 
 /**
  * Activity of the colors feature.
- *
- * @since 1.0.0
  */
 class ColorsActivity : Activity() {
     companion object {
         /**
          * Class of the colors activity.
-         *
-         * @since 2.0.0
          */
         val javaClass: Class<ColorsActivity> = ColorsActivity::class.java
     }

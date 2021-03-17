@@ -11,8 +11,6 @@ import kotlinx.coroutines.runBlocking
 
 /**
  * Manager of the color displayed in the colors activity.
- *
- * @since 2.0.0
  */
 internal class ColorsColorManager private constructor(
     private val activityReference: ActivityReference
@@ -24,8 +22,6 @@ internal class ColorsColorManager private constructor(
          * @param activityReference Reference of the activity to observe
          *
          * @return New instance of the manager
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference): ColorsColorManager =
             ColorsColorManager(activityReference).apply {
@@ -35,16 +31,12 @@ internal class ColorsColorManager private constructor(
 
     /**
      * Current color displayed in the activity.
-     *
-     * @since 2.0.0
      */
     val currentColor: LiveData<Color>
         get() = this.currentColorData
 
     /**
      * Previous color that was displayed in the activity.
-     *
-     * @since 2.0.0
      */
     val previousColor: Color?
         get() = this.previousColorValue
@@ -73,8 +65,6 @@ internal class ColorsColorManager private constructor(
 
     /**
      * Change colors to be displayed in the activity.
-     *
-     * @since 2.0.0
      */
     fun changeColors() {
         this.updatePreviousColor()

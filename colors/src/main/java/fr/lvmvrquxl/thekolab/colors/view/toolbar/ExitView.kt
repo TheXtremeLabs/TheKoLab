@@ -9,8 +9,6 @@ import kotlinx.coroutines.Runnable
 
 /**
  * View of the exit button.
- *
- * @since 2.0.0
  */
 internal class ExitView private constructor(
     private val activityReference: ActivityReference,
@@ -25,13 +23,10 @@ internal class ExitView private constructor(
          *
          * @param activityReference Reference of the colors activity
          * @param view View corresponding to the exit button
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference, view: ShapeableImageView) {
-            ExitView(activityReference, view).let { v: ExitView ->
-                activityReference.get()?.addObserver(v)
-            }
+            val exitView = ExitView(activityReference, view)
+            activityReference.get()?.addObserver(exitView)
         }
     }
 

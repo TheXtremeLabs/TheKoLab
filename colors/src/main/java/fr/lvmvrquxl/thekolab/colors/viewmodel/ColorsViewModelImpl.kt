@@ -6,8 +6,6 @@ import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * The view model's implementation of the colors activity.
- *
- * @since 2.0.0
  */
 internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
     companion object {
@@ -15,8 +13,6 @@ internal class ColorsViewModelImpl private constructor() : ColorsViewModel() {
          * Create a new instance of the view model's implementation.
          *
          * @return New instance of the view model's implementation.
-         *
-         * @since 2.0.0
          */
         fun create(): ColorsViewModel = ColorsViewModelImpl()
     }

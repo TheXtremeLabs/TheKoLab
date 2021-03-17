@@ -11,8 +11,6 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
  * Main view of the colors activity.
- *
- * @since 2.0.0
  */
 internal class ColorsView private constructor(private val activityReference: ActivityReference) :
     ActivityView<ColorsActivityBinding>(activityReference) {
@@ -21,8 +19,6 @@ internal class ColorsView private constructor(private val activityReference: Act
          * Observe the given activity lifecycle.
          *
          * @param activityReference Colors activity's reference
-         *
-         * @since 2.0.0
          */
         fun observe(activityReference: ActivityReference) {
             ColorsView(activityReference).let { view: ColorsView ->

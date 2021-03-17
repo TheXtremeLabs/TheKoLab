@@ -8,11 +8,6 @@ import fr.lvmvrquxl.thekolab.colors.utils.StringUtils
  * Purple color.
  *
  * @param context Context for building color
- *
- * @since 1.0.0
- *
- * @see [Color]
- * @see [Context]
  */
 internal class Purple private constructor(context: Context) :
     Color(StringUtils.purple(context), ColorUtils.purple(context)) {
@@ -23,11 +18,6 @@ internal class Purple private constructor(context: Context) :
          * @param context Context for building color
          *
          * @return New instance of purple color
-         *
-         * @since 1.0.0
-         *
-         * @see [Color]
-         * @see [Context]
          */
         fun create(context: Context): Color = Purple(context)
     }
