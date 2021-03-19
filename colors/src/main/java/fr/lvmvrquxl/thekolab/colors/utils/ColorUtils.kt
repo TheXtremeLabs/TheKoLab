@@ -6,9 +6,7 @@ import fr.lvmvrquxl.thekolab.colors.R
 import fr.lvmvrquxl.thekolab.shared.utils.SharedColorUtils
 
 /**
- * Color utilities.
- *
- * This singleton object should be used for retrieving colors from resources.
+ * Color utilities useful for retrieving colors from resources.
  */
 internal object ColorUtils {
     private val blue: Int = R.color.blue

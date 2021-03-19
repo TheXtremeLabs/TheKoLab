@@ -5,9 +5,7 @@ import fr.lvmvrquxl.thekolab.colors.R
 import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
 
 /**
- * String utilities.
- *
- * This singleton object should be used for retrieving strings from resources.
+ * String utilities useful for retrieving strings from resources.
  */
 internal object StringUtils {
     private val blue: Int = R.string.blue
