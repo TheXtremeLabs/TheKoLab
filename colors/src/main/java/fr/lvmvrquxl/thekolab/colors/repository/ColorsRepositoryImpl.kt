@@ -2,7 +2,6 @@ package fr.lvmvrquxl.thekolab.colors.repository
 
 import fr.lvmvrquxl.thekolab.colors.model.Colors
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,8 +35,7 @@ internal class ColorsRepositoryImpl private constructor(
         }
     }
 
-    private val colors: Colors? =
-        this.activityReference.get()?.let { activity: Activity -> Colors.create(activity) }
+    private val colors: Colors = Colors.create(this.activityReference)
 
     private var colorBackup: Color? = null
 
@@ -46,11 +44,11 @@ internal class ColorsRepositoryImpl private constructor(
     }
 
     override suspend fun firstColor(): Color? = when (this.colorBackup) {
-        null -> withContext(Dispatchers.Default) { this@ColorsRepositoryImpl.colors?.default() }
+        null -> withContext(Dispatchers.Default) { this@ColorsRepositoryImpl.colors.default() }
         else -> this.colorBackup
     }
 
-    override suspend fun randomColor(): Color? = withContext(Dispatchers.Default) {
-        this@ColorsRepositoryImpl.colors?.random()
+    override suspend fun randomColor(): Color = withContext(Dispatchers.Default) {
+        this@ColorsRepositoryImpl.colors.random()
     }
 }

@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.colors.view.toolbar
 
 import com.google.android.material.imageview.ShapeableImageView
-import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
@@ -49,8 +48,8 @@ internal class ExitView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.COLOR_FILTER)
-            super.viewModel?.previousColor?.let { color: Color -> this.startColor(color.value) }
-            super.color?.let { color: Color -> this.endColor(color.value) }
+            super.viewModel?.previousColor?.value?.let { value: Int -> this.startColor(value) }
+            super.color?.value?.let { value: Int -> this.endColor(value) }
         }
 
     override fun onDestroy() {
@@ -66,7 +65,7 @@ internal class ExitView private constructor(
     }
 
     private fun setColorFilter() =
-        super.color?.let { color: Color -> this.view.setColorFilter(color.value) }
+        super.color?.value?.let { value: Int -> this.view.setColorFilter(value) }
 
     private fun setListener() = this.view.setOnClickListener { super.viewModel?.onBackPressed() }
 

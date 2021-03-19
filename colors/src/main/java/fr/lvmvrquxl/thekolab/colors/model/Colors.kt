@@ -1,23 +1,22 @@
 package fr.lvmvrquxl.thekolab.colors.model
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Interface of the colors model.
- *
- * This interface should be used for retrieving colors to display.
  */
 internal interface Colors {
     companion object {
         /**
          * Create a new instance of colors model.
          *
-         * @param context Context for building colors
+         * @param activityReference Reference of the colors activity
          *
          * @return New instance of colors model
          */
-        fun create(context: Context): Colors = ColorsImpl.create(context)
+        fun create(activityReference: ActivityReference): Colors =
+            ColorsImpl.create(activityReference)
     }
 
     /**

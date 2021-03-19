@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.colors.view.content
 
 import com.google.android.material.textview.MaterialTextView
-import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import kotlinx.coroutines.Runnable
@@ -59,10 +58,10 @@ internal class ColorInfoView private constructor(
         this.setTextColor()
     }
 
-    private fun setText() = super.color?.let { color: Color -> this.view.text = color.name }
+    private fun setText() = super.color?.name?.let { name: String -> this.view.text = name }
 
     private fun setTextColor() =
-        super.color?.let { color: Color -> this.view.setTextColor(color.value) }
+        super.color?.value?.let { value: Int -> this.view.setTextColor(value) }
 
     private fun stopActivityObservation() = this.activityReference.get()?.removeObserver(this)
 }

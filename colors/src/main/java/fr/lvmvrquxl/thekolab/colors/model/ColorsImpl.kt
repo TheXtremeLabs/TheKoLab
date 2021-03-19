@@ -1,36 +1,30 @@
 package fr.lvmvrquxl.thekolab.colors.model
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.color.*
-import fr.lvmvrquxl.thekolab.colors.model.color.Blue
-import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.model.color.Purple
-import fr.lvmvrquxl.thekolab.colors.model.color.Red
-import fr.lvmvrquxl.thekolab.colors.model.color.White
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Implementation of the colors model.
- *
- * @param context Context for building colors
  */
-internal class ColorsImpl private constructor(private val context: Context) : Colors {
+internal class ColorsImpl private constructor(private val activityReference: ActivityReference) :
+    Colors {
     companion object {
         /**
          * Create a new instance of colors model.
          *
-         * @param context Context for building colors
+         * @param activityReference Reference of the colors activity
          *
          * @return New instance of colors model
          */
-        fun create(context: Context): Colors = ColorsImpl(context)
+        fun create(activityReference: ActivityReference): Colors = ColorsImpl(activityReference)
     }
 
     private val colors: List<Color> = listOf(
-        White.create(this.context),
-        Orange.create(this.context),
-        Purple.create(this.context),
-        Blue.create(this.context),
-        Red.create(this.context)
+        White.create(this.activityReference),
+        Orange.create(this.activityReference),
+        Purple.create(this.activityReference),
+        Blue.create(this.activityReference),
+        Red.create(this.activityReference)
     )
 
     override suspend fun default(): Color = this.colors.first()

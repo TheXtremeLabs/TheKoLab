@@ -41,5 +41,5 @@ internal interface ColorsRepository {
      *
      * @return Random color
      */
-    suspend fun randomColor(): Color?
+    suspend fun randomColor(): Color
 }

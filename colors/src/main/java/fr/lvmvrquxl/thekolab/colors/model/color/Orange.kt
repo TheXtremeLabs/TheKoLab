@@ -1,24 +1,25 @@
 package fr.lvmvrquxl.thekolab.colors.model.color
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.utils.ColorUtils
 import fr.lvmvrquxl.thekolab.colors.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Orange color.
- *
- * @param context Context for building color
  */
-internal class Orange private constructor(context: Context) :
-    Color(StringUtils.orange(context), ColorUtils.orange(context)) {
+internal class Orange private constructor(activityReference: ActivityReference) : Color(
+    activityReference.get()?.let { activity: Activity -> StringUtils.orange(activity) },
+    activityReference.get()?.let { activity: Activity -> ColorUtils.orange(activity) }
+) {
     companion object {
         /**
          * Create a new instance of orange color.
          *
-         * @param context Context for building color
+         * @param activityReference Reference of the colors activity
          *
          * @return New instance of orange color
          */
-        fun create(context: Context): Color = Orange(context)
+        fun create(activityReference: ActivityReference): Color = Orange(activityReference)
     }
 }

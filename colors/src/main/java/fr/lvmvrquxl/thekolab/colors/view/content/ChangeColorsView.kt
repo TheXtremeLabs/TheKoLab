@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.colors.view.content
 
 import com.google.android.material.button.MaterialButton
-import fr.lvmvrquxl.thekolab.colors.model.color.Color
 import fr.lvmvrquxl.thekolab.colors.view.ColorsAnimatedView
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.ArgbAnimationProperty
@@ -44,8 +43,8 @@ internal class ChangeColorsView private constructor(
     override val updateAnimation: Runnable
         get() = super.argbAnimation.apply {
             this.property(ArgbAnimationProperty.BACKGROUND_COLOR)
-            super.viewModel?.previousColor?.let { color: Color -> this.startColor(color.value) }
-            super.color?.let { color: Color -> this.endColor(color.value) }
+            super.viewModel?.previousColor?.value?.let { value: Int -> this.startColor(value) }
+            super.color?.value?.let { value: Int -> this.endColor(value) }
         }
 
     override fun onDestroy() {
@@ -61,7 +60,7 @@ internal class ChangeColorsView private constructor(
     }
 
     private fun setBackgroundColor() =
-        super.color?.let { color: Color -> this.view.setBackgroundColor(color.value) }
+        super.color?.value?.let { value: Int -> this.view.setBackgroundColor(value) }
 
     private fun setClickListener() =
         this.view.setOnClickListener { super.viewModel?.changeColors() }
