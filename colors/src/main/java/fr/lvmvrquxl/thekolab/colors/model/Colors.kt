@@ -22,11 +22,15 @@ internal interface Colors {
 
     /**
      * Retrieve default color.
+     *
+     * @return Default color
      */
-    val default: Color
+    suspend fun default(): Color
 
     /**
-     * Retrieve random color.
+     * Get a random color.
+     *
+     * @return Random color
      */
-    val random: Color
+    suspend fun random(): Color
 }

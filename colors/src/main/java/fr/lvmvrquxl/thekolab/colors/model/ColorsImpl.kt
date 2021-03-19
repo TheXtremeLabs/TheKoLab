@@ -25,11 +25,6 @@ internal class ColorsImpl private constructor(private val context: Context) : Co
         fun create(context: Context): Colors = ColorsImpl(context)
     }
 
-    override val default: Color
-        get() = this.colors.first()
-    override val random: Color
-        get() = this.colors.random()
-
     private val colors: List<Color> = listOf(
         White.create(this.context),
         Orange.create(this.context),
@@ -37,4 +32,8 @@ internal class ColorsImpl private constructor(private val context: Context) : Co
         Blue.create(this.context),
         Red.create(this.context)
     )
+
+    override suspend fun default(): Color = this.colors.first()
+
+    override suspend fun random(): Color = this.colors.random()
 }

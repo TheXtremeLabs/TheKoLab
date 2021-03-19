@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.colors.repository
 
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
@@ -18,10 +17,8 @@ internal interface ColorsRepository {
          *
          * @return Instance of colors repository
          */
-        fun instance(activityReference: ActivityReference): ColorsRepository =
-            ColorsRepositoryImpl.apply {
-                activityReference.get()?.let { activity: Activity -> this.withContext(activity) }
-            }
+        fun instance(activityReference: ActivityReference): ColorsRepository? =
+            ColorsRepositoryImpl.instance(activityReference)
     }
 
     /**
