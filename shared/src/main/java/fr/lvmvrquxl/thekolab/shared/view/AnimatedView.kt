@@ -2,17 +2,20 @@ package fr.lvmvrquxl.thekolab.shared.view
 
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.appcompat.app.AppCompatActivity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.animation.Animation
 import kotlinx.coroutines.Runnable
 
 /**
  * Parent of all animated views.
  *
+ * @param activityReference Reference of the current activity
+ * @param view Current view
+ *
  * @since 1.0.0
  */
 abstract class AnimatedView(
-    private val activity: AppCompatActivity,
+    private val activityReference: ActivityReference,
     private val view: View
 ) : LifecycleView() {
     /**
@@ -42,16 +45,13 @@ abstract class AnimatedView(
     /**
      * Animation instance for the view.
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     protected val animation: Animation
-        get() = Animation.animate(this.activity, this.view)
+        get() = Animation.animate(this.activityReference, this.view)
             .apply { this@AnimatedView.currentAnimation = this }
 
     private var currentAnimation: Animation? = null
-
-    @CallSuper
-    override fun onCreate() = this.observeViewModel()
 
     @CallSuper
     override fun onDestroy() {
@@ -61,10 +61,6 @@ abstract class AnimatedView(
     @CallSuper
     override fun onPause() {
         this.currentAnimation?.cancel()
-    }
-
-    @Deprecated("Will be removed in version 2.0.0")
-    protected open fun observeViewModel() {
     }
 
     /**

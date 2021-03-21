@@ -1,10 +1,10 @@
 package fr.lvmvrquxl.thekolab.home.base
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -20,6 +20,8 @@ import fr.lvmvrquxl.thekolab.home.toolbar.IToolbarCallback
 import fr.lvmvrquxl.thekolab.home.toolbar.IToolbarListener
 import fr.lvmvrquxl.thekolab.home.toolbar.time.view.ToolbarTimeFragment
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.view.ToolbarWeatherFragment
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.permission.Permission
 import fr.lvmvrquxl.thekolab.shared.permission.PermissionBuilder
 import fr.lvmvrquxl.thekolab.shared.utils.SharedStringUtils
@@ -30,35 +32,26 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * This class is responsible for managing the views of the home page activity.
  *
- * @param activity Instance of the home page activity
- *
  * @since 1.0.0
- *
- * @see [ActivityView]
- * @see [AppCompatActivity]
- * @see [HomeActivity]
  */
-internal class HomeView private constructor(private val activity: AppCompatActivity) :
-    ActivityView<HomeActivityBinding>(activity) {
+internal class HomeView private constructor(private val activityReference: ActivityReference) :
+    ActivityView<HomeActivityBinding>(activityReference) {
     companion object {
         /**
          * Create the home page view.
          *
-         * @param activity Instance of the home page activity
+         * @param activityReference Reference of the home page activity
          *
          * @return New instance of the home page view
          *
-         * @since 1.0.0
-         *
-         * @see [AppCompatActivity]
-         * @see [ActivityView]
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity): ActivityView<HomeActivityBinding> =
-            HomeView(activity)
+        fun create(activityReference: ActivityReference): ActivityView<HomeActivityBinding> =
+            HomeView(activityReference)
     }
 
     private val apps: List<App> = mutableListOf(
-        App("Colors", "Change colors programmatically", ColorsActivity::class.java)
+        App("Colors", "Change colors programmatically", ColorsActivity.javaClass)
     )
     private val appAdapter: AppAdapter = AppAdapter(this.apps)
     private var appsRecyclerView: RecyclerView? = null
@@ -67,7 +60,9 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     private var toolbar: ToolbarBinding? = null
 
     override fun bindView() {
-        super.viewBinding = HomeActivityBinding.inflate(this.activity.layoutInflater)
+        this.activityReference.get()?.let { activity: Activity ->
+            super.viewBinding = HomeActivityBinding.inflate(activity.layoutInflater)
+        }
         this.toolbar = super.viewBinding?.homeToolbar
         this.collapsingToolbar = this.toolbar?.collapsingToolbar
         this.appsRecyclerView = super.viewBinding?.appList?.appsRecyclerView
@@ -94,12 +89,13 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         this.checkPermissions()
         this.setViewPager()
         this.applyAppsRecyclerView()
-        super.onStart()
     }
 
     private fun applyAppsRecyclerView() {
         this.appsRecyclerView?.apply {
-            this.layoutManager = LinearLayoutManager(this@HomeView.activity)
+            this@HomeView.activityReference.get()?.let { activity: Activity ->
+                this.layoutManager = LinearLayoutManager(activity)
+            }
             this.adapter = this@HomeView.appAdapter
         }
     }
@@ -112,21 +108,23 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
     private fun initAppBar() = this.toolbar?.let { binding: ToolbarBinding ->
         val appBar: AppBarLayout = binding.root
         appBar.setExpanded(true)
-        val callback: IToolbarCallback = IToolbarCallback.create(this.activity, binding)
+        val callback: IToolbarCallback = IToolbarCallback.create(this.activityReference, binding)
         val toolbarListener: IToolbarListener = IToolbarListener.create(callback)
         appBar.addOnOffsetChangedListener(toolbarListener)
-        binding.versionName.text = SharedStringUtils.versionName(this.activity)
+        this.activityReference.get()?.let { activity: Activity ->
+            binding.versionName.text = SharedStringUtils.versionName(activity)
+        }
     }
 
     private fun initPermissions() {
-        this.permissions = PermissionBuilder.create(this.activity)
+        this.permissions = PermissionBuilder.create(this.activityReference)
             .withInternet()
             .withLocation()
             .build()
     }
 
     private fun setStatusBarTransparent() {
-        this.activity.window.statusBarColor = Color.TRANSPARENT
+        this.activityReference.get()?.window?.statusBarColor = Color.TRANSPARENT
     }
 
     private fun setViewPager() {
@@ -134,7 +132,8 @@ internal class HomeView private constructor(private val activity: AppCompatActiv
         if (this.arePermissionsGranted()) fragments.add(ToolbarWeatherFragment.create())
         this.toolbar?.viewPager?.let { viewPager: ViewPager2 ->
             viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            viewPager.adapter = ToolbarAdapter.create(this.activity, fragments)
+            ToolbarAdapter.create(this.activityReference, fragments)
+                ?.let { adapter: FragmentStateAdapter -> viewPager.adapter = adapter }
             this.toolbar?.tabIndicators?.let { tabLayout: TabLayout ->
                 TabLayoutMediator(tabLayout, viewPager) { _: TabLayout.Tab, _: Int -> }.attach()
             }

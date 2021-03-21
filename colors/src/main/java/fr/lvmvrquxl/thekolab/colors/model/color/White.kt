@@ -1,34 +1,25 @@
 package fr.lvmvrquxl.thekolab.colors.model.color
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.utils.ColorUtils
 import fr.lvmvrquxl.thekolab.colors.utils.StringUtils
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * White color.
- *
- * @param context Context for building color
- *
- * @since 1.0.0
- *
- * @see [Color]
- * @see [Context]
  */
-internal class White private constructor(context: Context) :
-    Color(StringUtils.white(context), ColorUtils.white(context)) {
+internal class White private constructor(activityReference: ActivityReference) : Color(
+    activityReference.get()?.let { activity: Activity -> StringUtils.white(activity) },
+    activityReference.get()?.let { activity: Activity -> ColorUtils.white(activity) }
+) {
     companion object {
         /**
          * Create a new instance of white color.
          *
-         * @param context Context for building color
+         * @param activityReference Reference of the colors activity
          *
          * @return New instance of white color
-         *
-         * @since 1.0.0
-         *
-         * @see [Color]
-         * @see [Context]
          */
-        fun create(context: Context): Color = White(context)
+        fun create(activityReference: ActivityReference): Color = White(activityReference)
     }
 }

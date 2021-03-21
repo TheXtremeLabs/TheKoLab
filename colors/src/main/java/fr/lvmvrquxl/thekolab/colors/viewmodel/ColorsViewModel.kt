@@ -1,64 +1,45 @@
 package fr.lvmvrquxl.thekolab.colors.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.viewmodel.ViewModel
 
 /**
  * The view model's interface of the colors activity.
- *
- * @since 1.0.0
  */
 internal abstract class ColorsViewModel : ViewModel() {
     companion object {
         /**
-         * Get instance of the view model.
-         *
-         * @param context Context of the view model
-         *
-         * @return Instance of the view model
-         *
-         * @since 1.0.0
-         *
-         * @see Context
+         * Instance of the view model.
          */
-        fun instance(context: Context): ColorsViewModel = ColorsViewModelImpl.withContext(context)
+        val instance: ColorsViewModel by lazy { ColorsViewModelImpl.create() }
     }
 
     /**
      * Current color to be displayed.
-     *
-     * @since 1.0.0
-     *
-     * @see Color
-     * @see LiveData
      */
-    abstract val color: LiveData<Color>
+    abstract val color: LiveData<Color>?
 
     /**
      * Previous color that was displayed.
-     *
-     * @since 1.0.0
-     *
-     * @see Color
      */
     abstract val previousColor: Color?
 
     /**
-     * Current state of the colors activity.
-     *
-     * @since 1.0.0
-     *
-     * @see ColorsState
-     * @see LiveData
+     * Current state of the activity.
      */
-    abstract val state: LiveData<ColorsState>
+    abstract val state: LiveData<String>?
 
     /**
-     * Update the color to be displayed.
-     *
-     * @since 1.0.0
+     * Change colors to be displayed.
      */
-    abstract fun updateColor()
+    abstract fun changeColors()
+
+    /**
+     * Observe the given activity's lifecycle.
+     *
+     * @param activityReference Reference of the colors activity
+     */
+    abstract fun observe(activityReference: ActivityReference)
 }

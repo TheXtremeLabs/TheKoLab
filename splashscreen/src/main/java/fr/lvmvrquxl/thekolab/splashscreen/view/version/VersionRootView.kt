@@ -3,6 +3,7 @@ package fr.lvmvrquxl.thekolab.splashscreen.view.version
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
@@ -15,9 +16,9 @@ import kotlinx.coroutines.Runnable
  * @since 2.0.0
  */
 internal class VersionRootView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     view: ConstraintLayout
-) : AnimatedView(activity, view) {
+) : AnimatedView(activityReference, view) {
     companion object {
         private const val CLOSE_ACTIVITY_DELAY: Long = 750
         private const val TRANSLATION_Y: Float = 64f
@@ -25,14 +26,14 @@ internal class VersionRootView private constructor(
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Splashscreen's activity
+         * @param activityReference Reference of the splashscreen's activity
          * @param view View corresponding to the layout's root
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, view: ConstraintLayout) =
-            VersionRootView(activity, view).let { v: VersionRootView ->
-                activity.addObserver(v)
+        fun observe(activityReference: ActivityReference, view: ConstraintLayout) =
+            VersionRootView(activityReference, view).let { v: VersionRootView ->
+                activityReference.get()?.addObserver(v)
             }
     }
 
@@ -51,15 +52,16 @@ internal class VersionRootView private constructor(
     private var viewModel: SplashscreenViewModel? = null
 
     override fun onCreate() {
-        super.onCreate()
         this.viewModel = SplashscreenViewModel.instance.apply {
-            this.state.observe(this@VersionRootView.activity, this@VersionRootView.stateObserver)
+            this@VersionRootView.activityReference.get()?.let { activity: Activity ->
+                this.state.observe(activity, this@VersionRootView.stateObserver)
+            }
         }
     }
 
     override fun onDestroy() {
         this.viewModel = null
-        this.activity.removeObserver(this)
+        this.activityReference.get()?.removeObserver(this)
         super.onDestroy()
     }
 

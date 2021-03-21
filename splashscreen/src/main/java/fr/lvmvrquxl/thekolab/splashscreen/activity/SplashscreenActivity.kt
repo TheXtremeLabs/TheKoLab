@@ -1,7 +1,6 @@
 package fr.lvmvrquxl.thekolab.splashscreen.activity
 
 import android.content.Intent
-import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.home.base.HomeActivity
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.splashscreen.view.SplashscreenView
@@ -23,20 +22,31 @@ class SplashscreenActivity : Activity() {
         val javaClass: Class<SplashscreenActivity> = SplashscreenActivity::class.java
     }
 
-    private val stateObserver: Observer<SplashscreenState>
-        get() = Observer { state: SplashscreenState ->
-            if (SplashscreenState.CLOSE == state) this.goToHome()
-        }
+    private var viewModel: SplashscreenViewModel? = null
 
-    init {
-        SplashscreenView.observe(this)
-        SplashscreenViewModel.instance.let { viewModel: SplashscreenViewModel ->
-            viewModel.observe(this)
-            viewModel.state.observe(this, this.stateObserver)
+    override fun initView() = SplashscreenView.observe(super.reference)
+
+    override fun initViewModel() {
+        this.viewModel =
+            SplashscreenViewModel.instance.apply { this.observe(this@SplashscreenActivity) }
+    }
+
+    override fun observeViewModelState() {
+        this.viewModel?.state?.observe(this) { state: SplashscreenState ->
+            if (SplashscreenState.CLOSE == state) this.goToHome()
         }
     }
 
     override fun onBackPressed() {}
+
+    override fun onDestroy() {
+        this.destroyViewModel()
+        super.onDestroy()
+    }
+
+    private fun destroyViewModel() {
+        this.viewModel = null
+    }
 
     private fun goToHome() {
         val intent = Intent(this, HomeActivity.javaClass)

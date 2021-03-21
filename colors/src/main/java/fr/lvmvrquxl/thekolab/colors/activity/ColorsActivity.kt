@@ -1,37 +1,45 @@
 package fr.lvmvrquxl.thekolab.colors.activity
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import fr.lvmvrquxl.thekolab.colors.view.ColorsView
-import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsState
 import fr.lvmvrquxl.thekolab.colors.viewmodel.ColorsViewModel
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleObserver
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.viewmodel.StateViewModel
 
 /**
  * Activity of the colors feature.
- *
- * @since 1.0.0
- *
- * @see AppCompatActivity
  */
-class ColorsActivity : AppCompatActivity() {
-    private val stateObserver: Observer<ColorsState>
-        get() = Observer { state: ColorsState ->
-            if (ColorsState.CLOSABLE == state) super.onBackPressed()
-        }
-
-    private val view: LifecycleObserver
-        get() = ColorsView.create(this)
-
-    private val viewModel: ColorsViewModel
-        get() = ColorsViewModel.instance(this).apply {
-            this.state.observe(this@ColorsActivity, this@ColorsActivity.stateObserver)
-        }
-
-    init {
-        this.lifecycle.addObserver(this.view)
-        this.lifecycle.addObserver(this.viewModel)
+class ColorsActivity : Activity() {
+    companion object {
+        /**
+         * Class of the colors activity.
+         */
+        val javaClass: Class<ColorsActivity> = ColorsActivity::class.java
     }
 
-    override fun onBackPressed() = this.viewModel.onBackPressed()
+    private var viewModel: ColorsViewModel? = null
+
+    override fun initView() = ColorsView.observe(super.reference)
+
+    override fun initViewModel() {
+        this.viewModel = ColorsViewModel.instance.apply { this.observe(super.reference) }
+    }
+
+    override fun observeViewModelState() {
+        this.viewModel?.state?.observe(this) { state: String ->
+            if (StateViewModel.CLOSE == state) super.onBackPressed()
+        }
+    }
+
+    override fun onBackPressed() {
+        this.viewModel?.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        this.destroyViewModel()
+        super.onDestroy()
+    }
+
+    private fun destroyViewModel() {
+        this.viewModel = null
+    }
 }

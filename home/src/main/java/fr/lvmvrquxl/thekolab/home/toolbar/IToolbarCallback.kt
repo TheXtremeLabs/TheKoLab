@@ -1,7 +1,7 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
-import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Callback of toolbar's interactions.
@@ -16,18 +16,17 @@ internal interface IToolbarCallback {
         /**
          * Create an instance of the toolbar's interactions callback.
          *
-         * @param activity Home page's activity
+         * @param activityReference Reference of the home page activity
          * @param toolbar Toolbar's view binding
          *
          * @return New instance of the toolbar's interactions callback
          *
-         * @since 1.0.0
-         *
-         * @see [AppCompatActivity]
-         * @see [ToolbarBinding]
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): IToolbarCallback =
-            ToolbarCallback.create(activity, toolbar)
+        fun create(
+            activityReference: ActivityReference,
+            toolbar: ToolbarBinding
+        ): IToolbarCallback = ToolbarCallback.create(activityReference, toolbar)
     }
 
     /**

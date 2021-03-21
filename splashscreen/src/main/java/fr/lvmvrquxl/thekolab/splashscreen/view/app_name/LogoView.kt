@@ -8,6 +8,7 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.Observer
 import com.google.android.material.imageview.ShapeableImageView
 import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.AnimatedView
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenState
 import fr.lvmvrquxl.thekolab.splashscreen.viewmodel.SplashscreenViewModel
@@ -19,9 +20,9 @@ import kotlinx.coroutines.Runnable
  * @since 2.0.0
  */
 internal class LogoView private constructor(
-    private val activity: Activity,
+    private val activityReference: ActivityReference,
     private val view: ShapeableImageView
-) : AnimatedView(activity, view) {
+) : AnimatedView(activityReference, view) {
     companion object {
         private const val SPINNING_ANIMATION_DURATION: Long = 3200
         private const val START_ANIMATION_DELAY: Long = 250
@@ -29,13 +30,16 @@ internal class LogoView private constructor(
         /**
          * Observe the given activity's lifecycle.
          *
-         * @param activity Splashscreen's activity
+         * @param activityReference Reference of the splashscreen's activity
          * @param view View corresponding to the logo
          *
          * @since 2.0.0
          */
-        fun observe(activity: Activity, view: ShapeableImageView) =
-            LogoView(activity, view).let { v: LogoView -> activity.addObserver(v) }
+        fun observe(activityReference: ActivityReference, view: ShapeableImageView) {
+            LogoView(activityReference, view).let { v: LogoView ->
+                activityReference.get()?.addObserver(v)
+            }
+        }
     }
 
     override val startAnimation: Runnable
@@ -53,9 +57,10 @@ internal class LogoView private constructor(
     private var viewModel: SplashscreenViewModel? = null
 
     override fun onCreate() {
-        super.onCreate()
         this.viewModel = SplashscreenViewModel.instance.apply {
-            this.state.observe(this@LogoView.activity, this@LogoView.stateObserver)
+            this@LogoView.activityReference.get()?.let { activity: Activity ->
+                this.state.observe(activity, this@LogoView.stateObserver)
+            }
         }
     }
 

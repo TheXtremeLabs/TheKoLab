@@ -62,18 +62,13 @@ internal class ToolbarTimeView private constructor(
 
     override fun onPause() {
         this.presenter?.cancelCoroutines()
-        super.onPause()
     }
 
     override fun onResume() {
         this.presenter?.startBackgroundCoroutines()
-        super.onResume()
     }
 
-    override fun onStart() {
-        this.initPresenter()
-        super.onStart()
-    }
+    override fun onStart() = this.initPresenter()
 
     private fun homeToolbarTimeCallback(): ToolbarTimeCallback =
         object : ToolbarTimeCallback {
