@@ -15,9 +15,24 @@ Visit [*Keep a Changelog*][changelog] for more information.
 
 ## List of releases
 
+- [Version 2.0.0](#v2.0.0) - 2021/03/21
 - [Version 1.0.1](#v1.0.1) - 2021/02/22
 - [Version 1.0.0](#v1.0.0) - 2021/02/22
 - [Version 0.1.0](#v0.1.0) - 2021/01/18
+
+## Version 2.0.0 <a name="v2.0.0"></a>
+
+### Added
+
+- Splashscreen activity
+
+### Changed
+
+- Refactor colors activity by adding compatibility with *Model-View-ViewModel* architecture
+
+### Deprecated
+
+- Home activity and its architecture will be refactored in next minor version
 
 ## Version 1.0.1 <a name="v1.0.1"></a>
 
