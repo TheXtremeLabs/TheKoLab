@@ -11,6 +11,7 @@ import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
  *
  * @since 1.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal interface IToolbarCallback {
     companion object {
         /**

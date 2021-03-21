@@ -11,6 +11,7 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * @see [AppBarLayout.OnOffsetChangedListener]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal interface IToolbarListener : AppBarLayout.OnOffsetChangedListener {
     companion object {
         /**

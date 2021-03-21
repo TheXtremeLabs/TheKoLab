@@ -14,6 +14,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * @since 2.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 class HomeActivity : Activity() {
     companion object {
         /**
