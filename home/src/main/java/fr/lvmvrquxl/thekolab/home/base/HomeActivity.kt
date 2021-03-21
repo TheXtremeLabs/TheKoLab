@@ -2,9 +2,9 @@ package fr.lvmvrquxl.thekolab.home.base
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.HomeActivityBinding
 import fr.lvmvrquxl.thekolab.home.toolbar.weather.presenter.ToolbarWeatherPresenter
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
 
 /**
@@ -12,9 +12,19 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * This activity is managing the lifecycle of the home page.
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
-class HomeActivity : AppCompatActivity() {
+@Deprecated("Should be refactored for version 2.1.0")
+class HomeActivity : Activity() {
+    companion object {
+        /**
+         * Class of the home's activity.
+         *
+         * @since 2.0.0
+         */
+        val javaClass: Class<HomeActivity> = HomeActivity::class.java
+    }
+
     private var view: ActivityView<HomeActivityBinding>? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -24,18 +34,19 @@ class HomeActivity : AppCompatActivity() {
         )
     }
 
-    override fun onBackPressed() = this.finishAffinity()
+    override fun initView() {}
+
+    override fun initViewModel() {}
+
+    override fun observeViewModelState() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.view = HomeView.create(this)
-        this.view?.onCreate()
-        super.setContentView(this.view?.root)
+        this.createView()
     }
 
     override fun onDestroy() {
-        this.view?.onDestroy()
-        this.view = null
+        this.destroyView()
         super.onDestroy()
     }
 
@@ -49,6 +60,20 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        this.view?.onStart()
+        this.startView()
     }
+
+    private fun createView() {
+        this.view = HomeView.create(super.reference).apply {
+            this.onCreate()
+            super.setContentView(this.root)
+        }
+    }
+
+    private fun destroyView() {
+        this.view?.onDestroy()
+        this.view = null
+    }
+
+    private fun startView() = this.view?.onStart()
 }

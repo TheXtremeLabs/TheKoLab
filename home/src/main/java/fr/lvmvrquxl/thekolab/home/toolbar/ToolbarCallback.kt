@@ -1,49 +1,43 @@
 package fr.lvmvrquxl.thekolab.home.toolbar
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.home.databinding.ToolbarBinding
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Implementation of toolbar's interactions.
  *
  * This class should not be used directly! Use [IToolbarCallback] instead.
  *
- * @param activity Home page's activity
- * @param toolbar Toolbar's view binding
- *
- * @since 1.0.0
- *
- * @see [AppCompatActivity]
- * @see [IToolbarCallback]
+ * @since 2.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarCallback private constructor(
-    private val activity: AppCompatActivity,
+    private val activityReference: ActivityReference,
     private val toolbar: ToolbarBinding
 ) : IToolbarCallback {
     companion object {
         /**
          * Create a new instance of toolbar's callback implementation.
          *
-         * @param activity Home page's activity
+         * @param activityReference Reference of the home page's activity
          * @param toolbar Toolbar's view binding
          *
          * @return New instance of toolbar's callback implementation
          *
-         * @since 1.0.0
-         *
-         * @see [AppCompatActivity]
-         * @see [IToolbarCallback]
-         * @see [ToolbarBinding]
+         * @since 2.0.0
          */
-        fun create(activity: AppCompatActivity, toolbar: ToolbarBinding): IToolbarCallback =
-            ToolbarCallback(activity, toolbar)
+        fun create(
+            activityReference: ActivityReference,
+            toolbar: ToolbarBinding
+        ): IToolbarCallback = ToolbarCallback(activityReference, toolbar)
     }
 
-    private val animationDuration: Int =
-        this.activity.resources.getInteger(android.R.integer.config_shortAnimTime)
+    private val animationDuration: Int?
+        get() = this.activityReference.get()?.let { activity: Activity ->
+            activity.resources.getInteger(android.R.integer.config_shortAnimTime)
+        }
 
     override fun hideTabIndicators() {
         this.toolbar.tabIndicators.apply {
@@ -60,28 +54,20 @@ internal class ToolbarCallback private constructor(
     }
 
     override fun showTabIndicators() {
-        this.toolbar.tabIndicators.apply {
-            this.animate()
+        this.animationDuration?.let { duration: Int ->
+            this.toolbar.tabIndicators.animate()
                 .alpha(0.75f)
-                .setDuration(this@ToolbarCallback.animationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator?) {
-                        this@apply.visibility = View.VISIBLE
-                    }
-                })
+                .setDuration(duration.toLong())
+                .withStartAction { this.toolbar.tabIndicators.visibility = View.VISIBLE }
         }
     }
 
     override fun showToolbarContent() {
-        this.toolbar.toolbarContent.apply {
-            this.animate()
+        this.animationDuration?.let { duration: Int ->
+            this.toolbar.toolbarContent.animate()
                 .alpha(0.75f)
-                .setDuration(this@ToolbarCallback.animationDuration.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator?) {
-                        this@apply.visibility = View.VISIBLE
-                    }
-                })
+                .setDuration(duration.toLong())
+                .withStartAction { this.toolbar.toolbarContent.visibility = View.VISIBLE }
         }
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="TheKoLab.Splashscreen.AppName" parent="TheKoLab.Text.Headline2">
+        <item name="android:letterSpacing">@dimen/empty</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">?android:textColor</item>
+        <item name="fontFamily">@font/labrat</item>
+    </style>
+
+    <style name="TheKoLab.Splashscreen.AppName.End" parent="TheKoLab.Splashscreen.AppName">
+        <item name="android:gravity">center_vertical|start</item>
+    </style>
+
+    <style name="TheKoLab.Splashscreen.AppName.Start" parent="TheKoLab.Splashscreen.AppName">
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:paddingHorizontal" tools:targetApi="o">@dimen/small</item>
+    </style>
+
+    <style name="TheKoLab.Splashscreen.Logo" parent="TheKoLab.Image">
+        <item name="android:src">@drawable/kotlin_logo</item>
+        <item name="android:tint">@color/white</item>
+    </style>
+
+    <style name="TheKoLab.Splashscreen.Logo.Background" parent="TheKoLab.Layout">
+        <item name="android:background">?attr/colorSurface</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="TheKoLab.Splashscreen.Version" parent="TheKoLab.Text.Body">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:letterSpacing">@dimen/letter_spacing_smooth</item>
+    </style>
+
+</resources>

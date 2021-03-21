@@ -1,63 +1,73 @@
 package fr.lvmvrquxl.thekolab.colors.view
 
-import androidx.appcompat.app.AppCompatActivity
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsActivityBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsContentBinding
 import fr.lvmvrquxl.thekolab.colors.databinding.ColorsToolbarBinding
-import fr.lvmvrquxl.thekolab.colors.view.content.ContentView
-import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarView
+import fr.lvmvrquxl.thekolab.colors.view.content.ContentLayoutView
+import fr.lvmvrquxl.thekolab.colors.view.toolbar.ToolbarLayoutView
+import fr.lvmvrquxl.thekolab.shared.activity.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 import fr.lvmvrquxl.thekolab.shared.view.ActivityView
-import fr.lvmvrquxl.thekolab.shared.view.LifecycleView
 
 /**
  * Main view of the colors activity.
- *
- * @param activity Instance of the colors activity
- *
- * @since 1.0.0
- *
- * @see ActivityView
- * @see AppCompatActivity
  */
-internal class ColorsView private constructor(private val activity: AppCompatActivity) :
-    ActivityView<ColorsActivityBinding>() {
+internal class ColorsView private constructor(private val activityReference: ActivityReference) :
+    ActivityView<ColorsActivityBinding>(activityReference) {
     companion object {
         /**
-         * Create an instance of the view.
+         * Observe the given activity lifecycle.
          *
-         * @param activity Instance of the colors activity
-         *
-         * @return New instance of the view
-         *
-         * @since 1.0.0
-         *
-         * @see ActivityView
-         * @see AppCompatActivity
+         * @param activityReference Colors activity's reference
          */
-        fun create(activity: AppCompatActivity): ActivityView<ColorsActivityBinding> =
-            ColorsView(activity)
+        fun observe(activityReference: ActivityReference) {
+            ColorsView(activityReference).let { view: ColorsView ->
+                activityReference.get()?.addObserver(view)
+            }
+        }
     }
 
-    override fun onCreate() {
-        this.bindView()
-        this.registerContentView()
-        this.registerToolbarView()
-        super.onCreate()
+    private var contentBinding: ColorsContentBinding? = null
+    private var toolbarBinding: ColorsToolbarBinding? = null
+
+    override fun bindView() {
+        this.activityReference.get()?.let { activity: Activity ->
+            super.viewBinding = ColorsActivityBinding.inflate(activity.layoutInflater).apply {
+                this@ColorsView.contentBinding = this.colorsContent
+                this@ColorsView.toolbarBinding = this.colorsToolbar
+            }
+        }
     }
 
-    private fun bindView() {
-        super.viewBinding = ColorsActivityBinding.inflate(this.activity.layoutInflater)
+    override fun onDestroy() {
+        this.destroyContentBinding()
+        this.destroyToolbarBinding()
+        this.stopActivityObservation()
+        super.onDestroy()
     }
 
-    private fun registerContentView() =
-        super.viewBinding?.colorsContent?.let { content: ColorsContentBinding ->
-            val view: LifecycleView = ContentView.create(this.activity, content)
-            super.addView(view)
+    override fun registerViews() {
+        this.registerContainerLayout()
+        this.registerToolbarLayout()
+    }
+
+    private fun destroyContentBinding() {
+        this.contentBinding = null
+    }
+
+    private fun destroyToolbarBinding() {
+        this.toolbarBinding = null
+    }
+
+    private fun registerContainerLayout() =
+        this.contentBinding?.let { binding: ColorsContentBinding ->
+            ContentLayoutView.observe(this.activityReference, binding)
         }
 
-    private fun registerToolbarView() =
-        super.viewBinding?.colorsToolbar?.let { toolbar: ColorsToolbarBinding ->
-            val view: LifecycleView = ToolbarView.create(this.activity, toolbar)
-            super.addView(view)
+    private fun registerToolbarLayout() =
+        this.toolbarBinding?.let { binding: ColorsToolbarBinding ->
+            ToolbarLayoutView.observe(this.activityReference, binding)
         }
+
+    private fun stopActivityObservation() = this.activityReference.get()?.removeObserver(this)
 }

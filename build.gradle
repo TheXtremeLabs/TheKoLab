@@ -1,7 +1,7 @@
 // Android
-def majorVersion = 1
+def majorVersion = 2
 def minorVersion = 0
-def patchVersion = 1
+def patchVersion = 0
 
 // Dependencies - Implementations
 def appcompatVersion = '1.2.0'
@@ -26,7 +26,7 @@ ext {
     compileSdkVersion = 29
     minSdkVersion = 21
     targetSdkVersion = 29
-    versionCode = 3
+    versionCode = 5
     versionName = "$majorVersion.$minorVersion.$patchVersion"
 
     androidTestDependencies = [
@@ -62,7 +62,7 @@ buildscript {
     ext {
         dokka_version = '1.4.20'
         gradle_version = '4.1.2'
-        kotlin_version = '1.4.21'
+        kotlin_version = '1.4.31'
     }
 
     dependencies {

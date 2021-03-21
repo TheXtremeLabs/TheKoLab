@@ -1,30 +1,25 @@
 package fr.lvmvrquxl.thekolab.shared.permission
 
-import android.app.Activity
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
  * Permissions builder.
  *
- * @param activity Activity that requests permission
- *
  * @since 1.0.0
- *
- * @see [Activity]
  */
-class PermissionBuilder private constructor(private val activity: Activity) {
+class PermissionBuilder private constructor(private val activityReference: ActivityReference) {
     companion object {
         private const val ERROR_MSG: String = "No permission was provided!"
 
         /**
          * Create an instance of the builder.
          *
-         * @param activity Activity that requests permission
+         * @param activityReference Reference of the activity that requests permission
          *
-         * @since 1.0.0
-         *
-         * @see [Activity]
+         * @since 2.0.0
          */
-        fun create(activity: Activity): PermissionBuilder = PermissionBuilder(activity)
+        fun create(activityReference: ActivityReference): PermissionBuilder =
+            PermissionBuilder(activityReference)
     }
 
     private val permissions: MutableList<Permission> = mutableListOf()
@@ -37,9 +32,6 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      * @throws [NoSuchElementException] If no permission was provided
      *
      * @since 1.0.0
-     *
-     * @see [List]
-     * @see [Permission]
      */
     fun build(): List<Permission> = when (this.permissions.isEmpty()) {
         true -> throw NoSuchElementException(ERROR_MSG)
@@ -51,10 +43,10 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      *
      * @return Current instance of builder
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     fun withInternet(): PermissionBuilder {
-        val permission: Permission = InternetPermission.create(this.activity)
+        val permission: Permission = InternetPermission.create(this.activityReference)
         this.addPermission(permission)
         return this
     }
@@ -64,10 +56,10 @@ class PermissionBuilder private constructor(private val activity: Activity) {
      *
      * @return Current instance of builder
      *
-     * @since 1.0.0
+     * @since 2.0.0
      */
     fun withLocation(): PermissionBuilder {
-        val permission: Permission = LocationPermission.create(this.activity)
+        val permission: Permission = LocationPermission.create(this.activityReference)
         this.addPermission(permission)
         return this
     }

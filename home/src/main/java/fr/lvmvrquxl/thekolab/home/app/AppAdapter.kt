@@ -15,6 +15,7 @@ import fr.lvmvrquxl.thekolab.home.app.model.App
  * @see AppViewHolder
  * @see RecyclerView.Adapter
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class AppAdapter(private val apps: List<App>) : RecyclerView.Adapter<AppViewHolder>() {
     override fun getItemCount(): Int = this.apps.size
 

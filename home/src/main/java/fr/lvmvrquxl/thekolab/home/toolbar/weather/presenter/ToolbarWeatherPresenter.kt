@@ -23,6 +23,7 @@ import kotlinx.coroutines.*
  * @see [ToolbarWeatherCallback]
  * @see [WeatherTrackerListener]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarWeatherPresenter private constructor(
     private val activity: Activity,
     private val callback: ToolbarWeatherCallback

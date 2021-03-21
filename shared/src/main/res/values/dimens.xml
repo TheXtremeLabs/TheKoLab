@@ -2,7 +2,8 @@
 <resources>
     <dimen name="alpha_smooth">0.75</dimen>
     <dimen name="backdrop_height">270dp</dimen>
-    <dimen name="empty">0dp</dimen>
+    <dimen name="empty">0</dimen>
+    <dimen name="empty_dp">0dp</dimen>
     <dimen name="extra_large">64dp</dimen>
     <dimen name="extra_small">4dp</dimen>
     <dimen name="large">32dp</dimen>

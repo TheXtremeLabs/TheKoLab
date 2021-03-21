@@ -7,6 +7,7 @@ import fr.lvmvrquxl.thekolab.core.weather.dto.WeatherDTO
  *
  * @since 1.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal interface ToolbarWeatherCallback {
     /**
      * Show weather info.

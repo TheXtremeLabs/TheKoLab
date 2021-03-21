@@ -21,6 +21,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @see [ToolbarTimeFragmentBinding]
  * @see [ViewGroup]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarTimeView private constructor(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?
@@ -49,27 +50,26 @@ internal class ToolbarTimeView private constructor(
 
     private var presenter: Presenter? = null
 
-    override fun onCreateView() = this.bindViews()
+    override fun bindView() {
+        val attachToParent = false
+        super.viewBinding =
+            ToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+    }
 
     override fun onDestroyView() {
         this.presenter = null
         super.onDestroyView()
     }
 
-    override fun onPause() = this.presenter?.cancelCoroutines()
-
-    override fun onResume() = this.presenter?.startBackgroundCoroutines()
-
-    override fun onStart() {
-        this.initPresenter()
-        super.onStart()
+    override fun onPause() {
+        this.presenter?.cancelCoroutines()
     }
 
-    private fun bindViews() {
-        val attachToParent = false
-        super.viewBinding =
-            ToolbarTimeFragmentBinding.inflate(this.inflater, this.container, attachToParent)
+    override fun onResume() {
+        this.presenter?.startBackgroundCoroutines()
     }
+
+    override fun onStart() = this.initPresenter()
 
     private fun homeToolbarTimeCallback(): ToolbarTimeCallback =
         object : ToolbarTimeCallback {

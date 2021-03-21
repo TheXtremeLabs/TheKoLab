@@ -2,7 +2,7 @@ package fr.lvmvrquxl.thekolab.home.app.model
 
 import android.content.Context
 import android.content.Intent
-import fr.lvmvrquxl.thekolab.colors.view.ColorsActivity
+import fr.lvmvrquxl.thekolab.colors.activity.ColorsActivity
 
 /**
  * Model representation of an application.
@@ -15,6 +15,7 @@ import fr.lvmvrquxl.thekolab.colors.view.ColorsActivity
  *
  * @see ColorsActivity
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class App(val name: String, val description: String, val activity: Class<ColorsActivity>) {
     override fun equals(other: Any?): Boolean = other is App && this.activity == other.activity
 

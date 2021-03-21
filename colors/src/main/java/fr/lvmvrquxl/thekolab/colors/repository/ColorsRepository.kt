@@ -1,53 +1,45 @@
 package fr.lvmvrquxl.thekolab.colors.repository
 
-import android.content.Context
 import fr.lvmvrquxl.thekolab.colors.model.color.Color
-import fr.lvmvrquxl.thekolab.colors.model.IColors
-import kotlinx.coroutines.*
+import fr.lvmvrquxl.thekolab.shared.activity.ActivityReference
 
 /**
- * Implementation of the colors repository.
+ * Interface of colors repository.
  *
- * @since 1.0.0
- *
- * @see [IColorsRepository]
+ * This interface should be used for accessing colors data from model layer.
  */
-internal object ColorsRepository : IColorsRepository {
-    override val firstColor: Color?
-        get() = when (this.colorBackup) {
-            null -> this.colors?.default
-            else -> this.colorBackup
-        }
-    override val randomColor: Color?
-        get() = this.colors?.random
-
-    private const val SCOPE_NAME: String = "ColorsRepository"
-    private val coroutineScope: CoroutineScope = CoroutineScope(CoroutineName(SCOPE_NAME))
-    private var colorBackup: Color? = null
-    private var colors: IColors? = null
-
-    override fun backupColor(color: Color): Job = this.coroutineScope.launch {
-        this@ColorsRepository.colorBackup = color
+internal interface ColorsRepository {
+    companion object {
+        /**
+         * Get instance of colors repository.
+         *
+         * @param activityReference Reference of the colors activity
+         *
+         * @return Instance of colors repository
+         */
+        fun instance(activityReference: ActivityReference): ColorsRepository? =
+            ColorsRepositoryImpl.instance(activityReference)
     }
 
     /**
-     * Update context and init new colors to display.
+     * Backup given color, which will be the first displayed color when user reopens
+     * the colors activity.
      *
-     * @param context New context
-     *
-     * @return Instance of repository
-     *
-     * @since 1.0.0
-     *
-     * @see [Context]
-     * @see [IColorsRepository]
+     * @param color Color to backup
      */
-    fun withContext(context: Context): IColorsRepository = runBlocking(Dispatchers.Default) {
-        this@ColorsRepository.initColors(context)
-        this@ColorsRepository
-    }
+    suspend fun backupColor(color: Color)
 
-    private fun initColors(context: Context) = this.coroutineScope.launch {
-        this@ColorsRepository.colors = IColors.create(context)
-    }
+    /**
+     * Get the first color to display.
+     *
+     * @return First color to display
+     */
+    suspend fun firstColor(): Color?
+
+    /**
+     * Get a random color to display.
+     *
+     * @return Random color
+     */
+    suspend fun randomColor(): Color
 }
