@@ -14,6 +14,7 @@ import com.google.android.material.appbar.AppBarLayout
  * @see [IToolbarCallback]
  * @see [IToolbarListener]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarListener private constructor(private val callback: IToolbarCallback) :
     IToolbarListener {
     companion object {

@@ -34,6 +34,7 @@ import fr.lvmvrquxl.thekolab.shared.view.ActivityView
  *
  * @since 1.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class HomeView private constructor(private val activityReference: ActivityReference) :
     ActivityView<HomeActivityBinding>(activityReference) {
     companion object {

@@ -20,6 +20,7 @@ import fr.lvmvrquxl.thekolab.home.app.model.App
  * @see RecyclerView.ViewHolder
  * @see ViewGroup
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class AppViewHolder private constructor(
     inflater: LayoutInflater,
     private val parent: ViewGroup

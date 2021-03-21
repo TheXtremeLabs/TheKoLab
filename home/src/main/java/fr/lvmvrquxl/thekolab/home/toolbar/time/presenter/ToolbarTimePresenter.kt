@@ -15,6 +15,7 @@ import java.util.*
  * @see [Presenter]
  * @see [ToolbarTimeCallback]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarTimePresenter private constructor(private val callback: ToolbarTimeCallback) :
     Presenter() {
     companion object {

@@ -28,6 +28,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @see [ToolbarWeatherFragmentBinding]
  * @see [ViewGroup]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarWeatherView private constructor(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?,

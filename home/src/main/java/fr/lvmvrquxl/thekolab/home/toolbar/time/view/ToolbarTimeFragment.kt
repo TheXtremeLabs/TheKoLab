@@ -18,6 +18,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  *
  * @see [Fragment]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarTimeFragment private constructor() : Fragment(LAYOUT) {
     companion object {
         private val LAYOUT: Int = R.layout.toolbar_time_fragment

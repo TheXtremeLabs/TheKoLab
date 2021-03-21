@@ -21,6 +21,7 @@ import fr.lvmvrquxl.thekolab.shared.view.FragmentView
  * @see [ToolbarTimeFragmentBinding]
  * @see [ViewGroup]
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal class ToolbarTimeView private constructor(
     private val inflater: LayoutInflater,
     private val container: ViewGroup?

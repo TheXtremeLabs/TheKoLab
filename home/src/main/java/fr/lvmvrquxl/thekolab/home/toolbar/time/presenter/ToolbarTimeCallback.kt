@@ -5,6 +5,7 @@ package fr.lvmvrquxl.thekolab.home.toolbar.time.presenter
  *
  * @since 1.0.0
  */
+@Deprecated("Should be refactored for version 2.1.0")
 internal interface ToolbarTimeCallback {
     /**
      * Update toolbar's date text.
