@@ -61,7 +61,7 @@ allprojects {
 buildscript {
     ext {
         dokka_version = '1.4.20'
-        gradle_version = '4.1.2'
+        gradle_version = '4.2.2'
         kotlin_version = '1.4.31'
     }
 

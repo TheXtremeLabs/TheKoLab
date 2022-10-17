@@ -26,6 +26,7 @@ android {
 
     defaultConfig {
         applicationId 'fr.lvmvrquxl.thekolab'
+        namespace 'fr.lvmvrquxl.thekolab'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode

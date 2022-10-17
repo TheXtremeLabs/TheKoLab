@@ -26,10 +26,9 @@ android {
     }
 
     defaultConfig {
+        namespace 'fr.lvmvrquxl.thekolab.colors'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
 
         consumerProguardFiles 'consumer-rules.pro'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
